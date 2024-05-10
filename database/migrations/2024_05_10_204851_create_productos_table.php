@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('categoria');
             $table->string('foto_url')->nullable();
             $table->longText('descripcion');
-            $table->text('nombre');
             $table->dateTime('promoted_at')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('sucursal_id')->constrained();
