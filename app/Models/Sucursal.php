@@ -21,8 +21,8 @@ class Sucursal extends Model
         return $this->hasMany(User::class);
     }
 
-    public function productos(): HasMany
+    public function products(): HasMany
     {
-        return $this->hasMany(Producto::class);
+        return $this->hasMany(Product::class);
     }
 }

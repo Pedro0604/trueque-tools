@@ -17,9 +17,9 @@ class SucursalFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => fake()->name(),
-            'direccion' => fake()->address(),
-            'codigo' => fake()->unique()->randomNumber(5)
+            'code' => fake()->unique()->randomNumber(5),
+            'name' => fake()->name(),
+            'address' => fake()->address(),
         ];
     }
 }

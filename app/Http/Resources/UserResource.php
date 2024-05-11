@@ -18,11 +18,10 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'apellido' => $this->apellido,
+            'surname' => $this->surname,
             'email' => $this->email,
-            'email_verified_at' => $this->email_verified_at,
-            'fecha_nacimiento' => (new Carbon($this->fecha_nacimiento))->format('d/m/Y'),
-            'reputacion' => $this->reputacion,
+            'birth_date' => (new Carbon($this->birth_date))->format('d/m/Y'),
+            'reputation' => $this->reputation,
             'sucursal' => new SucursalResource($this->sucursal),
         ];
     }

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Producto>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
-class ProductoFactory extends Factory
+class ProductFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,10 +17,10 @@ class ProductoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => fake()->name(),
-            'categoria' => fake()->numberBetween(1, 3),
-            'foto_url' => fake()->imageUrl(),
-            'descripcion' => fake()->sentence(),
+            'name' => fake()->name(),
+            'category' => fake()->numberBetween(1, 3),
+            'image_path' => fake()->imageUrl(),
+            'description' => fake()->sentence(),
             'promoted_at' => fake()->dateTime(),
             'user_id' => fake()->numberBetween(1,3),
             'sucursal_id' => fake()->numberBetween(1,3),

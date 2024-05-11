@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('sucursals', function (Blueprint $table) {
             $table->id();
-            $table->integer('codigo')->unique();
-            $table->string('nombre');
-            $table->string('direccion');
+            $table->integer('code')->unique();
+            $table->string('name');
+            $table->string('address');
             $table->softDeletes();
             $table->timestamps();
         });

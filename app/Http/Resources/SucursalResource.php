@@ -16,9 +16,9 @@ class SucursalResource extends JsonResource
     {
         return[
             'id' => $this->id,
-            'nombre' => $this->nombre,
-            'direccion' => $this->direccion,
-            'codigo' => $this->codigo,
+            'code' => $this->code,
+            'name' => $this->name,
+            'address' => $this->address,
         ];
     }
 }

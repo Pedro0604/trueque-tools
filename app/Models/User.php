@@ -47,9 +47,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function productos():HasMany
+    public function products():HasMany
     {
-        return $this->hasMany(Producto::class);
+        return $this->hasMany(Product::class);
     }
 
     public function sucursal(): BelongsTo
