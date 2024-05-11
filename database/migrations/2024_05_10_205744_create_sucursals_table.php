@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('sucursals', function (Blueprint $table) {
             $table->id();
+            $table->integer('codigo')->unique();
+            $table->string('nombre');
+            $table->string('direccion');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
