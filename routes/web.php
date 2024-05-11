@@ -1,13 +1,21 @@
 <?php
 
-use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::redirect('/', '/producto');
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
 
-Route::get('/producto', [ProductoController::class, 'index'])->name('producto.index');
+Route::get('/producto', [ProductController::class, 'index'])->name('producto.index');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -17,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('producto', ProductoController::class)->except(['index']);
+    Route::resource('producto', ProductController::class)->except(['index']);
 });
 
 require __DIR__.'/auth.php';
