@@ -20,9 +20,13 @@ export default function Authenticated({ user, header, children }) {
                                 </Link>
                             </div>
 
+                            {/*TODO - No olvidarse de agregar los links tambien en el dropdown responsive*/}
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
+                                </NavLink>
+                                <NavLink href={route('producto.index')} active={route().current('producto.*')}>
+                                    Productos
                                 </NavLink>
                             </div>
                         </div>
@@ -91,9 +95,13 @@ export default function Authenticated({ user, header, children }) {
                 </div>
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
+                    {/*TODO - No olvidarse de agregar los links tambien en la navbar normal*/}
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('producto.index')} active={route().current('producto.*')}>
+                            Productos
                         </ResponsiveNavLink>
                     </div>
 
