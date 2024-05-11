@@ -10,6 +10,12 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'category',
+        'description'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -19,4 +25,6 @@ class Product extends Model
     {
         return $this->belongsTo(Sucursal::class);
     }
+
+
 }
