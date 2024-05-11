@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductoResource;
 use App\Models\Producto;
 use App\Http\Requests\StoreProductoRequest;
 use App\Http\Requests\UpdateProductoRequest;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 class ProductoController extends Controller
 {
@@ -13,7 +16,10 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Producto::all();
+        return Inertia::render('Producto/Index', [
+            'productos' => ProductoResource::collection($productos)
+        ]);
     }
 
     /**
