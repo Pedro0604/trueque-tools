@@ -14,4 +14,9 @@ class Producto extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function sucursal(): BelongsTo
+    {
+        return $this->belongsTo(Sucursal::class);
+    }
 }
