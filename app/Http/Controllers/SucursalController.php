@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Resources\SucursalResource;
 use App\Models\Sucursal;
+use Inertia\Inertia;
 use App\Http\Requests\StoreSucursalRequest;
 use App\Http\Requests\UpdateSucursalRequest;
+
 
 class SucursalController extends Controller
 {

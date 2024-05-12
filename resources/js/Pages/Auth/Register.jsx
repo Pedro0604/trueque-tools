@@ -5,11 +5,15 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import SelectInput from "@/Components/SelectInput.jsx";
 
-export default function Register() {
+export default function Register({sucursales}) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
-        email: '',
+        email:'',
+        surname: '',
+        birth_date: '',
+        sucursal_id:'',
         password: '',
         password_confirmation: '',
     });
@@ -32,7 +36,7 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Name"/>
 
                     <TextInput
                         id="name"
@@ -45,11 +49,27 @@ export default function Register() {
                         required
                     />
 
-                    <InputError message={errors.name} className="mt-2" />
+                    <InputError message={errors.name} className="mt-2"/>
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="surname" value="Surname"/>
+
+                    <TextInput
+                        id="surname"
+                        name="surname"
+                        value={data.surname}
+                        className="mt-1 block w-full"
+                        autoComplete="surname"
+                        onChange={(e) => setData('surname', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.surname} className="mt-2"/>
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="email" value="Email"/>
 
                     <TextInput
                         id="email"
@@ -57,17 +77,52 @@ export default function Register() {
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
-                        autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
                         required
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.email} className="mt-2"/>
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="birth_date" value="Birth_date"/>
 
+                    <TextInput
+                        id="birth_date"
+                        type="date"
+                        name="birth_date"
+                        value={data.birth_date}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('birth_date', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.birth_date} className="mt-2"/>
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="sucursal_id" value="Sucursal"/>
+
+                    <SelectInput
+                        id="sucursal_id"
+                        name="sucursal_id"
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('sucursal_id', e.target.value)}
+                        required
+                    >
+                        <option value="">Selecciona una sucursal</option>
+                        {sucursales.data.map((sucursal) => (
+                            <option key={sucursal.id} value={sucursal.id}>
+                                {sucursal.name}
+                            </option>
+                        ))}
+                    </SelectInput>
+
+                    <InputError message={errors.sucursal_id} className="mt-2"/>
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password" value="Password"/>
                     <TextInput
                         id="password"
                         type="password"
@@ -79,11 +134,11 @@ export default function Register() {
                         required
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError message={errors.password} className="mt-2"/>
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
+                    <InputLabel htmlFor="password_confirmation" value="Confirm Password"/>
 
                     <TextInput
                         id="password_confirmation"
@@ -96,7 +151,7 @@ export default function Register() {
                         required
                     />
 
-                    <InputError message={errors.password_confirmation} className="mt-2" />
+                    <InputError message={errors.password_confirmation} className="mt-2"/>
                 </div>
 
                 <div className="flex items-center justify-end mt-4">

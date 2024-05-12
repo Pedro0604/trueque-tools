@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+use App\Http\Resources\SucursalResource;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sucursal;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -13,6 +15,7 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -20,7 +23,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        $sucursales = Sucursal::all();
+        return Inertia::render('Auth/Register', [
+            'sucursales' => SucursalResource::collection($sucursales)
+        ]);
     }
 
     /**
@@ -30,17 +36,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
+        $data=$request->validate([
+            'name' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'surname' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'birth_date' => 'required|date| before:18 years ago',
+            'sucursal_id' => 'required|exists:sucursals,id',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::min(6)],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $data['password'] = bcrypt($data['password']);
+        $data['reputation'] = 0;
+
+        $user = User::create($data);
 
         event(new Registered($user));
 
