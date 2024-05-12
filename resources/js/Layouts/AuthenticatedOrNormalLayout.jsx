@@ -7,7 +7,7 @@ import NormalLayout from "@/Layouts/NormalLayout.jsx";
 export default function AuthenticatedOrNormalLayout({user, authenticatedHeader, normalHeader, children}) {
     const innerContainer = (
         <div className="p-6 sm:p-8 md:p-12">
-            <div className="text-black dark:text-white bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
+            <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
                 {children}
             </div>
         </div>
