@@ -1,5 +1,6 @@
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import StarIcon from '@mui/icons-material/Star';
+import BusinessIcon from '@mui/icons-material/Business';
 
 export default function Product({product}) {
     const showProduct = (productId) => {
@@ -26,10 +27,17 @@ export default function Product({product}) {
                 className={`w-full object-cover h-64 rounded-md`}
             />
             <div className="mt-4">
-                <p className="text-gray-600 dark:text-gray-400 text-ellipsis">{product.name}</p>
-                <p className="text-xl">{CATEGORIES_TEXT_MAP[product.category]}</p>
-                <p className="text-gray-600 dark:text-gray-400 overflow-hidden text-ellipsis">{product.description}</p>
-                <p className="text-gray-600 dark:text-gray-400">Sucursal: {product.sucursal.name}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-ellipsis line-clamp-1">{product.name}</p>
+                <p className="text-xl my-2">{CATEGORIES_TEXT_MAP[product.category]}</p>
+                <p className="text-gray-600 text-sm dark:text-gray-500 overflow-hidden text-ellipsis line-clamp-3 h-16">{product.description}</p>
+                <div
+                    className="flex items-center gap-1 mt-1"
+                >
+                    <BusinessIcon/>
+                    <p className="text-gray-600 dark:text-gray-400">
+                        {product.sucursal.name}
+                    </p>
+                </div>
             </div>
         </div>
     )
