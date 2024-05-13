@@ -21,7 +21,7 @@ class ProductResource extends JsonResource
             'category' => $this->category,
             'image_path' => $this->image_path,
             'description' => $this->description,
-            'promoted_at' => (new Carbon($this->promoted_at))->format('d/m/Y'),
+            'promoted_at' => $this->promoted_at ? (new Carbon($this->promoted_at))->format('d/m/Y') : null,
             'user' => new UserResource($this->user),
             'sucursal' => new SucursalResource($this->sucursal),
         ];
