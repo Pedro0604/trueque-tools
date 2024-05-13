@@ -1,16 +1,15 @@
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import StarIcon from '@mui/icons-material/Star';
 import BusinessIcon from '@mui/icons-material/Business';
+import {router} from "@inertiajs/react";
 
 export default function Product({product}) {
     const showProduct = (productId) => {
-        // TODO - Descomentar cuando se cree la ruta product.show
-        // router.get(route('product.show', productId));
-        // TODO - Borrar esta linea
-        console.log('show product', productId)
+        router.get(route('product.show', productId));
     }
 
     return (
+
         <div
             onClick={() => showProduct(product.id)}
             className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
@@ -21,11 +20,17 @@ export default function Product({product}) {
                 <p className="text-gray-600 dark:text-gray-400 text-sm">{product.user.name}</p>
                 {product.promoted_at && <StarIcon className="text-yellow-500"/>}
             </div>
-            <img
-                src={product.image_path}
-                alt={product.name}
-                className={`w-full object-cover h-64 rounded-md`}
-            />
+            {product.image_path ?
+                <img
+                    src={product.image_path}
+                    alt={product.name}
+                    className={`object-cover h-64 rounded-md `}
+                />
+                :
+                <div className="flex items-center justify-center w-64 h-64 rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                    IMAGEN NO ENCONTRADA
+                </div>
+            }
             <div className="mt-4">
                 <p className="text-gray-600 dark:text-gray-400 text-ellipsis line-clamp-1">{product.name}</p>
                 <p className="text-xl my-2">{CATEGORIES_TEXT_MAP[product.category]}</p>

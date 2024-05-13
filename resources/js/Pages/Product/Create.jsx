@@ -22,7 +22,7 @@ export default function create({auth, sucursals}) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        post(route('producto.store'))
+        post(route('product.store'))
     }
 
     return (

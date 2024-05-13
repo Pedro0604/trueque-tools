@@ -24,10 +24,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('producto', ProductController::class)->except(['index', 'show']);
+    Route::resource('product', ProductController::class)->except(['index', 'show']);
 });
 
-Route::get('/producto', [ProductController::class, 'index'])->name('producto.index');
-Route::get('/producto/{producto}', [ProductController::class, 'show'])->name('producto.show');
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+
+Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
 
 require __DIR__.'/auth.php';

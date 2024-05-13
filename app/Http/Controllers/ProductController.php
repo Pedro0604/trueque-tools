@@ -56,21 +56,21 @@ class ProductController extends Controller
 
         Product::create($data);
 
-        return to_route('producto.index')->with('success', 'Producto creado correctamente');
+        return to_route('product.index')->with('success', 'product creado correctamente');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $producto)
+    public function show(Product $product): Response|ResponseFactory
     {
-        //
+        return inertia('Product/Show', ['product' => new ProductResource($product)]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $producto)
+    public function edit(Product $product)
     {
         //
     }
@@ -78,7 +78,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $producto)
+    public function update(UpdateProductRequest $request, Product $product)
     {
         //
     }
@@ -86,7 +86,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $producto)
+    public function destroy(Product $product)
     {
         //
     }

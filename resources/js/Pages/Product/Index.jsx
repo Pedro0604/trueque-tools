@@ -14,7 +14,7 @@ export default function Index({auth, products, success, error}) {
                     </h2>
                     <Link
                         className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
-                        href={route('producto.create')}
+                        href={route('product.create')}
                     >
                         Add new
                     </Link>
