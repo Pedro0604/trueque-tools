@@ -3,8 +3,16 @@ import ApplicationLogo from "@/Components/ApplicationLogo.jsx";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.jsx";
 import {useState} from "react";
 
-export default function NormalLayout({header, children}) {
+export default function NormalLayout({header, children, error}) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+
+    const innerContainer = (
+        <div className="p-6 sm:p-8 md:p-12">
+            <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
+                {children}
+            </div>
+        </div>
+    )
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
@@ -77,6 +85,6 @@ export default function NormalLayout({header, children}) {
                 </header>
             )}
 
-            <main>{children}</main>
+            <main>{innerContainer}</main>
         </div>)
 }
