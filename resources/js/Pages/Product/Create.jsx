@@ -40,7 +40,7 @@ export default function create({auth, sucursals}) {
             <div
                 className="text-black dark:text-white rounded-lg flex flex-col items-center">
                 <form
-                    className="p-4 sm:p-8 bg-white dark:bg-gray-800 border border-gray-700 sm:rounded-lg"
+                    className="p-4 sm:p-8 bg-white dark:bg-gray-800 border border-gray-700 sm:rounded-lg md:min-w-[550px]"
                     onSubmit={onSubmit}
                     method="post"
                 >
