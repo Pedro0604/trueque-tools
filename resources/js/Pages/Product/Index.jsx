@@ -1,8 +1,9 @@
 import {Head, Link} from "@inertiajs/react";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
 import Product from "@/Pages/Product/Partials/Product.jsx";
+import InformationBanner from "@/Components/InformationBanner.jsx";
 
-export default function Index({auth, products}) {
+export default function Index({auth, products, success, error}) {
     return (
         <AuthenticatedOrNormalLayout
             user={auth.user}
@@ -28,6 +29,20 @@ export default function Index({auth, products}) {
             }
         >
             <Head title="Productos"/>
+            {success &&
+                <InformationBanner
+                    severity="success"
+                >
+                    {success}
+                </InformationBanner>
+            }
+            {error &&
+                <InformationBanner
+                    severity="error"
+                >
+                    {error}
+                </InformationBanner>
+            }
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
                 {products.data.map(product => <Product key={product.id} product={product}></Product>)}
             </div>
