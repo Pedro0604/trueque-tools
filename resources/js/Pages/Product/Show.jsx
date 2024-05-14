@@ -2,6 +2,8 @@ import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import StarIcon from '@mui/icons-material/Star';
 import BusinessIcon from '@mui/icons-material/Business';
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
+import {Head} from "@inertiajs/react";
+import PrimaryButton from "@/Components/PrimaryButton.jsx";
 
 
 export default function Show({product, auth}) {
@@ -13,52 +15,67 @@ export default function Show({product, auth}) {
             authenticatedHeader={
                 <div className="flex gap-3 justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        Productos
+                        {product.name}
                     </h2>
                 </div>
             }
             normalHeader={
                 <div className="flex gap-3 justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        Productos
+                        {product.name}
                     </h2>
                 </div>
             }
         >
-            <div className="flex justify-between items-center mb-1">
-                <p className="text-gray-600 dark:text-gray-400 text-sm">{product.user.name}</p>
-                {product.promoted_at && <StarIcon className="text-yellow-500"/>}
-            </div>
+            <Head title={`Producto "${product.name}"`}/>
 
+            <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg lg:mx-32 xl:mx-64 2xl:mx-96">
+                <div className="flex justify-between items-center mb-1 h-6">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">{product.user.name}</p>
+                    {product.promoted_at && <StarIcon className="text-yellow-500"/>}
+                </div>
 
-            <div className="flex">
-                {product.image_path ?
-                    <img
-                        src={product.image_path}
-                        alt={product.name}
-                        className={`object-cover h-64 rounded-md `}
-                    />
-                    :
-                    <div className="flex items-center justify-center w-64 h-64 rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                        IMAGEN NO ENCONTRADA
+                <div className="md:flex">
+                    <div className="w-full md:w-80">
+                        {product.image_path ?
+                            <img
+                                src={product.image_path}
+                                alt={product.name}
+                                className={`object-cover w-full aspect-video md:aspect-square rounded-md`}
+                            />
+                            :
+                            <div
+                                className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                <p>IMAGEN NO ENCONTRADA</p>
+                            </div>
+                        }
                     </div>
-                }
-                <div className="mt-4 left-2 ml-5">
-                    <p className="text-gray-600 dark:text-gray-400">{product.name}</p>
-                    <p className="text-xl my-2">{CATEGORIES_TEXT_MAP[product.category]}</p>
-                    <p className="text-gray-600 text-sm dark:text-gray-500 overflow-hidden h-16 break-all">{product.description}</p>
-                    <div
-                        className="flex items-center gap-1 mt-1 "
-                    >
-                        <BusinessIcon/>
+                    <div className="mt-4 left-2 ml-5">
+                        <p className="text-xl mb-2">{CATEGORIES_TEXT_MAP[product.category]}</p>
+                        <p className="text-gray-600 text-sm dark:text-gray-500 overflow-hidden h-16 break-all">{product.description}</p>
+                        <div
+                            className="flex items-center gap-1 mt-1 "
+                        >
+                            <BusinessIcon/>
+                            <p className="text-gray-600 dark:text-gray-400">
+                                {product.sucursal.name}
+                            </p>
+                        </div>
                         <p className="text-gray-600 dark:text-gray-400">
-                            {product.sucursal.name}
+                            Dirección: {product.sucursal.address}
                         </p>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-400">
-                        Dirección: {product.sucursal.address}
-                    </p>
                 </div>
+
+                <PrimaryButton
+                    onClick={() => {
+                        history.back();
+                        return false;
+                    }}
+                    className="mt-4 md:mt-8"
+                >
+                    Volver
+                </PrimaryButton>
             </div>
         </AuthenticatedOrNormalLayout>
     )
