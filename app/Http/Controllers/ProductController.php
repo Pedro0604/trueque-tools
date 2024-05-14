@@ -56,7 +56,7 @@ class ProductController extends Controller
 
         Product::create($data);
 
-        return to_route('product.index')->with('success', 'product creado correctamente');
+        return to_route('product.index')->with('success', 'Producto creado correctamente');
     }
 
     /**
