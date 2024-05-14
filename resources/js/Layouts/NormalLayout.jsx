@@ -2,17 +2,14 @@ import {Link} from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo.jsx";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.jsx";
 import {useState} from "react";
+import NavLink from "@/Components/NavLink.jsx";
 
-export default function NormalLayout({header, children, error}) {
+export default function NormalLayout({header, children}) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
-    const innerContainer = (
-        <div className="p-6 sm:p-8 md:p-12">
-            <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
-                {children}
-            </div>
-        </div>
-    )
+    const container =
+        <div className="p-6 sm:p-8 md:p-12">{children}</div>
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
@@ -24,6 +21,13 @@ export default function NormalLayout({header, children, error}) {
                                     <ApplicationLogo
                                         className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"/>
                                 </Link>
+                            </div>
+
+                            {/*TODO - No olvidarse de agregar los links tambien en el dropdown responsive*/}
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink href={route('product.index')} active={route().current('product.*')}>
+                                    Productos
+                                </NavLink>
                             </div>
                         </div>
 
@@ -70,6 +74,12 @@ export default function NormalLayout({header, children, error}) {
                 </div>
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
+                    {/*TODO - No olvidarse de agregar los links tambien en la navbar normal*/}
+                    <div className="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink href={route('product.index')} active={route().current('product.*')}>
+                            Productos
+                        </ResponsiveNavLink>
+                    </div>
                     <div className="pb-2 border-t border-gray-200 dark:border-gray-600">
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink href={route('login')}>Log in</ResponsiveNavLink>
@@ -85,6 +95,6 @@ export default function NormalLayout({header, children, error}) {
                 </header>
             )}
 
-            <main>{innerContainer}</main>
+            <main>{container}</main>
         </div>)
 }

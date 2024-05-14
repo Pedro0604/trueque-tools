@@ -8,13 +8,8 @@ import { Link } from '@inertiajs/react';
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
-    const innerContainer = (
-        <div className="p-6 sm:p-8 md:p-12">
-            <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
-                {children}
-            </div>
-        </div>
-    )
+    const container =
+        <div className="p-6 sm:p-8 md:p-12">{children}</div>
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -24,15 +19,12 @@ export default function Authenticated({ user, header, children }) {
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                    <ApplicationLogo className="block h-12 w-auto fill-current text-gray-800 dark:text-gray-200" />
                                 </Link>
                             </div>
 
                             {/*TODO - No olvidarse de agregar los links tambien en el dropdown responsive*/}
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
                                 <NavLink href={route('product.index')} active={route().current('product.*')}>
                                     Productos
                                 </NavLink>
@@ -106,9 +98,6 @@ export default function Authenticated({ user, header, children }) {
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     {/*TODO - No olvidarse de agregar los links tambien en la navbar normal*/}
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('product.index')} active={route().current('product.*')}>
                             Productos
                         </ResponsiveNavLink>
@@ -137,7 +126,7 @@ export default function Authenticated({ user, header, children }) {
                 </header>
             )}
 
-            <main>{innerContainer}</main>
+            <main>{container}</main>
         </div>
     );
 }
