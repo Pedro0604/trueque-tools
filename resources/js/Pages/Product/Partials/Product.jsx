@@ -18,7 +18,8 @@ export default function Product({product}) {
         >
             <div className="flex justify-between items-center mb-1">
                 <p className="text-gray-600 dark:text-gray-400 text-sm">{product.user.name}</p>
-                {product.promoted_at && <StarIcon className="text-yellow-500"/>}
+                {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
+                {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
             </div>
             <div className="flex gap-2 sm:gap-4 sm:flex-col overflow-hidden">
                 <div className="w-2/5 min-w-24 sm:w-full">
