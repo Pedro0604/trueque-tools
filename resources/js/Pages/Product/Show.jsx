@@ -12,14 +12,7 @@ export default function Show({product, auth}) {
     return (
         <AuthenticatedOrNormalLayout
             user={auth.user}
-            authenticatedHeader={
-                <div className="flex gap-3 justify-between items-center">
-                    <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        {product.name}
-                    </h2>
-                </div>
-            }
-            normalHeader={
+            header={
                 <div className="flex gap-3 justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                         {product.name}

@@ -7,24 +7,19 @@ export default function Index({auth, products, success, error}) {
     return (
         <AuthenticatedOrNormalLayout
             user={auth.user}
-            authenticatedHeader={
+            header={
                 <div className="flex gap-3 justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                         Productos
                     </h2>
-                    <Link
-                        className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
-                        href={route('product.create')}
-                    >
-                        Add new
-                    </Link>
-                </div>
-            }
-            normalHeader={
-                <div className="flex gap-3 justify-between items-center">
-                    <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        Productos
-                    </h2>
+                    {auth.user &&
+                        <Link
+                            className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+                            href={route('product.create')}
+                        >
+                            Add new
+                        </Link>
+                    }
                 </div>
             }
         >
