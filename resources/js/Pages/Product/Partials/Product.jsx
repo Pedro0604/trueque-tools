@@ -1,5 +1,4 @@
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
-import StarIcon from '@mui/icons-material/Star';
 import BusinessIcon from '@mui/icons-material/Business';
 import {router} from "@inertiajs/react";
 
