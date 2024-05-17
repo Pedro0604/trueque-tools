@@ -50,7 +50,7 @@ export default function create({auth, sucursals}) {
                     <div className="mt-4">
                         <InputLabel
                             htmlFor="product_image_path"
-                            value="Imagen"
+                            value="Imagen (opcional)"
                         />
                         <TextInput
                             id="product_image_path"
