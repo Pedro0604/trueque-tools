@@ -23,7 +23,7 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string'],
             'description' => ['required', 'string', 'min:60'],
             'category' => ['required', Rule::in([1, 2, 3])],
             'sucursal_id' => ['required', 'exists:sucursals,id'],
