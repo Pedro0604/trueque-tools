@@ -271,5 +271,7 @@ return [
         'username'                 => 'usuario',
         'value'                    => 'valor',
         'year'                     => 'año',
-    ],
+        'birth_date'               => 'fecha de nacimiento',
+        'surname'                  => 'apellido',
+    ]
 ];
