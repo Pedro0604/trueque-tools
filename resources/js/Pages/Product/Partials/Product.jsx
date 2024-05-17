@@ -16,7 +16,7 @@ export default function Product({product}) {
                 rounded-lg p-4 cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500`}
         >
             <div className="flex justify-between items-center mb-1">
-                <p className="text-gray-600 dark:text-gray-400 text-sm">{product.user.name}</p>
+                <p className="text-gray-600 dark:text-custom-beige-700 text-sm">{product.user.name}</p>
                 {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
                 {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
             </div>
@@ -36,25 +36,25 @@ export default function Product({product}) {
                     }
                 </div>
                 <div className="mt-4">
-                    <p className="text-xs sm:text-base text-gray-600 dark:text-gray-400 text-ellipsis line-clamp-1">{product.name}</p>
+                    <p className="text-xs sm:text-base text-gray-600 dark:text-custom-beige-700 text-ellipsis line-clamp-1">{product.name}</p>
                     <p className="text-sm sm:text-xl my-2">{CATEGORIES_TEXT_MAP[product.category]}</p>
-                    <p className="hidden sm:block text-gray-600 text-xs sm:text-sm dark:text-gray-500 text-ellipsis line-clamp-3 h-16">{product.description}</p>
+                    <p className="hidden sm:block text-gray-600 text-xs sm:text-sm dark:text-custom-beige-700 text-ellipsis line-clamp-3 h-16">{product.description}</p>
                     <div
                         className="hidden sm:flex items-center gap-1 mt-1"
                     >
                         <BusinessIcon/>
-                        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+                        <p className="text-sm sm:text-base text-gray-600 dark:text-custom-beige-700">
                             {product.sucursal.name}
                         </p>
                     </div>
                 </div>
             </div>
-            <p className="sm:hidden text-gray-600 text-xs sm:text-sm dark:text-gray-500 text-ellipsis line-clamp-2 my-2">{product.description}</p>
+            <p className="sm:hidden text-gray-600 text-xs sm:text-sm dark:text-custom-beige-700 text-ellipsis line-clamp-2 my-2">{product.description}</p>
             <div
                 className="flex sm:hidden items-center gap-1 mt-1"
             >
                 <BusinessIcon/>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+                <p className="text-sm sm:text-base text-gray-600 dark:text-custom-beige-700">
                     {product.sucursal.name}
                 </p>
             </div>
