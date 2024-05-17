@@ -14,7 +14,7 @@ export default function Show({product, auth}) {
             user={auth.user}
             header={
                 <div className="flex gap-3 justify-between items-center">
-                    <h2 className="font-semibold text-xl text-gray-800 dark:text-beige-500 leading-tight">
+                    <h2 className="font-semibold text-xl text-gray-800 dark:text-custom-beige-500 leading-tight">
                         {product.name}
                     </h2>
                 </div>
@@ -24,7 +24,7 @@ export default function Show({product, auth}) {
 
             <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg lg:mx-32 xl:mx-64 2xl:mx-96">
                 <div className="flex justify-between items-center mb-1 h-6">
-                    <p className="text-gray-600 dark:text-beige-500 text-sm">{product.user.name}</p>
+                    <p className="text-gray-600 dark:text-custom-beige-500 text-sm">{product.user.name}</p>
                     {product.promoted_at && <StarIcon className="text-yellow-500"/>}
                 </div>
 
@@ -45,16 +45,16 @@ export default function Show({product, auth}) {
                     </div>
                     <div className="mt-4 left-2 ml-5">
                         <p className="text-xl mb-2">{CATEGORIES_TEXT_MAP[product.category]}</p>
-                        <p className="text-gray-600 text-sm dark:text-beige-700 overflow-hidden h-16 break-all">{product.description}</p>
+                        <p className="text-gray-600 text-sm dark:text-custom-beige-700 overflow-hidden h-16 break-all">{product.description}</p>
                         <div
                             className="flex items-center gap-1 mt-1 "
                         >
                             <BusinessIcon/>
-                            <p className="text-gray-600 dark:text-beige-700">
+                            <p className="text-gray-600 dark:text-custom-beige-700">
                                 {product.sucursal.name}
                             </p>
                         </div>
-                        <p className="text-gray-600 dark:text-beige-700">
+                        <p className="text-gray-600 dark:text-custom-beige-700">
                             Dirección: {product.sucursal.address}
                         </p>
                     </div>
