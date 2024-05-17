@@ -25,7 +25,8 @@ export default function Show({product, auth}) {
             <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg lg:mx-32 xl:mx-64 2xl:mx-96">
                 <div className="flex justify-between items-center mb-1 h-6">
                     <p className="text-gray-600 dark:text-custom-beige-500 text-sm">{product.user.name}</p>
-                    {product.promoted_at && <StarIcon className="text-yellow-500"/>}
+                    {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
+                    {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
                 </div>
 
                 <div className="md:flex">
