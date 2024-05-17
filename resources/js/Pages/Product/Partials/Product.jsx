@@ -13,7 +13,7 @@ export default function Product({product}) {
             onClick={() => showProduct(product.id)}
             className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
                 lg:hover:bg-gray-200 lg:hover:dark:bg-gray-700 lg:hover:shadow-2xl transition-all
-                rounded-lg p-4 cursor-pointer`}
+                rounded-lg p-4 cursor-pointer border-b border-width:thin border-custom-beige-900 dark:border-custom-beige-500`}
         >
             <div className="flex justify-between items-center mb-1">
                 <p className="text-gray-600 dark:text-gray-400 text-sm">{product.user.name}</p>
