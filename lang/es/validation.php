@@ -273,5 +273,20 @@ return [
         'year'                     => 'año',
         'birth_date'               => 'fecha de nacimiento',
         'surname'                  => 'apellido',
+        'sucursal_id'              => 'sucursal',
+    ],
+    'custom' => [
+        'name' => [
+            'regex' => 'El campo :attribute solo debe contener letras.'
+        ],
+        'surname' => [
+            'regex' => 'El campo :attribute solo debe contener letras.'
+        ],
+        'birth_date' => [
+            'before' => 'El usuario debe ser mayor de edad.'
+        ],
+        'sucursal_id' => [
+            'exists' => 'La sucursal seleccionada no existe.'
+        ],
     ]
 ];
