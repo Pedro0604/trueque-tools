@@ -93,7 +93,7 @@ export default function Register({sucursales}) {
                             <InputLabel htmlFor="birth_date" className="w-full" value="Fecha de nacimiento *"/>
 
                             <Tooltip
-                                title="La fecha de nacimiento es necesaria ya que solo los usuarios mayores de edad pueden realizar trueques"
+                                title="La fecha de nacimiento es necesaria ya que solo los usuarios mayores de edad pueden acceder al sistema"
                                 placement="top"
                             >
                                 <IconButton>
