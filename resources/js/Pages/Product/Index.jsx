@@ -27,20 +27,6 @@ export default function Index({auth, products, success, error, productCreatedId 
             }
         >
             <Head title="Productos"/>
-            {success &&
-                <InformationBanner
-                    severity="success"
-                >
-                    {success}
-                </InformationBanner>
-            }
-            {error &&
-                <InformationBanner
-                    severity="error"
-                >
-                    {error}
-                </InformationBanner>
-            }
 
             <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
                 <div

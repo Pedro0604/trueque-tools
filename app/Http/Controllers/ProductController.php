@@ -24,9 +24,7 @@ class ProductController extends Controller
         $products = Product::all()->sortByDesc('created_at');
         return Inertia::render('Product/Index', [
             'products' => ProductResource::collection($products),
-            'success' => session('success'),
             'productCreatedId' => session('product_created_id'),
-            'error' => session('error'),
         ]);
     }
 

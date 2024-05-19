@@ -1,6 +1,7 @@
 import {useState} from "react";
-import {Link} from "@inertiajs/react";
+import {Link, usePage} from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo.jsx";
+import InformationBanner from "@/Components/InformationBanner.jsx";
 
 export default function CommonLayout({
                                          header,
@@ -8,9 +9,10 @@ export default function CommonLayout({
                                          responsiveNavLinks,
                                          headerOptions,
                                          responsiveOptions,
-                                         children
+                                         children,
                                      }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const {error, success} = usePage().props.flash;
 
     const container =
         <div className="p-6 sm:p-8 md:p-12">{children}</div>
@@ -88,6 +90,20 @@ export default function CommonLayout({
                 </header>
             )}
 
+            {error &&
+                <InformationBanner
+                    severity="error"
+                >
+                    {error}
+                </InformationBanner>
+            }
+            {success &&
+                <InformationBanner
+                    severity="success"
+                >
+                    {success}
+                </InformationBanner>
+            }
             <main>{container}</main>
         </div>
     );
