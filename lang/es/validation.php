@@ -289,5 +289,8 @@ return [
         'sucursal_id' => [
             'exists' => 'La sucursal seleccionada no existe.'
         ],
+        'password_confirmation' => [
+            'same' => 'La contraseña y su confirmación deben coincidir.'
+        ],
     ]
 ];
