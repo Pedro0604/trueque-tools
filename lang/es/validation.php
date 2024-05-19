@@ -274,6 +274,7 @@ return [
         'birth_date'               => 'fecha de nacimiento',
         'surname'                  => 'apellido',
         'sucursal_id'              => 'sucursal',
+        'category'                 => 'categoría',
     ],
     'custom' => [
         'name' => [
