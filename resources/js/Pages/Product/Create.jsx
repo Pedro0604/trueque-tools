@@ -13,7 +13,17 @@ import CyanButton from "@/Components/CyanButton.jsx";
 export default function create({auth, sucursals}) {
     sucursals = sucursals.data;
 
-    const {data, submit, errors, setValidationTimeout, validateFiles, validate, setData, processing} = useForm('post', route('product.store'), {
+    const {
+        data,
+        submit,
+        errors,
+        setValidationTimeout,
+        validateFiles,
+        validate,
+        setData,
+        processing,
+        touch
+    } = useForm('post', route('product.store'), {
         image: '',
         name: '',
         description: '',
@@ -62,7 +72,10 @@ export default function create({auth, sucursals}) {
                             name="name"
                             value={data.name}
                             onChange={e => setData('name', e.target.value)}
-                            onBlur={() => validate('name')}
+                            onBlur={() => {
+                                touch('name')
+                                validate('name')
+                            }}
                             className="mt-1 block w-full"
                             isFocused={true}
                         />
@@ -79,7 +92,10 @@ export default function create({auth, sucursals}) {
                             name="description"
                             value={data.description}
                             onChange={e => setData('description', e.target.value)}
-                            onBlur={() => validate('description')}
+                            onBlur={() => {
+                                touch('description')
+                                validate('description')
+                            }}
                             className="mt-1 block w-full"
                             rows={3}
                         />
@@ -99,7 +115,10 @@ export default function create({auth, sucursals}) {
                             id="product_category"
                             name="category"
                             onChange={e => setData('category', e.target.value)}
-                            onBlur={() => validate('category')}
+                            onBlur={() => {
+                                touch('category')
+                                validate('category')
+                            }}
                             className="mt-1 block w-full"
                         >
                             <option value="">Elija una categoría</option>
@@ -118,7 +137,10 @@ export default function create({auth, sucursals}) {
                             id="product_sucursal_id"
                             name="sucursal_id"
                             onChange={e => setData('sucursal_id', e.target.value)}
-                            onBlur={() => validate('sucursal_id')}
+                            onBlur={() => {
+                                touch('sucursal_id')
+                                validate('sucursal_id')
+                            }}
                             className="mt-1 block w-full"
                         >
                             <option value="">Elija una sucursal</option>
@@ -148,7 +170,10 @@ export default function create({auth, sucursals}) {
                                     setData('image', e.target.files[0])
                                 }
                             }}
-                            onBlur={() => validate('image')}
+                            onBlur={() => {
+                                touch('image')
+                                validate('image')
+                            }}
                             className="mt-1 block w-full"
                         />
                         <InputError message={errors.image} className="mt-2"/>

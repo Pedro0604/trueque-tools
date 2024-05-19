@@ -4,14 +4,25 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import {Head, Link, useForm} from '@inertiajs/react';
+import {Head, Link} from '@inertiajs/react';
 import SelectInput from "@/Components/SelectInput.jsx";
 import Divisor from "@/Components/Divisor.jsx";
 import {IconButton, Tooltip} from "@mui/material";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import {useForm} from "laravel-precognition-react";
 
 export default function Register({sucursales}) {
-    const {data, setData, post, processing, errors, reset} = useForm({
+    const {
+        data,
+        setData,
+        processing,
+        errors,
+        reset,
+        submit,
+        setValidationTimeout,
+        validate,
+        touch
+    } = useForm('post', route('register'), {
         name: '',
         email: '',
         surname: '',
@@ -27,17 +38,18 @@ export default function Register({sucursales}) {
         };
     }, []);
 
-    const submit = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
 
-        post(route('register'));
+        submit();
     };
+    setValidationTimeout(500);
 
     return (
         <GuestLayout register>
             <Head title="Register"/>
 
-            <form onSubmit={submit} className="lg:flex gap-8 justify-center p-4">
+            <form onSubmit={onSubmit} className="lg:flex gap-8 justify-center p-4">
                 <div className="lg:min-w-96">
                     <div>
                         <InputLabel htmlFor="name" value="Nombre *"/>
@@ -50,6 +62,10 @@ export default function Register({sucursales}) {
                             autoComplete="name"
                             isFocused={true}
                             onChange={(e) => setData('name', e.target.value)}
+                            onBlur={() => {
+                                touch('name')
+                                validate('name')
+                            }}
                         />
 
                         <InputError message={errors.name} className="mt-2"/>
@@ -65,6 +81,10 @@ export default function Register({sucursales}) {
                             className="mt-1 block w-full"
                             autoComplete="surname"
                             onChange={(e) => setData('surname', e.target.value)}
+                            onBlur={() => {
+                                touch('surname')
+                                validate('surname')
+                            }}
                         />
 
                         <InputError message={errors.surname} className="mt-2"/>
@@ -80,6 +100,10 @@ export default function Register({sucursales}) {
                             value={data.email}
                             className="mt-1 block w-full"
                             onChange={(e) => setData('email', e.target.value)}
+                            onBlur={() => {
+                                touch('email')
+                                validate('email')
+                            }}
                         />
 
                         <InputError message={errors.email} className="mt-2"/>
@@ -106,6 +130,10 @@ export default function Register({sucursales}) {
                             value={data.birth_date}
                             className="mt-1 block w-full"
                             onChange={(e) => setData('birth_date', e.target.value)}
+                            onBlur={() => {
+                                touch('birth_date')
+                                validate('birth_date')
+                            }}
                         />
 
                         <InputError message={errors.birth_date} className="mt-2"/>
@@ -121,6 +149,10 @@ export default function Register({sucursales}) {
                             name="sucursal_id"
                             className="mt-1 block w-full"
                             onChange={(e) => setData('sucursal_id', e.target.value)}
+                            onBlur={() => {
+                                touch('sucursal_id')
+                                validate('sucursal_id')
+                            }}
                         >
                             <option value="">Selecciona una sucursal</option>
                             {sucursales.data.map((sucursal) => (
@@ -143,6 +175,10 @@ export default function Register({sucursales}) {
                             className="mt-1 block w-full"
                             autoComplete="new-password"
                             onChange={(e) => setData('password', e.target.value)}
+                            onBlur={() => {
+                                touch('password')
+                                validate('password')
+                            }}
                         />
 
                         <InputError message={errors.password} className="mt-2"/>
@@ -159,6 +195,10 @@ export default function Register({sucursales}) {
                             className="mt-1 block w-full"
                             autoComplete="new-password"
                             onChange={(e) => setData('password_confirmation', e.target.value)}
+                            onBlur={() => {
+                                touch('password_confirmation')
+                                validate('password_confirmation')
+                            }}
                         />
 
                         <InputError message={errors.password_confirmation} className="mt-2"/>
