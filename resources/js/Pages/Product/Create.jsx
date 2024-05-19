@@ -8,6 +8,7 @@ import TextAreaInput from "@/Components/TextAreaInput.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import {LinearProgress} from "@mui/material";
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
+import CyanButton from "@/Components/CyanButton.jsx";
 
 export default function create({auth, sucursals}) {
     sucursals = sucursals.data;
@@ -26,7 +27,7 @@ export default function create({auth, sucursals}) {
     }
 
     const descriptionLength = data.description.length;
-    const rightDescriptionLength = descriptionLength >= 60 && descriptionLength <= 255;
+    const rightDescriptionLength = descriptionLength >= 60;
 
     return (
         <Authenticated
@@ -156,15 +157,12 @@ export default function create({auth, sucursals}) {
                         <InputError message={errors.sucursal_id} className="mt-2"/>
                     </div>
                     <div className="mt-8">
-                        <button
-                            className="bg-emerald-500 py-1 px-3 w-full text-white rounded hover:bg-emerald-600
-                            active:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
-                            dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 disabled:opacity-25 disabled:hover:bg-emerald-500
-                            disabled:cursor-not-allowed"
+                        <CyanButton
+                            className="w-full justify-center"
                             disabled={processing}
                         >
                             {processing ? 'Creando Producto...' : 'Crear Producto'}
-                        </button>
+                        </CyanButton>
                     </div>
                     <div className="mt-4">
                         <PrimaryButton
