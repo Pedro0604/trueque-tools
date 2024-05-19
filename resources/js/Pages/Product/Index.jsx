@@ -1,11 +1,10 @@
 import {Head} from "@inertiajs/react";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
 import Product from "@/Pages/Product/Partials/Product.jsx";
-import InformationBanner from "@/Components/InformationBanner.jsx";
 import CyanButton from "@/Components/CyanButton.jsx";
-import {useEffect, useRef} from 'react';
+import AddIcon from '@mui/icons-material/Add';
 
-export default function Index({auth, products, success, error, productCreatedId = null}) {
+export default function Index({auth, products, productCreatedId = null}) {
 
     return (
         <AuthenticatedOrNormalLayout
@@ -20,7 +19,8 @@ export default function Index({auth, products, success, error, productCreatedId 
                             isLink
                             href={route('product.create')}
                         >
-                            Agregar nuevo producto
+                            <span className="hidden sm:block">Agregar nuevo producto</span>
+                            <span className="sm:hidden"><AddIcon/></span>
                         </CyanButton>
                     }
                 </div>
