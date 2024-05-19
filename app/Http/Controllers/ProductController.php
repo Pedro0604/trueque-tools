@@ -21,10 +21,11 @@ class ProductController extends Controller
      */
     public function index(): Response|ResponseFactory
     {
-        $products = Product::all();
+        $products = Product::all()->sortByDesc('created_at');
         return Inertia::render('Product/Index', [
             'products' => ProductResource::collection($products),
             'success' => session('success'),
+            'productCreatedId' => session('product_created_id'),
             'error' => session('error'),
         ]);
     }
@@ -54,9 +55,9 @@ class ProductController extends Controller
             $data['image_path'] = asset($image->store('project/' . Str::random(), 'public'));
         }
 
-        Product::create($data);
+        $product = Product::create($data);
 
-        return to_route('product.index')->with('success', 'Producto creado correctamente');
+        return to_route('product.index')->with('success', 'Producto creado correctamente')->with('product_created_id', $product->id);
     }
 
     /**
