@@ -50,7 +50,6 @@ export default function Register({sucursales}) {
                             autoComplete="name"
                             isFocused={true}
                             onChange={(e) => setData('name', e.target.value)}
-                            required
                         />
 
                         <InputError message={errors.name} className="mt-2"/>
@@ -66,7 +65,6 @@ export default function Register({sucursales}) {
                             className="mt-1 block w-full"
                             autoComplete="surname"
                             onChange={(e) => setData('surname', e.target.value)}
-                            required
                         />
 
                         <InputError message={errors.surname} className="mt-2"/>
@@ -82,7 +80,6 @@ export default function Register({sucursales}) {
                             value={data.email}
                             className="mt-1 block w-full"
                             onChange={(e) => setData('email', e.target.value)}
-                            required
                         />
 
                         <InputError message={errors.email} className="mt-2"/>
@@ -109,7 +106,6 @@ export default function Register({sucursales}) {
                             value={data.birth_date}
                             className="mt-1 block w-full"
                             onChange={(e) => setData('birth_date', e.target.value)}
-                            required
                         />
 
                         <InputError message={errors.birth_date} className="mt-2"/>
@@ -125,7 +121,6 @@ export default function Register({sucursales}) {
                             name="sucursal_id"
                             className="mt-1 block w-full"
                             onChange={(e) => setData('sucursal_id', e.target.value)}
-                            required
                         >
                             <option value="">Selecciona una sucursal</option>
                             {sucursales.data.map((sucursal) => (
@@ -148,14 +143,13 @@ export default function Register({sucursales}) {
                             className="mt-1 block w-full"
                             autoComplete="new-password"
                             onChange={(e) => setData('password', e.target.value)}
-                            required
                         />
 
                         <InputError message={errors.password} className="mt-2"/>
                     </div>
 
                     <div className="mt-4">
-                        <InputLabel htmlFor="password_confirmation" value="Confirmar contraseña *"/>
+                        <InputLabel htmlFor="password_confirmation" value="Confirmación de la contraseña *"/>
 
                         <TextInput
                             id="password_confirmation"
@@ -165,7 +159,6 @@ export default function Register({sucursales}) {
                             className="mt-1 block w-full"
                             autoComplete="new-password"
                             onChange={(e) => setData('password_confirmation', e.target.value)}
-                            required
                         />
 
                         <InputError message={errors.password_confirmation} className="mt-2"/>

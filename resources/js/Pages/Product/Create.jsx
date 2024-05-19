@@ -62,7 +62,6 @@ export default function create({auth, sucursals}) {
                             onChange={e => setData('name', e.target.value)}
                             className="mt-1 block w-full"
                             isFocused={true}
-                            required
                         />
                         <InputError message={errors.name} className="mt-2"/>
                     </div>
@@ -79,7 +78,6 @@ export default function create({auth, sucursals}) {
                             onChange={e => setData('description', e.target.value)}
                             className="mt-1 block w-full"
                             rows={3}
-                            required
                         />
                         <InputLabel
                             htmlFor="product_description"
@@ -98,7 +96,6 @@ export default function create({auth, sucursals}) {
                             name="category"
                             onChange={e => setData('category', e.target.value)}
                             className="mt-1 block w-full"
-                            required
                         >
                             <option value="">Elija una categoría</option>
                             <option value="1">{CATEGORIES_TEXT_MAP[1]}</option>
@@ -117,7 +114,6 @@ export default function create({auth, sucursals}) {
                             name="sucursal"
                             onChange={e => setData('sucursal_id', e.target.value)}
                             className="mt-1 block w-full"
-                            required
                         >
                             <option value="">Elija una sucursal</option>
                             {sucursals.map((sucursal) => (
