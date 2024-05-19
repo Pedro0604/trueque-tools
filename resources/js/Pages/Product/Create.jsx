@@ -82,9 +82,9 @@ export default function create({auth, sucursals}) {
                         <InputLabel
                             htmlFor="product_description"
                             value={`Mínimo ${descriptionLength}/60`}
-                            className={`opacity-60 ${rightDescriptionLength ? 'text-green-500 dark:text-green-500' : 'text-red-500 dark:text-red-500'}`}
+                            className={`opacity-60 ${rightDescriptionLength ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}
                         />
-                        <InputError message={errors.description} className="mt-2"/>
+                        <InputError message={errors.description}/>
                     </div>
                     <div className="mt-4">
                         <InputLabel
