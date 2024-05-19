@@ -1,11 +1,23 @@
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import BusinessIcon from '@mui/icons-material/Business';
 import {router} from "@inertiajs/react";
+import {useEffect, useState} from "react";
 
-export default function Product({product}) {
+export default function Product({product, created}) {
+    const [isPulsing, setIsPulsing] = useState(created);
     const showProduct = (productId) => {
         router.get(route('product.show', productId));
     }
+
+    useEffect(() => {
+        if (created) {
+            const timeoutId = setTimeout(() => {
+                setIsPulsing(false);
+            }, 6000); // Remove the class after 2 seconds
+
+            return () => clearTimeout(timeoutId); // Clean up the timeout if the component is unmounted
+        }
+    }, [created]);
 
     return (
 
@@ -13,7 +25,8 @@ export default function Product({product}) {
             onClick={() => showProduct(product.id)}
             className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
                 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl transition-all
-                rounded-lg p-4 cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500`}
+                rounded-lg p-4 cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500
+                ${isPulsing ? 'animate-pulse' : ''}`}
         >
             <div className="flex justify-between items-center mb-1">
                 <p className="text-gray-600 dark:text-custom-beige-600 text-sm">{product.user.name}</p>
