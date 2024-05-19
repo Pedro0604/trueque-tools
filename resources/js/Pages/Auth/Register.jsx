@@ -4,7 +4,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import {Head, Link} from '@inertiajs/react';
+import {Head, Link, router} from '@inertiajs/react';
 import SelectInput from "@/Components/SelectInput.jsx";
 import Divisor from "@/Components/Divisor.jsx";
 import {IconButton, Tooltip} from "@mui/material";
@@ -18,7 +18,6 @@ export default function Register({sucursales}) {
         processing,
         errors,
         reset,
-        submit,
         setValidationTimeout,
         validate,
         touch
@@ -41,7 +40,7 @@ export default function Register({sucursales}) {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        submit();
+        router.post(route('register'), data);
     };
     setValidationTimeout(500);
 
@@ -52,7 +51,7 @@ export default function Register({sucursales}) {
             <form onSubmit={onSubmit} className="lg:flex gap-8 justify-center p-4">
                 <div className="lg:min-w-96">
                     <div>
-                        <InputLabel htmlFor="name" value="Nombre *"/>
+                        <InputLabel htmlFor="name" value="Nombre/s *"/>
 
                         <TextInput
                             id="name"
@@ -72,14 +71,14 @@ export default function Register({sucursales}) {
                     </div>
 
                     <div className="mt-4">
-                        <InputLabel htmlFor="surname" value="Apellido *"/>
+                        <InputLabel htmlFor="surname" value="Apellido/s *"/>
 
                         <TextInput
                             id="surname"
                             name="surname"
                             value={data.surname}
                             className="mt-1 block w-full"
-                            autoComplete="surname"
+                            autoComplete="family-name"
                             onChange={(e) => setData('surname', e.target.value)}
                             onBlur={() => {
                                 touch('surname')
@@ -98,6 +97,7 @@ export default function Register({sucursales}) {
                             type="email"
                             name="email"
                             value={data.email}
+                            autoComplete="email"
                             className="mt-1 block w-full"
                             onChange={(e) => setData('email', e.target.value)}
                             onBlur={() => {
@@ -129,6 +129,7 @@ export default function Register({sucursales}) {
                             name="birth_date"
                             value={data.birth_date}
                             className="mt-1 block w-full"
+                            autoComplete="bday"
                             onChange={(e) => setData('birth_date', e.target.value)}
                             onBlur={() => {
                                 touch('birth_date')
