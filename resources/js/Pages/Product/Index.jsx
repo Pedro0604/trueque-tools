@@ -1,10 +1,12 @@
-import {Head, Link} from "@inertiajs/react";
+import {Head} from "@inertiajs/react";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
 import Product from "@/Pages/Product/Partials/Product.jsx";
 import InformationBanner from "@/Components/InformationBanner.jsx";
 import CyanButton from "@/Components/CyanButton.jsx";
+import {useEffect, useRef} from 'react';
 
-export default function Index({auth, products, success, error}) {
+export default function Index({auth, products, success, error, productCreatedId = null}) {
+
     return (
         <AuthenticatedOrNormalLayout
             user={auth.user}
@@ -43,7 +45,12 @@ export default function Index({auth, products, success, error}) {
             <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
                 <div
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
-                    {products.data.map(product => <Product key={product.id} product={product}></Product>)}
+                    {products.data.map(product => (
+                        <Product
+                            key={product.id}
+                            created={productCreatedId === product.id}
+                            product={product}
+                        />))}
                 </div>
             </div>
         </AuthenticatedOrNormalLayout>
