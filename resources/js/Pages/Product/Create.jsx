@@ -217,10 +217,8 @@ export default function create({auth, sucursals}) {
                     </div>
                     <div className="mt-4">
                         <PrimaryButton
-                            onClick={() => {
-                                history.back();
-                                return false;
-                            }}
+                            isLink
+                            href={route('product.index')}
                             className="w-full justify-center"
                         >
                             Volver
