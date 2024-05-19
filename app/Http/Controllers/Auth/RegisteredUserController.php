@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+use App\Http\Requests\Auth\StoreRegisteredUserRequest;
 use App\Http\Resources\SucursalResource;
 
 use App\Http\Controllers\Controller;
@@ -8,10 +9,7 @@ use App\Models\Sucursal;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -34,17 +32,9 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreRegisteredUserRequest $request): RedirectResponse
     {
-        $data=$request->validate([
-            'name' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
-            'surname' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'birth_date' => ['required', 'date', 'before:18 years ago'],
-            'sucursal_id' => ['required', 'exists:sucursals,id'],
-            'password' => ['required', Rules\Password::min(6), 'confirmed'],
-            'password_confirmation' => ['required', 'same:password'],
-        ]);
+        $data = $request->validated();
 
         $data['password'] = bcrypt($data['password']);
         $data['reputation'] = 0;
