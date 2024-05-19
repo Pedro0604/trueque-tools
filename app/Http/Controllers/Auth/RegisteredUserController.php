@@ -39,10 +39,11 @@ class RegisteredUserController extends Controller
         $data=$request->validate([
             'name' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
             'surname' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'birth_date' => ['required', 'date', 'before:18 years ago'],
             'sucursal_id' => ['required', 'exists:sucursals,id'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', Rules\Password::min(6), 'confirmed'],
+            'password_confirmation' => ['required', 'same:password'],
         ]);
 
         $data['password'] = bcrypt($data['password']);
