@@ -51,7 +51,7 @@ class ProductController extends Controller
         /** @var $image \Illuminate\Http\UploadedFile */
         $image = $data['image'] ?? null;
         if ($image) {
-            $data['image_path'] = $image->store('project/' . Str::random(), 'public');
+            $data['image_path'] = asset($image->store('project/' . Str::random(), 'public'));
         }
 
         Product::create($data);
