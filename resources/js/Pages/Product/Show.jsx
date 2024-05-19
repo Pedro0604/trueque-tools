@@ -46,16 +46,16 @@ export default function Show({product, auth}) {
                     </div>
                     <div className="mt-4 left-2 ml-5">
                         <p className="text-xl mb-2">{CATEGORIES_TEXT_MAP[product.category]}</p>
-                        <p className="text-gray-600 text-sm dark:text-custom-beige-700 overflow-hidden h-16 break-all">{product.description}</p>
+                        <p className="text-gray-600 text-sm dark:text-custom-beige-600 overflow-hidden h-16 break-all">{product.description}</p>
                         <div
                             className="flex items-center gap-1 mt-1 "
                         >
                             <BusinessIcon/>
-                            <p className="text-gray-600 dark:text-custom-beige-700">
+                            <p className="text-gray-600 dark:text-custom-beige-600">
                                 {product.sucursal.name}
                             </p>
                         </div>
-                        <p className="text-gray-600 dark:text-custom-beige-700">
+                        <p className="text-gray-600 dark:text-custom-beige-600">
                             Dirección: {product.sucursal.address}
                         </p>
                     </div>
