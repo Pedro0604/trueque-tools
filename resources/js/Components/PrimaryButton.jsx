@@ -6,8 +6,8 @@ export default function PrimaryButton({className = '', isLink, children, ...prop
                 dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700
                 dark:hover:bg-custom-beige-100 focus:bg-gray-700 dark:focus:bg-custom-beige-500
                 active:bg-gray-900 dark:active:bg-custom-beige-500 focus:outline-none focus:ring-2
-                focus:ring-custom-teal-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800
-                transition ease-in-out duration-150 disabled:opacity-25 disabled:hover:bg-custom-beige-300 ${className}`;
+                focus:ring-custom-blue-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800
+                transition ease-in-out duration-150 disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:bg-custom-beige-300 ${className}`;
 
     if (isLink) {
         return (
