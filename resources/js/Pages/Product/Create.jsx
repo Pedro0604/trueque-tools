@@ -1,5 +1,5 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout.jsx";
-import {Head} from "@inertiajs/react";
+import {Head, router} from "@inertiajs/react";
 import {useForm} from 'laravel-precognition-react';
 import InputLabel from "@/Components/InputLabel.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
@@ -15,7 +15,6 @@ export default function create({auth, sucursals}) {
 
     const {
         data,
-        submit,
         errors,
         setValidationTimeout,
         validateFiles,
@@ -33,7 +32,7 @@ export default function create({auth, sucursals}) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        submit();
+        router.post(route('product.store'), data)
     }
     setValidationTimeout(500);
     validateFiles();
@@ -59,6 +58,7 @@ export default function create({auth, sucursals}) {
                     className="p-4 sm:p-8 bg-white dark:bg-gray-800 border border-gray-700 rounded-md sm:rounded-lg md:min-w-[550px] md:max-w-[700px]"
                     onSubmit={onSubmit}
                     method="post"
+                    autoComplete="off"
                 >
                     <div>
                         <InputLabel
