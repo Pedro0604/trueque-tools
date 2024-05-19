@@ -39,7 +39,7 @@ export default forwardRef(function TextInput({
                 {...props}
                 type={type}
                 className={
-                    `rounded-md shadow-sm dark:bg-gray-900 dark:text-gray-300 ${borderClasses} ${className}`
+                    `rounded-md shadow-sm pr-8 dark:bg-gray-900 dark:text-gray-300 ${borderClasses} ${className}`
                 }
                 ref={input}
             />

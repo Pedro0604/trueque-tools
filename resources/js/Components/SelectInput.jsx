@@ -25,7 +25,7 @@ export default forwardRef(function SelectInput({className = '', children, invali
             <select
                 {...props}
                 className={
-                    `rounded-md shadow-sm dark:bg-gray-900 dark:text-gray-300 ${borderClasses} ${className}`
+                    `rounded-md shadow-sm pr-14 truncate dark:bg-gray-900 dark:text-gray-300 ${borderClasses} ${className}`
                 }
                 ref={select}
             >
