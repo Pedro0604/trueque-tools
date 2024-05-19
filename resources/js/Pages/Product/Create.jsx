@@ -48,35 +48,7 @@ export default function create({auth, sucursals}) {
                     onSubmit={onSubmit}
                     method="post"
                 >
-                    <div className="mt-4">
-                        <InputLabel
-                            htmlFor="product_image_path"
-                            value="Imagen (opcional)"
-                        />
-                        <TextInput
-                            id="product_image_path"
-                            placeholder="Image Path"
-                            type="file"
-                            name="image"
-                            onChange={e => {
-                                if (e.target.files[0] && e.target.files[0].size > 6291456) {
-                                    alert("La imagen es muy grande.\nPor favor elija una imagen más pequeña o reduzca el tamaño de la misma.");
-                                    e.target.value = "";
-                                } else {
-                                    setData('image', e.target.files[0])
-                                }
-                            }}
-                            className="mt-1 block w-full"
-                        />
-                        <InputError message={errors.image} className="mt-2"/>
-                        {progress &&
-                            <LinearProgress
-                                variant="determinate"
-                                value={progress?.percentage}
-                            />
-                        }
-                    </div>
-                    <div className="mt-4">
+                    <div className="">
                         <InputLabel
                             htmlFor="product_name"
                             value="Nombre *"
@@ -155,6 +127,34 @@ export default function create({auth, sucursals}) {
                             ))}
                         </SelectInput>
                         <InputError message={errors.sucursal_id} className="mt-2"/>
+                    </div>
+                    <div className="mt-4">
+                        <InputLabel
+                            htmlFor="product_image_path"
+                            value="Imagen (opcional)"
+                        />
+                        <TextInput
+                            id="product_image_path"
+                            placeholder="Image Path"
+                            type="file"
+                            name="image"
+                            onChange={e => {
+                                if (e.target.files[0] && e.target.files[0].size > 6291456) {
+                                    alert("La imagen es muy grande.\nPor favor elija una imagen más pequeña o reduzca el tamaño de la misma.");
+                                    e.target.value = "";
+                                } else {
+                                    setData('image', e.target.files[0])
+                                }
+                            }}
+                            className="mt-1 block w-full"
+                        />
+                        <InputError message={errors.image} className="mt-2"/>
+                        {progress &&
+                            <LinearProgress
+                                variant="determinate"
+                                value={progress?.percentage}
+                            />
+                        }
                     </div>
                     <div className="mt-8">
                         <CyanButton
