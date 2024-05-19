@@ -2,7 +2,7 @@ import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import StarIcon from '@mui/icons-material/Star';
 import BusinessIcon from '@mui/icons-material/Business';
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
-import {Head, router} from "@inertiajs/react";
+import {Head} from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import Modal from '@mui/material/Modal';
 import {useState} from "react";
@@ -50,7 +50,7 @@ export default function Show({product, auth}) {
                                     <img
                                         src={product.image_path}
                                         alt={product.name}
-                                        className={`object-contain w-1/2`}
+                                        className={`object-contain w-1/2 max-h-dvh`}
                                     />
                                 </Modal>
                                 <img
@@ -85,9 +85,8 @@ export default function Show({product, auth}) {
                 </div>
 
                 <PrimaryButton
-                    onClick={() => {
-                        router.get(route('product.index'));
-                    }}
+                    isLink
+                    href={route('product.index')}
                     className="mt-4 md:mt-8"
                 >
                     Volver
