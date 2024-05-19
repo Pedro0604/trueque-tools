@@ -61,16 +61,15 @@ export default {
                     900: '#004040',
                 },
                 'custom-beige': {
-                    50: '#fdfcf8',
-                    100: '#faf8e6',
-                    200: '#f7f3d4',
-                    300: '#f4eed3',
-                    400: '#f1e9c1',
-                    500: '#f2ebdf',
-                    600: '#efe4c0',
-                    700: '#ebe4ab',
-                    800: '#e7e095',
-                    900: '#e3da80',
+                    100: '#fbf9f3', // Very light variation
+                    200: '#f7f3e7', // Lighter variation
+                    300: '#f2ebdf', // Base color
+                    400: '#e6e0d2', // Slightly darker
+                    500: '#d6d0c2', // Medium
+                    600: '#b8b2a3', // Darker
+                    700: '#9b9586', // Darker still
+                    800: '#7f7970', // Quite dark
+                    900: '#625e58', // Very dark
                 },
             }
         },
