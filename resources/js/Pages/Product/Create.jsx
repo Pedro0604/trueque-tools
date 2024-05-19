@@ -21,7 +21,9 @@ export default function create({auth, sucursals}) {
         validate,
         setData,
         processing,
-        touch
+        touch,
+        invalid,
+        valid
     } = useForm('post', route('product.store'), {
         image: '',
         name: '',
@@ -71,12 +73,17 @@ export default function create({auth, sucursals}) {
                             type="text"
                             name="name"
                             value={data.name}
-                            onChange={e => setData('name', e.target.value)}
+                            onChange={e => {
+                                setData('name', e.target.value)
+                                validate('name')
+                            }}
                             onBlur={() => {
                                 touch('name')
                                 validate('name')
                             }}
                             className="mt-1 block w-full"
+                            invalid={invalid('name')}
+                            valid={valid('name')}
                             isFocused={true}
                         />
                         <InputError message={errors.name} className="mt-2"/>
@@ -91,12 +98,17 @@ export default function create({auth, sucursals}) {
                             placeholder="Product Description"
                             name="description"
                             value={data.description}
-                            onChange={e => setData('description', e.target.value)}
+                            onChange={e => {
+                                setData('description', e.target.value)
+                                validate('description')
+                            }}
                             onBlur={() => {
                                 touch('description')
                                 validate('description')
                             }}
                             className="mt-1 block w-full"
+                            invalid={invalid('description')}
+                            valid={valid('description')}
                             rows={3}
                         />
                         <InputLabel
@@ -114,12 +126,17 @@ export default function create({auth, sucursals}) {
                         <SelectInput
                             id="product_category"
                             name="category"
-                            onChange={e => setData('category', e.target.value)}
+                            onChange={e => {
+                                setData('category', e.target.value)
+                                validate('category')
+                            }}
                             onBlur={() => {
                                 touch('category')
                                 validate('category')
                             }}
                             className="mt-1 block w-full"
+                            invalid={invalid('category')}
+                            valid={valid('category')}
                         >
                             <option value="">Elija una categoría</option>
                             <option value="1">{CATEGORIES_TEXT_MAP[1]}</option>
@@ -136,12 +153,17 @@ export default function create({auth, sucursals}) {
                         <SelectInput
                             id="product_sucursal_id"
                             name="sucursal_id"
-                            onChange={e => setData('sucursal_id', e.target.value)}
+                            onChange={e => {
+                                setData('sucursal_id', e.target.value)
+                                validate('sucursal_id')
+                            }}
                             onBlur={() => {
                                 touch('sucursal_id')
                                 validate('sucursal_id')
                             }}
                             className="mt-1 block w-full"
+                            invalid={invalid('sucursal_id')}
+                            valid={valid('sucursal_id')}
                         >
                             <option value="">Elija una sucursal</option>
                             {sucursals.map((sucursal) => (
@@ -167,14 +189,21 @@ export default function create({auth, sucursals}) {
                                     alert("La imagen es muy grande.\nPor favor elija una imagen más pequeña o reduzca el tamaño de la misma.");
                                     e.target.value = "";
                                 } else {
-                                    setData('image', e.target.files[0])
+                                    {
+                                        setData('image', e.target.files[0])
+                                        validate('image')
+                                    }
                                 }
                             }}
-                            onBlur={() => {
+                            onBlur={(e) => {
                                 touch('image')
-                                validate('image')
+                                if(e.target.files[0]) {
+                                    validate('image')
+                                }
                             }}
                             className="mt-1 block w-full"
+                            invalid={invalid('image')}
+                            valid={valid('image')}
                         />
                         <InputError message={errors.image} className="mt-2"/>
                     </div>

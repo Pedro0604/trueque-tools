@@ -20,7 +20,9 @@ export default function Register({sucursales}) {
         reset,
         setValidationTimeout,
         validate,
-        touch
+        touch,
+        invalid,
+        valid
     } = useForm('post', route('register'), {
         name: '',
         email: '',
@@ -58,9 +60,14 @@ export default function Register({sucursales}) {
                             name="name"
                             value={data.name}
                             className="mt-1 block w-full"
+                            invalid={invalid('name')}
+                            valid={valid('name')}
                             autoComplete="name"
                             isFocused={true}
-                            onChange={(e) => setData('name', e.target.value)}
+                            onChange={(e) => {
+                                setData('name', e.target.value)
+                                validate('name')
+                            }}
                             onBlur={() => {
                                 touch('name')
                                 validate('name')
@@ -78,8 +85,13 @@ export default function Register({sucursales}) {
                             name="surname"
                             value={data.surname}
                             className="mt-1 block w-full"
+                            invalid={invalid('surname')}
+                            valid={valid('surname')}
                             autoComplete="family-name"
-                            onChange={(e) => setData('surname', e.target.value)}
+                            onChange={(e) => {
+                                setData('surname', e.target.value)
+                                validate('surname')
+                            }}
                             onBlur={() => {
                                 touch('surname')
                                 validate('surname')
@@ -99,7 +111,12 @@ export default function Register({sucursales}) {
                             value={data.email}
                             autoComplete="email"
                             className="mt-1 block w-full"
-                            onChange={(e) => setData('email', e.target.value)}
+                            invalid={invalid('email')}
+                            valid={valid('email')}
+                            onChange={(e) => {
+                                setData('email', e.target.value)
+                                validate('email')
+                            }}
                             onBlur={() => {
                                 touch('email')
                                 validate('email')
@@ -129,8 +146,13 @@ export default function Register({sucursales}) {
                             name="birth_date"
                             value={data.birth_date}
                             className="mt-1 block w-full"
+                            invalid={invalid('birth_date')}
+                            valid={valid('birth_date')}
                             autoComplete="bday"
-                            onChange={(e) => setData('birth_date', e.target.value)}
+                            onChange={(e) => {
+                                setData('birth_date', e.target.value)
+                                validate('birth_date')
+                            }}
                             onBlur={() => {
                                 touch('birth_date')
                                 validate('birth_date')
@@ -149,7 +171,12 @@ export default function Register({sucursales}) {
                             id="sucursal_id"
                             name="sucursal_id"
                             className="mt-1 block w-full"
-                            onChange={(e) => setData('sucursal_id', e.target.value)}
+                            invalid={invalid('sucursal_id')}
+                            valid={valid('sucursal_id')}
+                            onChange={(e) => {
+                                setData('sucursal_id', e.target.value)
+                                validate('sucursal_id')
+                            }}
                             onBlur={() => {
                                 touch('sucursal_id')
                                 validate('sucursal_id')
@@ -174,8 +201,13 @@ export default function Register({sucursales}) {
                             name="password"
                             value={data.password}
                             className="mt-1 block w-full"
+                            invalid={invalid('password')}
+                            valid={valid('password')}
                             autoComplete="new-password"
-                            onChange={(e) => setData('password', e.target.value)}
+                            onChange={(e) => {
+                                setData('password', e.target.value)
+                                validate('password')
+                            }}
                             onBlur={() => {
                                 touch('password')
                                 validate('password')
@@ -194,8 +226,13 @@ export default function Register({sucursales}) {
                             name="password_confirmation"
                             value={data.password_confirmation}
                             className="mt-1 block w-full"
+                            invalid={invalid('password_confirmation')}
+                            valid={valid('password_confirmation')}
                             autoComplete="new-password"
-                            onChange={(e) => setData('password_confirmation', e.target.value)}
+                            onChange={(e) => {
+                                setData('password_confirmation', e.target.value)
+                                validate('password_confirmation')
+                            }}
                             onBlur={() => {
                                 touch('password_confirmation')
                                 validate('password_confirmation')
