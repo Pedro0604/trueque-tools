@@ -2,6 +2,7 @@ import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import BusinessIcon from '@mui/icons-material/Business';
 import {router} from "@inertiajs/react";
 import {useEffect, useState} from "react";
+import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 
 export default function Product({product, created}) {
     const [isPulsing, setIsPulsing] = useState(created);
@@ -44,7 +45,12 @@ export default function Product({product, created}) {
                         :
                         <div
                             className="flex items-center justify-center w-full aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
-                            <p>IMAGEN NO ENCONTRADA</p>
+                            <p className="hidden sm:inline">IMAGEN NO ENCONTRADA</p>
+                            <span className="sm:hidden">
+                                <ImageNotSupportedIcon
+                                    sx={{fontSize: 32}}
+                                />
+                            </span>
                         </div>
                     }
                 </div>
