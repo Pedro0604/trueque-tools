@@ -1,32 +1,34 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout.jsx";
-import {Head, useForm} from "@inertiajs/react";
+import {Head} from "@inertiajs/react";
+import {useForm} from 'laravel-precognition-react';
 import InputLabel from "@/Components/InputLabel.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import InputError from "@/Components/InputError.jsx";
 import TextInput from "@/Components/TextInput.jsx";
 import TextAreaInput from "@/Components/TextAreaInput.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
-import {LinearProgress} from "@mui/material";
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import CyanButton from "@/Components/CyanButton.jsx";
 
 export default function create({auth, sucursals}) {
     sucursals = sucursals.data;
 
-    const {data, setData, post, processing, errors, progress} = useForm({
+    const form = useForm('post', route('product.store'), {
         image: '',
         name: '',
         description: '',
         category: '',
         sucursal_id: '',
-    })
+    });
 
     const onSubmit = (e) => {
         e.preventDefault();
-        post(route('product.store'))
+        form.submit();
     }
+    form.setValidationTimeout(500);
+    form.validateFiles();
 
-    const descriptionLength = data.description.length;
+    const descriptionLength = form.data.description.length;
     const rightDescriptionLength = descriptionLength >= 60;
 
     return (
@@ -48,7 +50,7 @@ export default function create({auth, sucursals}) {
                     onSubmit={onSubmit}
                     method="post"
                 >
-                    <div className="">
+                    <div>
                         <InputLabel
                             htmlFor="product_name"
                             value="Nombre *"
@@ -58,12 +60,13 @@ export default function create({auth, sucursals}) {
                             placeholder="Product name"
                             type="text"
                             name="name"
-                            value={data.name}
-                            onChange={e => setData('name', e.target.value)}
+                            value={form.data.name}
+                            onChange={e => form.setData('name', e.target.value)}
+                            onBlur={() => form.validate('name')}
                             className="mt-1 block w-full"
                             isFocused={true}
                         />
-                        <InputError message={errors.name} className="mt-2"/>
+                        {form.invalid('name') && <InputError message={form.errors.name} className="mt-2"/>}
                     </div>
                     <div className="mt-4">
                         <InputLabel
@@ -74,8 +77,9 @@ export default function create({auth, sucursals}) {
                             id="product_description"
                             placeholder="Product Description"
                             name="description"
-                            value={data.description}
-                            onChange={e => setData('description', e.target.value)}
+                            value={form.data.description}
+                            onChange={e => form.setData('description', e.target.value)}
+                            onBlur={() => form.validate('description')}
                             className="mt-1 block w-full"
                             rows={3}
                         />
@@ -84,7 +88,7 @@ export default function create({auth, sucursals}) {
                             value={`Mínimo ${descriptionLength}/60`}
                             className={`opacity-60 ${rightDescriptionLength ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}
                         />
-                        <InputError message={errors.description}/>
+                        {form.invalid('description') && <InputError message={form.errors.description}/>}
                     </div>
                     <div className="mt-4">
                         <InputLabel
@@ -94,7 +98,8 @@ export default function create({auth, sucursals}) {
                         <SelectInput
                             id="product_category"
                             name="category"
-                            onChange={e => setData('category', e.target.value)}
+                            onChange={e => form.setData('category', e.target.value)}
+                            onBlur={() => form.validate('category')}
                             className="mt-1 block w-full"
                         >
                             <option value="">Elija una categoría</option>
@@ -102,7 +107,7 @@ export default function create({auth, sucursals}) {
                             <option value="2">{CATEGORIES_TEXT_MAP[2]}</option>
                             <option value="3">{CATEGORIES_TEXT_MAP[3]}</option>
                         </SelectInput>
-                        <InputError message={errors.category} className="mt-2"/>
+                        {form.invalid('category') && <InputError message={form.errors.category} className="mt-2"/>}
                     </div>
                     <div className="mt-4">
                         <InputLabel
@@ -111,8 +116,9 @@ export default function create({auth, sucursals}) {
                         />
                         <SelectInput
                             id="product_sucursal_id"
-                            name="sucursal"
-                            onChange={e => setData('sucursal_id', e.target.value)}
+                            name="sucursal_id"
+                            onChange={e => form.setData('sucursal_id', e.target.value)}
+                            onBlur={() => form.validate('sucursal_id')}
                             className="mt-1 block w-full"
                         >
                             <option value="">Elija una sucursal</option>
@@ -122,7 +128,7 @@ export default function create({auth, sucursals}) {
                                 </option>
                             ))}
                         </SelectInput>
-                        <InputError message={errors.sucursal_id} className="mt-2"/>
+                        {form.invalid('sucursal_id') && <InputError message={form.errors.sucursal_id} className="mt-2"/>}
                     </div>
                     <div className="mt-4">
                         <InputLabel
@@ -139,25 +145,20 @@ export default function create({auth, sucursals}) {
                                     alert("La imagen es muy grande.\nPor favor elija una imagen más pequeña o reduzca el tamaño de la misma.");
                                     e.target.value = "";
                                 } else {
-                                    setData('image', e.target.files[0])
+                                    form.setData('image', e.target.files[0])
                                 }
                             }}
+                            onBlur={() => form.validate('image')}
                             className="mt-1 block w-full"
                         />
-                        <InputError message={errors.image} className="mt-2"/>
-                        {progress &&
-                            <LinearProgress
-                                variant="determinate"
-                                value={progress?.percentage}
-                            />
-                        }
+                        {form.invalid('image') && <InputError message={form.errors.image} className="mt-2"/>}
                     </div>
                     <div className="mt-8">
                         <CyanButton
                             className="w-full justify-center"
-                            disabled={processing}
+                            disabled={form.processing}
                         >
-                            {processing ? 'Creando Producto...' : 'Crear Producto'}
+                            {form.processing ? 'Creando Producto...' : 'Crear Producto'}
                         </CyanButton>
                     </div>
                     <div className="mt-4">
