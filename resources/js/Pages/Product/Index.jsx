@@ -2,6 +2,7 @@ import {Head, Link} from "@inertiajs/react";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
 import Product from "@/Pages/Product/Partials/Product.jsx";
 import InformationBanner from "@/Components/InformationBanner.jsx";
+import CyanButton from "@/Components/CyanButton.jsx";
 
 export default function Index({auth, products, success, error}) {
     return (
@@ -13,12 +14,12 @@ export default function Index({auth, products, success, error}) {
                         Productos
                     </h2>
                     {auth.user &&
-                    <Link
-                        className="bg-custom-cyan-600 py-1 px-3 text-white rounded shadow transition-all hover:bg-custom-cyan-800"
-                        href={route('product.create')}
-                    >
-                        Add new
-                    </Link>
+                        <CyanButton
+                            isLink
+                            href={route('product.create')}
+                        >
+                            Agregar nuevo producto
+                        </CyanButton>
                     }
                 </div>
             }
