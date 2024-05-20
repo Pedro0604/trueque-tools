@@ -22,7 +22,9 @@ export default function Register({sucursales}) {
         validate,
         touch,
         invalid,
-        valid
+        valid,
+        submit,
+        hasErrors
     } = useForm('post', route('register'), {
         name: '',
         email: '',
@@ -41,8 +43,11 @@ export default function Register({sucursales}) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
-        router.post(route('register'), data);
+        if (hasErrors) {
+            submit().catch()
+        } else {
+            router.post(route('register'), data);
+        }
     };
     setValidationTimeout(500);
 
@@ -51,8 +56,8 @@ export default function Register({sucursales}) {
             <Head title="Register"/>
 
             <form onSubmit={onSubmit} className="lg:flex gap-8 justify-center p-4">
-                <div className="lg:min-w-96">
-                    <div>
+                <div className="lg:min-w-96 lg:max-w-96">
+                    <div className="h-24">
                         <InputLabel htmlFor="name" value="Nombre/s *"/>
 
                         <TextInput
@@ -77,7 +82,7 @@ export default function Register({sucursales}) {
                         <InputError message={errors.name} className="mt-2"/>
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 h-24">
                         <InputLabel htmlFor="surname" value="Apellido/s *"/>
 
                         <TextInput
@@ -101,7 +106,7 @@ export default function Register({sucursales}) {
                         <InputError message={errors.surname} className="mt-2"/>
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 h-24">
                         <InputLabel htmlFor="email" value="Correo electrónico *"/>
 
                         <TextInput
@@ -126,7 +131,7 @@ export default function Register({sucursales}) {
                         <InputError message={errors.email} className="mt-2"/>
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 h-24">
                         <div className="flex items-center justify-between">
                             <InputLabel htmlFor="birth_date" className="w-full" value="Fecha de nacimiento *"/>
 
@@ -163,8 +168,8 @@ export default function Register({sucursales}) {
                     </div>
                 </div>
 
-                <div className="lg:min-w-96">
-                    <div className="mt-4 lg:mt-0">
+                <div className="lg:min-w-96 lg:max-w-96">
+                    <div className="mt-4 lg:mt-0 h-24">
                         <InputLabel htmlFor="sucursal_id" value="Sucursal *"/>
 
                         <SelectInput
@@ -193,7 +198,7 @@ export default function Register({sucursales}) {
                         <InputError message={errors.sucursal_id} className="mt-2"/>
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 h-24">
                         <InputLabel htmlFor="password" value="Contraseña *"/>
                         <TextInput
                             id="password"
@@ -217,7 +222,7 @@ export default function Register({sucursales}) {
                         <InputError message={errors.password} className="mt-2"/>
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 h-24">
                         <InputLabel htmlFor="password_confirmation" value="Confirmación de la contraseña *"/>
 
                         <TextInput
@@ -238,7 +243,6 @@ export default function Register({sucursales}) {
                                 validate('password_confirmation')
                             }}
                         />
-
                         <InputError message={errors.password_confirmation} className="mt-2"/>
                     </div>
 

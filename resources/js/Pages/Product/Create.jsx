@@ -23,7 +23,9 @@ export default function create({auth, sucursals}) {
         processing,
         touch,
         invalid,
-        valid
+        valid,
+        hasErrors,
+        submit
     } = useForm('post', route('product.store'), {
         image: '',
         name: '',
@@ -34,12 +36,16 @@ export default function create({auth, sucursals}) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        router.post(route('product.store'), data)
+        if (hasErrors) {
+            submit().catch()
+        } else {
+            router.post(route('product.store'), data)
+        }
     }
     setValidationTimeout(500);
     validateFiles();
 
-    const descriptionLength =  data.description.trim().length;
+    const descriptionLength = data.description.trim().length;
     const rightDescriptionLength = descriptionLength >= 60;
 
     return (
@@ -62,7 +68,7 @@ export default function create({auth, sucursals}) {
                     method="post"
                     autoComplete="off"
                 >
-                    <div>
+                    <div className="h-24">
                         <InputLabel
                             htmlFor="product_name"
                             value="Nombre *"
@@ -116,9 +122,13 @@ export default function create({auth, sucursals}) {
                             value={`Mínimo ${descriptionLength}/60`}
                             className={`opacity-60 ${rightDescriptionLength ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}
                         />
-                        <InputError message={errors.description}/>
+                        {invalid('description') ?
+                            <InputError message={errors.description}/>
+                            :
+                            <div className="mb-9"></div>
+                        }
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-4 h-24">
                         <InputLabel
                             htmlFor="product_category"
                             value="Categoría *"
@@ -145,7 +155,7 @@ export default function create({auth, sucursals}) {
                         </SelectInput>
                         <InputError message={errors.category} className="mt-2"/>
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-4 h-24">
                         <InputLabel
                             htmlFor="product_sucursal_id"
                             value="Sucursal donde realizar el trueque *"
@@ -174,7 +184,7 @@ export default function create({auth, sucursals}) {
                         </SelectInput>
                         <InputError message={errors.sucursal_id} className="mt-2"/>
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-4 h-24">
                         <InputLabel
                             htmlFor="product_image_path"
                             value="Imagen (opcional)"
@@ -197,7 +207,7 @@ export default function create({auth, sucursals}) {
                             }}
                             onBlur={(e) => {
                                 touch('image')
-                                if(e.target.files[0]) {
+                                if (e.target.files[0]) {
                                     validate('image')
                                 }
                             }}
@@ -207,7 +217,7 @@ export default function create({auth, sucursals}) {
                         />
                         <InputError message={errors.image} className="mt-2"/>
                     </div>
-                    <div className="mt-8">
+                    <div className="mt-4">
                         <CyanButton
                             className="w-full justify-center"
                             disabled={processing}
