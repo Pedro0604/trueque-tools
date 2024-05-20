@@ -40,7 +40,7 @@ export default function Product({product, created}) {
                         <img
                             src={product.image_path}
                             alt={product.name}
-                            className={`object-cover w-full aspect-square rounded-md `}
+                            className={`object-cover w-full aspect-square rounded-md  border border-custom-beige-900 dark:border-custom-beige-500`}
                         />
                         :
                         <div

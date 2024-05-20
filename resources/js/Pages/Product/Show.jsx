@@ -57,7 +57,7 @@ export default function Show({product, auth}) {
                                     src={product.image_path}
                                     alt={product.name}
                                     onClick={handleOpen}
-                                    className={`object-cover w-full aspect-video md:aspect-square rounded-md cursor-pointer`}
+                                    className={`object-cover w-full aspect-video md:aspect-square rounded-md cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500`}
                                 />
                             </>
                             :
