@@ -30,7 +30,7 @@ class StoreRegisteredUserRequest extends FormRequest
             'birth_date' => ['required', 'date', 'before:18 years ago'],
             'sucursal_id' => ['required', 'exists:sucursals,id'],
             'password' => ['required', Password::min(6), 'confirmed'],
-            'password_confirmation' => ['required' , 'same:password'],
+            'password_confirmation' => ['required', Password::min(6) , 'same:password'],
         ];
     }
 }
