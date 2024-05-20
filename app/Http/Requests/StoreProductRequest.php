@@ -28,7 +28,7 @@ class StoreProductRequest extends FormRequest
             'description' => ['required', 'string', 'min:60'],
             'category' => ['required', Rule::in([1, 2, 3])],
             'sucursal_id' => ['required', 'exists:sucursals,id'],
-            'image' => ['nullable', File::image()->max(6144)],
+            'image' => ['nullable', 'image', File::image()->max(6144)],
         ];
     }
 }

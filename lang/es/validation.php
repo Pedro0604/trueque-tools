@@ -292,5 +292,8 @@ return [
         'password_confirmation' => [
             'same' => 'La contraseña y su confirmación deben coincidir.'
         ],
+        'image' => [
+            'image' => 'El archivo debe ser una imagen'
+        ]
     ]
 ];
