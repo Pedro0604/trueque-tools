@@ -39,7 +39,7 @@ export default function create({auth, sucursals}) {
     setValidationTimeout(500);
     validateFiles();
 
-    const descriptionLength = data.description.length;
+    const descriptionLength =  data.description.trim().length;
     const rightDescriptionLength = descriptionLength >= 60;
 
     return (
@@ -69,7 +69,7 @@ export default function create({auth, sucursals}) {
                         />
                         <TextInput
                             id="product_name"
-                            placeholder="Product name"
+                            placeholder="Nombre del producto"
                             type="text"
                             name="name"
                             value={data.name}
@@ -95,7 +95,7 @@ export default function create({auth, sucursals}) {
                         />
                         <TextAreaInput
                             id="product_description"
-                            placeholder="Product Description"
+                            placeholder="Descripción del producto"
                             name="description"
                             value={data.description}
                             onChange={e => {
