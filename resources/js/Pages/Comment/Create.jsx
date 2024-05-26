@@ -5,7 +5,7 @@ import InputError from "@/Components/InputError.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 
 export default function Create({productId, ...props}) {
-    const {data, setData, errors, post, processing, clearErrors} = useForm({
+    const {data, setData, errors, post, processing, reset} = useForm({
         text: ""
     })
 
@@ -13,10 +13,10 @@ export default function Create({productId, ...props}) {
         e.preventDefault()
         post(route('comment.store', productId), {
             onSuccess: () => {
-                setData('text', '')
-                clearErrors()
+                reset()
             },
-            preserveScroll: true
+            preserveScroll: true,
+            preserveState: true
         })
     }
 
