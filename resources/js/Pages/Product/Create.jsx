@@ -11,8 +11,6 @@ import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import CyanButton from "@/Components/CyanButton.jsx";
 
 export default function create({auth, sucursals}) {
-    sucursals = sucursals.data;
-
     const {
         data,
         errors,
