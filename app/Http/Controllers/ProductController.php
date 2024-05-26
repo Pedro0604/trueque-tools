@@ -7,6 +7,7 @@ use App\Http\Resources\SucursalResource;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\CommentResource;
 use App\Models\Sucursal;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
@@ -63,7 +64,10 @@ class ProductController extends Controller
      */
     public function show(Product $product): Response|ResponseFactory
     {
-        return inertia('Product/Show', ['product' => new ProductResource($product)]);
+        return inertia('Product/Show', [
+            'product' => new ProductResource($product),
+            'comments' => CommentResource::collection($product->comments),
+        ]);
     }
 
     /**
