@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->longText('text');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('product_id')->constrained();
+            $table->foreignId('product_id')->nullable()->constrained();
             $table->foreignId('response_id')->nullable()->constrained(table: 'comments');
             $table->softDeletes();
             $table->timestamps();
