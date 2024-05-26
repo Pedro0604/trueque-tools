@@ -3,8 +3,8 @@ import Comment from "./Partials/Comment";
 export default function CommentsList({ comments }) {
     console.log(JSON.stringify(comments, null, 2))
     return (
-        <div className="p-6 bg-gray-300 dark:bg-gray-700 rounded-b-lg rounded-t-sm">
-            {comments ? (
+        <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
+            {comments.length > 0 ? (
                 <>
                     <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
                         Comentarios:
@@ -27,8 +27,10 @@ export default function CommentsList({ comments }) {
                     </div>
                 </>
             ) : (
-                <h2>No hay comentarios</h2>
-            )}
+                <h2 className="text-2xl font-bold text-black dark:text-white">
+                    No hay comentarios
+                </h2>
+                )}
         </div>
     );
 }
