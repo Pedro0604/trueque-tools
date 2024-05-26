@@ -21,22 +21,6 @@ class CommentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment): Response|ResponseFactory
-    {
-        return inertia('Comment/Show', ['comment' => new commentResource($comment)]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Comment $comments)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateCommentRequest $request, Comment $comments)
