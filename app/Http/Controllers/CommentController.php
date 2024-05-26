@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -15,9 +16,16 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentRequest $request)
+    public function store(StoreCommentRequest $request, Product $product)
     {
-        //
+        // TODO - ADD VALIDATION IN StoreCommentRequest
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
+        $data['product_id'] = $product->id;
+
+        Comment::create($data);
+
+        return to_route('product.show')->with('success', 'Comentario creado correctamente');
     }
 
     /**
