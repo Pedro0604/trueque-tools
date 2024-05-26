@@ -18,7 +18,7 @@ class CommentResource extends JsonResource
         return [
             'id' => $this->id,
             'text' => $this->text,
-            'created_at' => (new Carbon($this->created_at))->format('d/m/Y'),
+            'created_at' => (new Carbon($this->created_at))->format('d/m/Y H:i'),
             'user' => new UserResource($this->user),
             'response' => $this->response ? new CommentResource($this->response) : null,
         ];
