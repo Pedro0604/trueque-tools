@@ -27,8 +27,8 @@ class Comment extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function response(): HasOne
+    public function response(): belongsTo
     {
-        return $this->hasOne(Comment::class, 'response_id');
+        return $this->belongsTo(Comment::class, 'response_id');
     }
 }
