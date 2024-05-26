@@ -37,7 +37,8 @@ class CommentController extends Controller
         $data['user_id'] = auth()->id();
         $data['product_id'] = null;
 
-        Comment::create($data);
+        $created_comment = Comment::create($data);
+        $comment->update(['response_id' => $created_comment->id]);
 
         return to_route('product.show', $comment->product)->with('success', 'Respuesta guardada correctamente');
     }
