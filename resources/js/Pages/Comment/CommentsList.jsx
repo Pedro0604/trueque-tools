@@ -12,7 +12,9 @@ export default function CommentsList({comments}) {
                         <div
                             key={comment.id}
                         >
-                            <Comment comment={comment}/>
+                            <Comment
+                                comment={comment}
+                            />
                             {comment.response && (
                                 <Comment
                                     comment={comment.response}

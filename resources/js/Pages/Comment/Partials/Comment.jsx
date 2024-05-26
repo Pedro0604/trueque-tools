@@ -1,9 +1,12 @@
+import {usePage} from "@inertiajs/react";
+
 export default function Comment({
     comment,
     isResponse,
     className = "",
     ...props
 }) {
+    const {auth} = usePage().props;
     return (
         <div
             {...props}
@@ -21,6 +24,7 @@ export default function Comment({
                 </div>
             </div>
             <div className="mt-2">{comment.text}</div>
+            <div className={!isResponse && auth.user && auth.user.id === comment.user.id ? "": "hidden"}><button>respondeme</button></div>
         </div>
     );
 }

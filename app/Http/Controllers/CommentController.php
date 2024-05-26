@@ -29,6 +29,20 @@ class CommentController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     */
+    public function respond(StoreCommentRequest $request, Comment $comment): RedirectResponse
+    {
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
+        $data['product_id'] = null;
+
+        Comment::create($data);
+
+        return to_route('product.show', $comment->product)->with('success', 'Respuesta guardada correctamente');
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateCommentRequest $request, Comment $comments)

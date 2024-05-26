@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
 
     // Comment routes
     Route::post('/product/{product}/comment', [CommentController::class, 'store'])->name('comment.store');
+    Route::post('/comment/{comment}', [CommentController::class, 'respond'])->name('comment.respond');
 
     // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN PRODUCTO
 //    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
