@@ -17,7 +17,6 @@ export default function CommentsList({comments}) {
                                 <Comment
                                     comment={comment.response}
                                     isResponse
-                                    className={`mt-2`}
                                 />
                             )}
                         </div>

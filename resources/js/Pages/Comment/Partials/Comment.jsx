@@ -8,7 +8,7 @@ export default function Comment({
         <div
             {...props}
             className={`${
-                isResponse ? "ml-10 " : ""
+                isResponse ? "ml-10 mt-2" : ""
             } text-black dark:text-white bg-gray-400 dark:bg-gray-700 rounded-md p-4 relative ${className}`}
         >
             {isResponse && <div className="absolute border-b border-l border-gray-500 dark:border-gray-300 w-4 h-4 -left-6 top-1"></div>}
