@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Sucursal;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,8 +24,8 @@ class ProductFactory extends Factory
             'image_path' => fake()->imageUrl(),
             'description' => fake()->sentence(),
             'promoted_at' => fake()->dateTime(),
-            'user_id' => fake()->numberBetween(1,3),
-            'sucursal_id' => fake()->numberBetween(1,3),
+            'user_id' => fake()->numberBetween(1, User::count()),
+            'sucursal_id' => fake()->numberBetween(1, Sucursal::count()),
         ];
     }
 }
