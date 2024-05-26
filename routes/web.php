@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Comment;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
-
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
+
+Route::post('/product/{product}/comment', [Comment::class, 'store'])->name('comment.store')->middleware(HandlePrecognitiveRequests::class);
 
 require __DIR__.'/auth.php';
