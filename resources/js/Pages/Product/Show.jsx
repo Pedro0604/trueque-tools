@@ -1,14 +1,15 @@
-import { CATEGORIES_TEXT_MAP } from "@/Categories.jsx";
+import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import StarIcon from "@mui/icons-material/Star";
 import BusinessIcon from "@mui/icons-material/Business";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
-import { Head } from "@inertiajs/react";
+import {Head} from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import Modal from "@mui/material/Modal";
-import { useState } from "react";
+import {useState} from "react";
 import CommentsList from "../Comment/CommentsList";
+import Create from "@/Pages/Comment/Create.jsx";
 
-export default function Show({ product, auth, comments }) {
+export default function Show({product, auth, comments}) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -24,7 +25,7 @@ export default function Show({ product, auth, comments }) {
                 </div>
             }
         >
-            <Head title={`Producto "${product.name}"`} />
+            <Head title={`Producto "${product.name}"`}/>
 
             <div className="lg:mx-32 xl:mx-64 2xl:mx-96">
                 <div
@@ -63,7 +64,8 @@ export default function Show({ product, auth, comments }) {
                                     />
                                 </>
                             ) : (
-                                <div className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                <div
+                                    className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                                     <p>IMAGEN NO ENCONTRADA</p>
                                 </div>
                             )}
@@ -76,7 +78,7 @@ export default function Show({ product, auth, comments }) {
                                 {product.description}
                             </p>
                             <div className="flex items-center gap-1 mt-1 ">
-                                <BusinessIcon />
+                                <BusinessIcon/>
                                 <p className="text-gray-600 dark:text-custom-beige-600">
                                     {product.sucursal.name}
                                 </p>
@@ -95,7 +97,10 @@ export default function Show({ product, auth, comments }) {
                         Volver
                     </PrimaryButton>
                 </div>
-                <CommentsList comments={comments} />
+                <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
+                    <Create productId={product.id}/>
+                    <CommentsList comments={comments}/>
+                </div>
             </div>
         </AuthenticatedOrNormalLayout>
     );
