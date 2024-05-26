@@ -52,7 +52,10 @@ class ProductController extends Controller
         $image = $data['image'] ?? null;
         if ($image) {
             $data['image_path'] = asset($image->store('project/' . Str::random(), 'public'));
+
         }
+
+        unset($data['image']); // Unset the image value
 
         $product = Product::create($data);
 
