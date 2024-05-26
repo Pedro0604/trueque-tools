@@ -13,8 +13,8 @@ class CommentSeeder extends Seeder
      */
     public function run(): void
     {
-        Comment::factory(rand(Product::count(), Product::count() * 4))->create();
-        Comment::factory(Product::count())->each(function ($comment) {
+        Comment::factory(rand(Product::count(), Product::count() * 3))->create();
+        Comment::factory(Comment::count())->create()->each(function ($comment) {
             // Determine whether the comment will have a response
             $hasResponse = rand(1, 100) <= 30; // 30% chance
 
