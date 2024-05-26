@@ -99,7 +99,10 @@ export default function Show({product, auth, comments}) {
                 </div>
                 <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
                     <Create productId={product.id}/>
-                    <CommentsList comments={comments}/>
+                    <CommentsList
+                        comments={comments}
+                        productUserId={product.user.id}
+                    />
                 </div>
             </div>
         </AuthenticatedOrNormalLayout>

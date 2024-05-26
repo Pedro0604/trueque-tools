@@ -1,6 +1,6 @@
 import Comment from "./Partials/Comment";
 
-export default function CommentsList({comments}) {
+export default function CommentsList({comments, productUserId}) {
     return (
         comments.length > 0 ? (
             <>
@@ -14,6 +14,7 @@ export default function CommentsList({comments}) {
                         >
                             <Comment
                                 comment={comment}
+                                productUserId={productUserId}
                             />
                             {comment.response && (
                                 <Comment
