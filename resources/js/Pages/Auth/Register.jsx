@@ -188,7 +188,7 @@ export default function Register({sucursales}) {
                             }}
                         >
                             <option value="">Selecciona una sucursal</option>
-                            {sucursales.data.map((sucursal) => (
+                            {sucursales.map((sucursal) => (
                                 <option key={sucursal.id} value={sucursal.id}>
                                     {sucursal.name}
                                 </option>
