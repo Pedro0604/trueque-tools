@@ -69,7 +69,7 @@ class ProductController extends Controller
     {
         return inertia('Product/Show', [
             'product' => new ProductResource($product),
-            'comments' => CommentResource::collection($product->comments),
+            'comments' => CommentResource::collection($product->comments->sortByDesc('created_at')),
         ]);
     }
 
