@@ -22,8 +22,12 @@ Route::middleware('auth')->group(function () {
 //    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Product routes
     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product', [ProductController::class, 'store'])->name('product.store')->middleware(HandlePrecognitiveRequests::class);
+
+    // Comment routes
+    Route::post('/product/{product}/comment', [CommentController::class, 'store'])->name('comment.store');
 
     // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN PRODUCTO
 //    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
@@ -34,6 +38,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
 
-Route::post('/product/{product}/comment', [CommentController::class, 'store'])->name('comment.store');
 
 require __DIR__.'/auth.php';
