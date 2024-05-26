@@ -89,10 +89,10 @@ export default function CommonLayout({
                     </div>
                 </header>
             )}
-
             {error &&
                 <InformationBanner
                     severity="error"
+                    key={Math.random()}
                 >
                     {error}
                 </InformationBanner>
@@ -100,6 +100,7 @@ export default function CommonLayout({
             {success &&
                 <InformationBanner
                     severity="success"
+                    key={Math.random()}
                 >
                     {success}
                 </InformationBanner>
