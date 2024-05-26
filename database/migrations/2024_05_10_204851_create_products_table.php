@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->integer('category');
+            $table->enum('category', [1, 2, 3]);
             $table->string('image_path')->nullable();
             $table->longText('description');
             $table->dateTime('promoted_at')->nullable();
