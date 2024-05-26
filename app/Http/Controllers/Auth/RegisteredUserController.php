@@ -39,6 +39,8 @@ class RegisteredUserController extends Controller
         $data['password'] = bcrypt($data['password']);
         $data['reputation'] = 0;
 
+        unset($data['password_confirmation']);
+
         $user = User::create($data);
 
         event(new Registered($user));
