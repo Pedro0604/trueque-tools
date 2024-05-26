@@ -21,6 +21,9 @@ class CommentSeeder extends Seeder
             // If the comment has a response, get a random comment as response
             if ($hasResponse) {
                 $responded_comment = Comment::inRandomOrder()->first();
+                while(!$responded_comment->product_id) {
+                    $responded_comment = Comment::inRandomOrder()->first();
+                }
                 $responded_comment->update(['response_id' => $comment->id]);
                 $comment->update(['product_id' => null]);
             }
