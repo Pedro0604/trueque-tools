@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\SolicitudResource;
 use App\Http\Resources\SucursalResource;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\CommentResource;
+use App\Models\Solicitud;
 use App\Models\Sucursal;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
@@ -70,6 +72,7 @@ class ProductController extends Controller
         return inertia('Product/Show', [
             'product' => new ProductResource($product),
             'comments' => CommentResource::collection($product->comments->sortByDesc('created_at')),
+            'solicituds' => $product->user->id === auth()->id() ? SolicitudResource::collection($product->solicituds->sortByDesc('created_at')) : [],
         ]);
     }
 
