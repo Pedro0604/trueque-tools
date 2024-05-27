@@ -92,8 +92,7 @@ export default function Show({product, auth, comments, solicituds}) {
                         </div>
 
                         <PrimaryButton
-                            isLink
-                            href={route("product.index")}
+                            onClick={() => window.history.back()}
                             className="mt-4 md:mt-8"
                         >
                             Volver
