@@ -3,7 +3,7 @@ import StarIcon from "@mui/icons-material/Star";
 import BusinessIcon from "@mui/icons-material/Business";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
 import {Head} from "@inertiajs/react";
-import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import Modal from "@mui/material/Modal";
 import {useState} from "react";
 import CommentsList from "../Comment/CommentsList";

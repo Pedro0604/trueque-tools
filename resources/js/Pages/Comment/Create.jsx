@@ -1,8 +1,8 @@
 import {useForm} from "@inertiajs/react";
-import TextAreaInput from "@/Components/TextAreaInput.jsx";
-import InputLabel from "@/Components/InputLabel.jsx";
-import InputError from "@/Components/InputError.jsx";
-import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import TextAreaInput from "@/Components/Inputs/TextAreaInput.jsx";
+import InputLabel from "@/Components/Inputs/InputLabel.jsx";
+import InputError from "@/Components/Inputs/InputError.jsx";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 
 export default function Create({productId, ...props}) {
     const {data, setData, errors, post, processing, reset} = useForm({

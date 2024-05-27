@@ -1,6 +1,6 @@
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
-import PrimaryButton from "@/Components/PrimaryButton.jsx";
-import CyanButton from "@/Components/CyanButton.jsx";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
+import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import {router} from "@inertiajs/react";
 
 export default function Solicitud({solicitud}) {

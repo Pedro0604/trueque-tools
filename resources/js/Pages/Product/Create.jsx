@@ -1,14 +1,14 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout.jsx";
 import {Head, router} from "@inertiajs/react";
 import {useForm} from 'laravel-precognition-react';
-import InputLabel from "@/Components/InputLabel.jsx";
-import SelectInput from "@/Components/SelectInput.jsx";
-import InputError from "@/Components/InputError.jsx";
-import TextInput from "@/Components/TextInput.jsx";
-import TextAreaInput from "@/Components/TextAreaInput.jsx";
-import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import InputLabel from "@/Components/Inputs/InputLabel.jsx";
+import SelectInput from "@/Components/Inputs/SelectInput.jsx";
+import InputError from "@/Components/Inputs/InputError.jsx";
+import TextInput from "@/Components/Inputs/TextInput.jsx";
+import TextAreaInput from "@/Components/Inputs/TextAreaInput.jsx";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
-import CyanButton from "@/Components/CyanButton.jsx";
+import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 
 export default function create({auth, sucursals}) {
     const {

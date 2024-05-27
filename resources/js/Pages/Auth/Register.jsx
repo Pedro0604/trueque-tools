@@ -1,11 +1,11 @@
 import {useEffect} from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import InputError from '@/Components/Inputs/InputError.jsx';
+import InputLabel from '@/Components/Inputs/InputLabel.jsx';
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.jsx';
+import TextInput from '@/Components/Inputs/TextInput.jsx';
 import {Head, Link, router} from '@inertiajs/react';
-import SelectInput from "@/Components/SelectInput.jsx";
+import SelectInput from "@/Components/Inputs/SelectInput.jsx";
 import Divisor from "@/Components/Divisor.jsx";
 import {IconButton, Tooltip} from "@mui/material";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';

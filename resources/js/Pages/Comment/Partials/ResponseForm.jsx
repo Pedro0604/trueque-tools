@@ -1,7 +1,7 @@
-import InputLabel from "@/Components/InputLabel.jsx";
-import TextAreaInput from "@/Components/TextAreaInput.jsx";
-import InputError from "@/Components/InputError.jsx";
-import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import InputLabel from "@/Components/Inputs/InputLabel.jsx";
+import TextAreaInput from "@/Components/Inputs/TextAreaInput.jsx";
+import InputError from "@/Components/Inputs/InputError.jsx";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import {useForm} from "@inertiajs/react";
 
 export default function ResponseForm({comment, onSuccess}) {

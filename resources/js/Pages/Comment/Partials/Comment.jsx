@@ -1,5 +1,5 @@
 import {usePage} from "@inertiajs/react";
-import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import {useState} from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import ResponseForm from "@/Pages/Comment/Partials/ResponseForm.jsx";

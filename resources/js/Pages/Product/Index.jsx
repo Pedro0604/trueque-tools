@@ -1,7 +1,7 @@
 import {Head} from "@inertiajs/react";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
 import Product from "@/Pages/Product/Partials/Product.jsx";
-import CyanButton from "@/Components/CyanButton.jsx";
+import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import AddIcon from '@mui/icons-material/Add';
 
 export default function Index({auth, products, productCreatedId = null}) {
