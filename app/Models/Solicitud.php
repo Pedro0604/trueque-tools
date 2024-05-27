@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Solicitud extends Model
 {
@@ -24,5 +25,10 @@ class Solicitud extends Model
     public function offeredProduct(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'offered_product_id');
+    }
+
+    public function trueque(): HasOne
+    {
+        return $this->hasOne(Trueque::class);
     }
 }
