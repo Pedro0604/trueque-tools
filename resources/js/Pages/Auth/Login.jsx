@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -45,6 +44,7 @@ export default function Login({ status, canResetPassword }) {
                         className="mt-1 block w-full"
                         autoComplete="username"
                         isFocused={true}
+                        invalid={errors.email}
                         onChange={(e) => setData('email', e.target.value)}
                     />
 
@@ -61,6 +61,7 @@ export default function Login({ status, canResetPassword }) {
                         value={data.password}
                         className="mt-1 block w-full"
                         autoComplete="current-password"
+                        invalid={errors.password}
                         onChange={(e) => setData('password', e.target.value)}
                     />
 
