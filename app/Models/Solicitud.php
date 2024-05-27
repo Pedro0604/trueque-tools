@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Solicitud extends Model
 {
@@ -14,4 +15,14 @@ class Solicitud extends Model
         'offered_product_id',
         'was_rejected',
     ];
+
+    public function publishedProduct(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, 'published_product_id');
+    }
+
+    public function offeredProduct(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, 'offered_product_id');
+    }
 }
