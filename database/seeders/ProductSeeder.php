@@ -14,6 +14,6 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory(rand(User::count(), User::count() * 7))->create();
+        Product::factory(rand(User::count() * 2, User::count() * 3))->create();
     }
 }
