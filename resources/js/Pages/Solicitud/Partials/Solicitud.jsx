@@ -2,6 +2,7 @@ import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import {router} from "@inertiajs/react";
+import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 
 export default function Solicitud({solicitud}) {
     const {offered_product} = solicitud;
@@ -55,11 +56,11 @@ export default function Solicitud({solicitud}) {
                         >
                             Aceptar
                         </CyanButton>
-                        <PrimaryButton
+                        <DangerButton
                             className="w-full justify-center"
                         >
                             Rechazar
-                        </PrimaryButton>
+                        </DangerButton>
                     </div>
                 </div>
             </div>
