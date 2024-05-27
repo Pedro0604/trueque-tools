@@ -35,4 +35,9 @@ class Product extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function solicituds(): HasMany
+    {
+        return $this->hasMany(Solicitud::class, 'published_product_id');
+    }
 }
