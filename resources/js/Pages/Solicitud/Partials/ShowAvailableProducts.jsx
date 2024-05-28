@@ -4,7 +4,6 @@ import Product from "@/Pages/Product/Partials/Product.jsx";
 export default function ShowAvailableProducts({availableProducts, onSelectProduct}) {
     return (
         // TODO - AÑADIR SLIDER PARA MOSTRAR MAS DE 3 PRODUCTOS
-        // TODO - ONCLICK DEBERÍAN AGREGARSE A LA SOLICITUD
         <div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {availableProducts.map(product => (
