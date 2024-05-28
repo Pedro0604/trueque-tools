@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
     // Solicitud routes
     Route::get('product/{product}/solicitud/create', [SolicitudController::class, 'create'])->name('solicitud.create');
+    Route::post('product/{product}/solicitud', [SolicitudController::class, 'store'])->name('solicitud.store');
 
     // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN PRODUCTO
 //    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');

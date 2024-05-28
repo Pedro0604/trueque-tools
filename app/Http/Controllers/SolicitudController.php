@@ -9,6 +9,7 @@ use App\Models\Solicitud;
 use App\Http\Requests\StoreSolicitudRequest;
 use App\Http\Requests\UpdateSolicitudRequest;
 use App\Models\Sucursal;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 
@@ -17,8 +18,11 @@ class SolicitudController extends Controller
     /**
     * Show the form for creating a new resource.
     */
-    public function create(Product $product): Response|ResponseFactory
+    public function create(Product $product): Response|ResponseFactory|RedirectResponse
     {
+        if (auth()->id() == $product->user->id) {
+            return back()->with('error', 'Sos el dueño del producto, no podes solicitar un trueque!');
+        }
         return inertia('Solicitud/Create', [
             'product' => new ProductResource($product),
         ]);
