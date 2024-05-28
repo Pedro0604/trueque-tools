@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SolicitudController;
 use App\Models\Comment;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
@@ -29,6 +30,9 @@ Route::middleware('auth')->group(function () {
     // Comment routes
     Route::post('/product/{product}/comment', [CommentController::class, 'store'])->name('comment.store');
     Route::post('/comment/{comment}', [CommentController::class, 'respond'])->name('comment.respond');
+
+    // Solicitud routes
+    Route::get('product/{product}/solicitud/create', [SolicitudController::class, 'create'])->name('solicitud.create');
 
     // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN PRODUCTO
 //    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');

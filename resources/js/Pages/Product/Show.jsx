@@ -88,6 +88,14 @@ export default function Show({product, auth, comments, solicituds}) {
                                 <p className="text-gray-600 dark:text-custom-beige-600">
                                     Dirección: {product.sucursal.address}
                                 </p>
+                                <PrimaryButton
+                                    isLink
+                                    href={route("solicitud.create", product.id)}
+                                    isFullRounded
+                                    className="mt-4 md:mt-8 py-2.5 align-middle justify-center w-full"
+                                >
+                                    Solicitar Trueque
+                                </PrimaryButton>
                             </div>
                         </div>
 
