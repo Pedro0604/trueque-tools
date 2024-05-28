@@ -1,7 +1,7 @@
 import {router} from "@inertiajs/react";
 import Product from "@/Pages/Product/Partials/Product.jsx";
 
-export default function ShowAvailableProducts({availableProducts}) {
+export default function ShowAvailableProducts({availableProducts, onSelectProduct}) {
     return (
         // TODO - AÑADIR SLIDER PARA MOSTRAR MAS DE 3 PRODUCTOS
         // TODO - ONCLICK DEBERÍAN AGREGARSE A LA SOLICITUD
@@ -11,6 +11,7 @@ export default function ShowAvailableProducts({availableProducts}) {
                 <Product
                     key={product.id}
                     product={product}
+                    onClick={() => onSelectProduct(product)}
                     withUserName={false}
                     withSucursal={false}
                     withCategory={false}
