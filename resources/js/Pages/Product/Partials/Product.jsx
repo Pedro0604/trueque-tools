@@ -4,7 +4,7 @@ import {router} from "@inertiajs/react";
 import {useEffect, useState} from "react";
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 
-export default function Product({product, created}) {
+export default function Product({product, created, withUserName = true, withSucursal = true, withCategory = true}) {
     const [isPulsing, setIsPulsing] = useState(created);
     const showProduct = (productId) => {
         router.get(route('product.show', productId));
@@ -30,7 +30,7 @@ export default function Product({product, created}) {
                 ${isPulsing ? 'animate-pulse' : ''}`}
         >
             <div className="flex justify-between items-center mb-1">
-                <p className="text-gray-600 dark:text-custom-beige-600 text-sm">{product.user.name}</p>
+                {withUserName && <p className="text-gray-600 dark:text-custom-beige-600 text-sm">{product.user.name}</p>}
                 {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
                 {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
             </div>
@@ -56,8 +56,8 @@ export default function Product({product, created}) {
                 </div>
                 <div className="mt-4">
                     <p className="text-xs sm:text-base text-gray-600 dark:text-custom-beige-600 text-ellipsis line-clamp-1">{product.name}</p>
-                    <p className="text-sm sm:text-xl my-2">{CATEGORIES_TEXT_MAP[product.category]}</p>
-                    <div
+                    {withCategory && <p className="text-sm sm:text-xl my-2">{CATEGORIES_TEXT_MAP[product.category]}</p>}
+                    {withSucursal && <div
                         className="hidden sm:flex items-center gap-1 mt-1"
                     >
                         <BusinessIcon/>
@@ -65,6 +65,7 @@ export default function Product({product, created}) {
                             {product.sucursal.name}
                         </p>
                     </div>
+                    }
                 </div>
             </div>
             <p className="sm:hidden text-gray-600 text-xs sm:text-sm dark:text-custom-beige-600 text-ellipsis line-clamp-2 my-2">{product.description}</p>
