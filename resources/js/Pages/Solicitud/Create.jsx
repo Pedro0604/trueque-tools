@@ -19,12 +19,14 @@ const style = {
     p: 4,
 };
 
-export default function create({product, availableProducts}) {
+export default function create({publishedProduct, availableProducts}) {
     const {auth} = usePage().props;
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const {
         data,
@@ -33,13 +35,19 @@ export default function create({product, availableProducts}) {
         post,
         processing,
     } = useForm({
-        product_id: '',
+        offered_product_id: '',
         meeting_date_time: '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('solicitud.create', product.id))
+        post(route('solicitud.create', publishedProduct.id))
+    }
+
+    const handleSelectProduct = (product) => {
+        handleClose();
+        setData('offered_product_id', product.id)
+        setSelectedProduct(product);
     }
 
     return (
@@ -48,19 +56,22 @@ export default function create({product, availableProducts}) {
             header={
                 <div className="flex gap-3 justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        Solicitar Trueque a "{product.name}"
+                        Solicitar Trueque a "{publishedProduct.name}"
                     </h2>
                 </div>
             }
         >
-            <Head title={'Solicitar Trueque a "' + product.name + '"'}/>
+            <Head title={'Solicitar Trueque a "' + publishedProduct.name + '"'}/>
 
             <div className="flex justify-center">
                 <div
                     className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8
                             rounded-lg flex gap-8 justify-center w-fit">
                     <div className="w-72">
-                        <Product product={product}/>
+                        <Product
+                            product={publishedProduct}
+                            withSucursal={false}
+                        />
                     </div>
                     <div className="flex flex-col justify-center items-center gap-4">
                         <div
@@ -69,7 +80,7 @@ export default function create({product, availableProducts}) {
                             <BusinessIcon
                                 sx={{fontSize: 32}}/>
                             <p className="text-sm sm:text-base lg:text-xl text-gray-600 dark:text-custom-beige-600">
-                                {product.sucursal.name}
+                                {publishedProduct.sucursal.name}
                             </p>
                         </div>
                         <MultipleStopIcon
@@ -79,18 +90,34 @@ export default function create({product, availableProducts}) {
                             <form
                                 onSubmit={handleSubmit}
                             >
-                                <TextInput id={'meeting_date_time'} type={'datetime-local'}/>
+                                <TextInput
+                                    id={'meeting_date_time'}
+                                    type={'datetime-local'}
+                                />
                             </form>
                         </div>
                     </div>
-                    <div
-                        className="border border-cyan-50 w-72 rounded-md flex justify-center items-center cursor-pointer"
-                        onClick={handleOpen}
-                    >
-                        <AddIcon
-                            sx={{fontSize: 40}}
-                        />
-                    </div>
+                    {selectedProduct === null ?
+                        <div
+                            className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
+                                        lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl transition-all
+                                        rounded-lg p-4 cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500
+                                        flex justify-center items-center w-72`}
+                            onClick={handleOpen}
+                        >
+                            <AddIcon
+                                sx={{fontSize: 40}}
+                            />
+                        </div>
+                        :
+                        <div className="w-72">
+                            <Product
+                                product={selectedProduct}
+                                withSucursal={true}
+                                onClick={handleOpen}
+                            />
+                        </div>
+                    }
                 </div>
             </div>
             <Modal
@@ -105,6 +132,7 @@ export default function create({product, availableProducts}) {
                 >
                     <ShowAvailableProducts
                         availableProducts={availableProducts}
+                        onSelectProduct={handleSelectProduct}
                     />
                 </Box>
             </Modal>
