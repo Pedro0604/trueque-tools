@@ -2,8 +2,10 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import CommonLayout from "@/Layouts/CommonLayout.jsx";
+import {usePage} from "@inertiajs/react";
 
-export default function Authenticated({user, header, children}) {
+export default function Authenticated({user = null, header, children}) {
+    user = user ?? usePage().props.auth.user
     {/* TODO - NO OLVIDARSE DE AGREGAR LOS LINKS EN navLinks y responsiveNavLinks */}
     return (
         <CommonLayout
