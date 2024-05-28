@@ -62,7 +62,7 @@ export default function Show({product, auth, comments, solicituds}) {
                                             src={product.image_path}
                                             alt={product.name}
                                             onClick={handleOpen}
-                                            className={`object-cover w-full aspect-video md:aspect-square rounded-md cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500`}
+                                            className={`object-cover w-full aspect-video md:aspect-square rounded-md cursor-zoom-in border border-custom-beige-900 dark:border-custom-beige-500`}
                                         />
                                     </>
                                 ) : (
