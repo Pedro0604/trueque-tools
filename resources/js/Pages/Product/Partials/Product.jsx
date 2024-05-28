@@ -14,7 +14,7 @@ export default function Product({product, created, onClick = null, withUserName 
         if (created) {
             const timeoutId = setTimeout(() => {
                 setIsPulsing(false);
-            }, 6000); // Remove the class after 2 seconds
+            }, 4000); // Remove the class after 2 seconds
 
             return () => clearTimeout(timeoutId); // Clean up the timeout if the component is unmounted
         }
