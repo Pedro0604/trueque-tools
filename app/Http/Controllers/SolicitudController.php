@@ -32,7 +32,7 @@ class SolicitudController extends Controller
             ->get();
 
         return inertia('Solicitud/Create', [
-            'product' => new ProductResource($product),
+            'publishedProduct' => new ProductResource($product),
             'availableProducts' => ProductResource::collection($available_products),
         ]);
     }
