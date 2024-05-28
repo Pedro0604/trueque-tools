@@ -1,7 +1,19 @@
 import {router} from "@inertiajs/react";
 import Product from "@/Pages/Product/Partials/Product.jsx";
+import {useState} from "react";
+import Create from "@/Pages/Product/Create.jsx"
 
-export default function ShowAvailableProducts({availableProducts, onSelectProduct}) {
+export default function ShowAvailableProducts({availableProducts, onSelectProduct, sucursals}) {
+    const [showCreateProductForm, setShowCreateForm] = useState(false)
+
+    // TODO - MOSTRAR FORMULARIO PARA CREAR PRODUCTOS SIN LAYOUT
+    if(showCreateProductForm){
+        return(
+            <Create
+                sucursals={sucursals}
+            />
+        )
+    }
     return (
         // TODO - AÑADIR SLIDER PARA MOSTRAR MAS DE 3 PRODUCTOS
         <div
@@ -16,7 +28,7 @@ export default function ShowAvailableProducts({availableProducts, onSelectProduc
                     withCategory={false}
                 />))}
             <div
-                onClick={() => router.get(route('product.create'))}
+                onClick={() => setShowCreateForm(true)}
                 className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
                 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl transition-all
                 rounded-lg p-4 cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500
