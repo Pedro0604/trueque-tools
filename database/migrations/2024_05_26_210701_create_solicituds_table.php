@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('published_product_id')->constrained('products');
             $table->foreignId('offered_product_id')->constrained('products');
+            $table->dateTime('meeting_date_time');
             $table->boolean('was_rejected')->default(false);
             $table->softDeletes();
             $table->timestamps();

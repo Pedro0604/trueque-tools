@@ -20,6 +20,7 @@ class SolicitudFactory extends Factory
         return [
             'published_product_id' => fake()->numberBetween(1, Product::count()),
             'offered_product_id' => fake()->numberBetween(1, Product::count()),
+            'meeting_date_time' => fake()->dateTimeBetween('now', '+1 year'), // '2023-05-26 21:07:01
             'was_rejected' => false,
         ];
     }

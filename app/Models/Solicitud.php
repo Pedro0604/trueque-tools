@@ -14,6 +14,7 @@ class Solicitud extends Model
     protected $fillable = [
         'published_product_id',
         'offered_product_id',
+        'meeting_date_time',
         'was_rejected',
     ];
 

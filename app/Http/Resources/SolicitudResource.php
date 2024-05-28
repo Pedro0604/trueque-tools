@@ -19,6 +19,7 @@ class SolicitudResource extends JsonResource
             'id' => $this->id,
             'published_product' => new ProductResource($this->publishedProduct),
             'offered_product' => new ProductResource($this->offeredProduct),
+            'meeting_date_time' =>  (new Carbon($this->meeting_date_time))->format('d/m/Y H:i'),
             'was_rejected' => $this->was_rejected,
             'created_at' =>  (new Carbon($this->created_at))->format('d/m/Y H:i'),
         ];
