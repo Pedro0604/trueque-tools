@@ -10,10 +10,10 @@ use App\Http\Requests\StoreSolicitudRequest;
 use App\Http\Requests\UpdateSolicitudRequest;
 use App\Models\Sucursal;
 use App\Models\Trueque;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Inertia\ResponseFactory;
-use PhpParser\Builder;
 
 class SolicitudController extends Controller
 {
@@ -25,10 +25,17 @@ class SolicitudController extends Controller
         if (auth()->id() == $product->user->id) {
             return back()->with('error', 'Sos el dueño del producto, no podes solicitar un trueque!');
         }
+        if($product->offeredTrueque || $product->publishedTrueque) {
+            return back()->with('error', 'El producto ya fue trocado!');
+        }
 
-        // TODO - AGREGAR QUE SOLO TRAIGA PRODUCTOS QUE NO ESTÉN TROCADOS
         $available_products = Product::where('user_id', auth()->id())
             ->where('category', $product->category)
+            ->doesntHave('offeredTrueque')
+            ->doesntHave('publishedTrueque')
+            ->whereDoesntHave('offeredSolicituds', function (Builder $query) use ($product) {
+                $query->where('published_product_id', $product->id);
+            })
             ->get();
 
         return inertia('Solicitud/Create', [
