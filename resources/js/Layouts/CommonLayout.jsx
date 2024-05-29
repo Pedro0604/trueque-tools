@@ -2,6 +2,7 @@ import {useState} from "react";
 import {Link, usePage} from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo.jsx";
 import InformationBanner from "@/Components/InformationBanner.jsx";
+import { useMemo } from "react";
 
 export default function CommonLayout({
                                          header,
@@ -89,21 +90,28 @@ export default function CommonLayout({
                     </div>
                 </header>
             )}
-            {error &&
-                <InformationBanner
-                    severity="error"
-                    key={Math.random()}
-                >
-                    {error}
-                </InformationBanner>
+            {useMemo(()=>{
+                    return (
+                        error && <InformationBanner
+                            severity="error"
+                            key={Math.random()}
+                        >
+                            {error}
+                        </InformationBanner>
+                    )
+                }, [error])
             }
-            {success &&
-                <InformationBanner
-                    severity="success"
-                    key={Math.random()}
-                >
-                    {success}
-                </InformationBanner>
+            {useMemo(()=>{
+                    return (
+                        success &&
+                            <InformationBanner
+                                severity="success"
+                                key={Math.random()}
+                            >
+                                {success}
+                            </InformationBanner>
+                    )
+                }, [success])
             }
             <main>{container}</main>
         </div>
