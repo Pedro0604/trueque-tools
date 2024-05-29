@@ -13,6 +13,7 @@ export default function CreateForm({
     sucursals,
     selectedSucursal = null,
     selectedCategory = null,
+    onVolver = () => window.history.back(),
 }) {
     const {
         data,
@@ -230,7 +231,7 @@ export default function CreateForm({
                 </div>
                 <div className="mt-4">
                     <PrimaryButton
-                        onClick={() => window.history.back()}
+                        onClick={onVolver}
                         className="w-full justify-center"
                     >
                         Volver
