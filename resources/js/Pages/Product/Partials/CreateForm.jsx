@@ -9,7 +9,11 @@ import { CATEGORIES_TEXT_MAP } from "@/Categories.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import { router } from "@inertiajs/react";
 
-export default function CreateForm({ sucursals }) {
+export default function CreateForm({
+    sucursals,
+    selectedSucursal = null,
+    selectedCategory = null,
+}) {
     const {
         data,
         errors,
@@ -27,8 +31,8 @@ export default function CreateForm({ sucursals }) {
         image: "",
         name: "",
         description: "",
-        category: "",
-        sucursal_id: "",
+        category: selectedCategory ?? "",
+        sucursal_id: selectedSucursal ? selectedSucursal.id : "",
     });
 
     const onSubmit = (e) => {
@@ -132,7 +136,9 @@ export default function CreateForm({ sucursals }) {
                         }}
                         className="mt-1 block w-full"
                         invalid={invalid("category")}
-                        valid={valid("category")}
+                        valid={selectedCategory ?? valid("category")}
+                        disabled={selectedCategory}
+                        value={selectedCategory ?? data.category}
                     >
                         <option value="">Elija una categoría</option>
                         <option value="1">{CATEGORIES_TEXT_MAP[1]}</option>
@@ -159,7 +165,13 @@ export default function CreateForm({ sucursals }) {
                         }}
                         className="mt-1 block w-full"
                         invalid={invalid("sucursal_id")}
-                        valid={valid("sucursal_id")}
+                        valid={selectedSucursal ?? valid("sucursal_id")}
+                        disabled={selectedSucursal}
+                        value={
+                            selectedSucursal
+                                ? selectedSucursal.id
+                                : data.sucursal_id
+                        }
                     >
                         <option value="">Elija una sucursal</option>
                         {sucursals.map((sucursal) => (
