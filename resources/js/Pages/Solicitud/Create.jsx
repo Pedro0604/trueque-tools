@@ -28,6 +28,7 @@ export default function Create({
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     const { data, setData, errors, post, processing } = useForm({
+        published_product_id: publishedProduct.id,
         offered_product_id: "",
         meeting_date_time: "",
     });
