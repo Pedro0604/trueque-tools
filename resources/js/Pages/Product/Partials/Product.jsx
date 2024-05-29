@@ -4,7 +4,7 @@ import {router} from "@inertiajs/react";
 import {useEffect, useState} from "react";
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 
-export default function Product({product, created, onClick = null, withUserName = true, withSucursal = true, withCategory = true}) {
+export default function Product({product, created, onClick = null, withUserName = true, withSucursal = true, withCategory = true, className = "", ...props}) {
     const [isPulsing, setIsPulsing] = useState(created);
     const showProduct = (productId) => {
         router.get(route('product.show', productId));
@@ -23,11 +23,12 @@ export default function Product({product, created, onClick = null, withUserName 
     return (
 
         <div
+            {...props}
             onClick={onClick ? onClick : ()=> showProduct(product.id)}
             className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
                 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl transition-all
                 rounded-lg p-4 cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500
-                ${isPulsing ? 'animate-pulse' : ''}`}
+                ${isPulsing ? 'animate-pulse' : ''} ${className}`}
         >
             <div className="flex justify-between items-center mb-1">
                 {withUserName && <p className="text-gray-600 dark:text-custom-beige-600 text-sm">{product.user.name}</p>}
