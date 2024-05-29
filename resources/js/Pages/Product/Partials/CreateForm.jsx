@@ -14,6 +14,8 @@ export default function CreateForm({
     selectedSucursal = null,
     selectedCategory = null,
     onVolver = () => window.history.back(),
+    onSuccess = () => {},
+    redirectionOnSuccess = route("product.index"),
 }) {
     const {
         data,
@@ -34,6 +36,7 @@ export default function CreateForm({
         description: "",
         category: selectedCategory ?? "",
         sucursal_id: selectedSucursal ? selectedSucursal.id : "",
+        redirection_on_success: redirectionOnSuccess,
     });
 
     const onSubmit = (e) => {
@@ -41,7 +44,9 @@ export default function CreateForm({
         if (hasErrors) {
             submit().catch();
         } else {
-            router.post(route("product.store"), data);
+            router.post(route("product.store"), data, {
+                onSuccess: onSuccess,
+            });
         }
     };
     setValidationTimeout(500);
