@@ -54,14 +54,13 @@ class ProductController extends Controller
         $image = $data['image'] ?? null;
         if ($image) {
             $data['image_path'] = asset($image->store('project/' . Str::random(), 'public'));
-
         }
 
         unset($data['image']); // Unset the image value
 
         $product = Product::create($data);
 
-        return to_route('product.index')->with('success', 'Producto creado correctamente')->with('product_created_id', $product->id);
+        return redirect($request->redirection_on_success ?? route('product.index'))->with('success', 'Producto creado correctamente')->with('product_created_id', $product->id);
     }
 
     /**
