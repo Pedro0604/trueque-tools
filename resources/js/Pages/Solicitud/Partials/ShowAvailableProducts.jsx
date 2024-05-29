@@ -44,7 +44,7 @@ export default function ShowAvailableProducts({
                 className={`bg-gray-200 dark:bg-gray-700 text-black dark:text-white lg:bg-gray-100 lg:dark:bg-gray-800
                 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl transition-all
                 rounded-lg p-4 cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500
-                flex justify-center items-center`}
+                flex justify-center items-center h-60`}
             >
                 Crear un nuevo producto
             </div>
