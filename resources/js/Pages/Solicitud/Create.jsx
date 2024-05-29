@@ -22,7 +22,7 @@ const style = {
     p: 4,
 };
 
-export default function create({publishedProduct, availableProducts, sucursals}) {
+export default function Create({publishedProduct, availableProducts, sucursals}) {
     const {auth} = usePage().props;
 
     const [open, setOpen] = useState(false);
@@ -169,6 +169,7 @@ export default function create({publishedProduct, availableProducts, sucursals})
                         availableProducts={availableProducts}
                         onSelectProduct={handleSelectProduct}
                         sucursals={sucursals}
+                        publishedProduct={publishedProduct}
                     />
                 </Box>
             </Modal>

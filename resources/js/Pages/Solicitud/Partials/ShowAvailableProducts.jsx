@@ -1,16 +1,17 @@
-import {router} from "@inertiajs/react";
 import Product from "@/Pages/Product/Partials/Product.jsx";
 import {useState} from "react";
-import Create from "@/Pages/Product/Create.jsx"
+import CreateForm from "@/Pages/Product/Partials/CreateForm";
 
-export default function ShowAvailableProducts({availableProducts, onSelectProduct, sucursals}) {
+export default function ShowAvailableProducts({availableProducts, onSelectProduct, sucursals, publishedProduct}) {
     const [showCreateProductForm, setShowCreateForm] = useState(false)
 
-    // TODO - MOSTRAR FORMULARIO PARA CREAR PRODUCTOS SIN LAYOUT
+    // TODO - HACER FORMULARIO SCROLLABLE
     if(showCreateProductForm){
         return(
-            <Create
+            <CreateForm
                 sucursals={sucursals}
+                selectedSucursal={publishedProduct.sucursal}
+                selectedCategory={publishedProduct.category}
             />
         )
     }
