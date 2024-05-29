@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Product extends Model
@@ -43,8 +43,25 @@ class Product extends Model
         return $this->hasMany(Solicitud::class, 'published_product_id');
     }
 
-    public function trueque(): HasOneThrough
+    public function offeredSolicituds(): HasMany
+    {
+        return $this->hasMany(Solicitud::class, 'offered_product_id');
+    }
+
+    public function publishedTrueque(): HasOneThrough
     {
         return $this->hasOneThrough(Trueque::class, Solicitud::class, 'published_product_id');
+    }
+
+    public function offeredTrueque(): HasOneThrough
+    {
+        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'offered_product_id');
+    }
+
+    protected function hasTrueque(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->publishedTrueque()->exists() || $this->offeredTrueque()->exists(),
+        );
     }
 }
