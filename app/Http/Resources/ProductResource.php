@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
             'promoted_at' => $this->promoted_at ? (new Carbon($this->promoted_at))->format('d/m/Y') : null,
             'user' => new UserResource($this->user),
             'sucursal' => new SucursalResource($this->sucursal),
+            'hasTrueque' => $this->hasTrueque,
         ];
     }
 }
