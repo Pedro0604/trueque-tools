@@ -88,7 +88,8 @@ export default function Show({ product, auth, comments, solicituds }) {
                                     Dirección: {product.sucursal.address}
                                 </p>
                                 {auth.user &&
-                                    auth.user.id !== product.user.id && (
+                                    auth.user.id !== product.user.id &&
+                                    !product.hasTrueque && (
                                         <PrimaryButton
                                             isLink
                                             href={route(
@@ -97,6 +98,7 @@ export default function Show({ product, auth, comments, solicituds }) {
                                             )}
                                             isFullRounded
                                             className="mt-4 md:mt-8 py-2.5 align-middle justify-center w-full"
+                                            preserveScroll
                                         >
                                             Solicitar Trueque
                                         </PrimaryButton>
@@ -112,9 +114,9 @@ export default function Show({ product, auth, comments, solicituds }) {
                         </PrimaryButton>
                     </div>
                     <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
-                        {auth.user && product.user.id !== auth.user.id && 
+                        {auth.user && product.user.id !== auth.user.id && (
                             <Create productId={product.id} />
-                        }
+                        )}
                         <CommentsList
                             comments={comments}
                             productUserId={product.user.id}
