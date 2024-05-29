@@ -21,8 +21,11 @@ class StoreSolicitudRequest extends FormRequest
      */
     public function rules(): array
     {
+        // TODO - VALIDAR QUE EL PRODUCTO NO ESTÉ TROCADO
+        // TODO - VALIDAR QUE LA FECHA SEA ENTRE LAS 9 Y LAS 18 (O QSY)
         return [
-            //
+            'offered_product_id' => ['required', 'integer', 'exists:products,id'],
+            'meeting_date_time' => ['required', 'date', 'after:+1 day'],
         ];
     }
 }
