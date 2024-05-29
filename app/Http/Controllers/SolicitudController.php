@@ -44,7 +44,13 @@ class SolicitudController extends Controller
      */
     public function store(StoreSolicitudRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['was_rejected'] = false;
+
+        $solicitud = Solicitud::create($data);
+
+        // TODO - DESPUÉS REDIRIGIR A MIS SOLICITUDES (?
+        return to_route('product.show', $data['published_product_id'])->with('success', 'Solicitud creada correctamente');
     }
 
     /**
