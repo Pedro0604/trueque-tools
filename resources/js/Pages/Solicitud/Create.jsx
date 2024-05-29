@@ -34,7 +34,9 @@ export default function Create({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("solicitud.store", publishedProduct.id));
+        post(route("solicitud.store", publishedProduct.id), {
+            preserveScroll: true,
+        });
     };
 
     const handleSelectProduct = (product) => {
@@ -84,7 +86,7 @@ export default function Create({
                         <div className="">
                             <MultipleStopIcon sx={{ fontSize: 40 }} />
                         </div>
-                        <div>
+                        <div className="max-w-60">
                             <form onSubmit={handleSubmit}>
                                 <InputLabel
                                     htmlFor="meeting_date_time"
@@ -104,6 +106,7 @@ export default function Create({
                                         );
                                     }}
                                     invalid={errors.meeting_date_time}
+                                    className="w-full"
                                 />
 
                                 <InputError
@@ -121,22 +124,29 @@ export default function Create({
                         </div>
                     </div>
                     {selectedProduct === null ? (
-                        <div
-                            className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
+                        <div className="flex flex-col justify-stretch">
+                            <div
+                                className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
                                 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl transition-all
                                 rounded-lg p-4 cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500
-                                flex justify-center items-center w-72 ${
+                                flex justify-center items-center w-72 h-full ${
                                     errors.offered_product_id
                                         ? "border-red-600" +
                                           " dark:border-red-400 focus:border-orange-900 dark:focus:border-orange-800 focus:ring-orange-900" +
                                           " dark:focus:ring-orange-800"
                                         : ""
                                 }`}
-                            // TODO - ver como funciona el tabIndex
-                            tabIndex={3}
-                            onClick={handleOpen}
-                        >
-                            <AddIcon sx={{ fontSize: 40 }} />
+                                // TODO - ver como funciona el tabIndex
+                                tabIndex={3}
+                                onClick={handleOpen}
+                            >
+                                <AddIcon sx={{ fontSize: 40 }} />
+                            </div>
+
+                            <InputError
+                                message={errors.offered_product_id}
+                                className="mt-2"
+                            />
                         </div>
                     ) : (
                         <div className="w-72">
