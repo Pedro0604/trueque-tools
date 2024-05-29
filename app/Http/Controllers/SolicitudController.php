@@ -34,7 +34,8 @@ class SolicitudController extends Controller
         return inertia('Solicitud/Create', [
             'publishedProduct' => new ProductResource($product),
             'availableProducts' => ProductResource::collection($available_products),
-            'sucursals' => SucursalResource::collection(Sucursal::all())
+            'sucursals' => SucursalResource::collection(Sucursal::all()),
+            'productCreated' => session('product_created_id') ? new ProductResource(Product::find(session('product_created_id'))) : null,
         ]);
     }
 
