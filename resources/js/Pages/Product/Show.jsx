@@ -1,16 +1,16 @@
-import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
+import { CATEGORIES_TEXT_MAP } from "@/Categories.jsx";
 import StarIcon from "@mui/icons-material/Star";
 import BusinessIcon from "@mui/icons-material/Business";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
-import {Head} from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import Modal from "@mui/material/Modal";
-import {useState} from "react";
+import { useState } from "react";
 import CommentsList from "../Comment/CommentsList";
 import Create from "@/Pages/Comment/Create.jsx";
 import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
 
-export default function Show({product, auth, comments, solicituds}) {
+export default function Show({ product, auth, comments, solicituds }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -26,7 +26,7 @@ export default function Show({product, auth, comments, solicituds}) {
                 </div>
             }
         >
-            <Head title={`Producto "${product.name}"`}/>
+            <Head title={`Producto "${product.name}"`} />
 
             <div className="flex gap-4 justify-center">
                 <div className="max-w-sm sm:max-w-lg lg:max-w-4xl">
@@ -66,8 +66,7 @@ export default function Show({product, auth, comments, solicituds}) {
                                         />
                                     </>
                                 ) : (
-                                    <div
-                                        className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                    <div className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                                         <p>IMAGEN NO ENCONTRADA</p>
                                     </div>
                                 )}
@@ -80,7 +79,7 @@ export default function Show({product, auth, comments, solicituds}) {
                                     {product.description}
                                 </p>
                                 <div className="flex items-center gap-1 mt-1 ">
-                                    <BusinessIcon/>
+                                    <BusinessIcon />
                                     <p className="text-gray-600 dark:text-custom-beige-600">
                                         {product.sucursal.name}
                                     </p>
@@ -88,14 +87,20 @@ export default function Show({product, auth, comments, solicituds}) {
                                 <p className="text-gray-600 dark:text-custom-beige-600">
                                     Dirección: {product.sucursal.address}
                                 </p>
-                                {auth.user && auth.user.id !== product.user.id && <PrimaryButton
-                                    isLink
-                                    href={route("solicitud.create", product.id)}
-                                    isFullRounded
-                                    className="mt-4 md:mt-8 py-2.5 align-middle justify-center w-full"
-                                >
-                                    Solicitar Trueque
-                                </PrimaryButton>}
+                                {auth.user &&
+                                    auth.user.id !== product.user.id && (
+                                        <PrimaryButton
+                                            isLink
+                                            href={route(
+                                                "solicitud.create",
+                                                product.id
+                                            )}
+                                            isFullRounded
+                                            className="mt-4 md:mt-8 py-2.5 align-middle justify-center w-full"
+                                        >
+                                            Solicitar Trueque
+                                        </PrimaryButton>
+                                    )}
                             </div>
                         </div>
 
@@ -107,19 +112,22 @@ export default function Show({product, auth, comments, solicituds}) {
                         </PrimaryButton>
                     </div>
                     <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
-                        <Create productId={product.id}/>
+                        {auth.user && product.user.id !== auth.user.id && 
+                            <Create productId={product.id} />
+                        }
                         <CommentsList
                             comments={comments}
                             productUserId={product.user.id}
                         />
                     </div>
                 </div>
-                {auth.user && product.user.id === auth.user.id &&
+                {auth.user && product.user.id === auth.user.id && (
                     <div
                         className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg w-80 h-fit`}
                     >
-                        <SolicitudsList solicituds={solicituds}/>
-                    </div>}
+                        <SolicitudsList solicituds={solicituds} />
+                    </div>
+                )}
             </div>
         </AuthenticatedOrNormalLayout>
     );

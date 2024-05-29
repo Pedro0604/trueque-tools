@@ -3,15 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentRequest;
-use App\Http\Requests\StoreResponseRequest;
 use App\Http\Requests\UpdateCommentRequest;
-use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Inertia\Response;
-use Inertia\ResponseFactory;
 
 class CommentController extends Controller
 {
@@ -20,6 +15,10 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request, Product $product): RedirectResponse
     {
+        if($product->user_id === auth()->id()) {
+            return back()->with('error', 'No podés comentar en tus propios productos');
+        }
+
         $data = $request->validated();
         $data['user_id'] = auth()->id();
         $data['product_id'] = $product->id;
