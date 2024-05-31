@@ -49,6 +49,12 @@ export default function Authenticated({user = null, header, children}) {
                     <Dropdown.Content>
                         {/*TODO – DESCOMENTAR CUANDO HAYA QUE MOSTRAR LA EDICION DE USUARIO*/}
                         {/*<Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>*/}
+                        <Dropdown.Link href={route('product.myProducts')} method="get" as="button">
+                            Mis productos
+                        </Dropdown.Link>
+                        {/*<Dropdown.Link href={route('logout')} method="post" as="button">
+                            Mis trueques
+                        </Dropdown.Link>*/}
                         <Dropdown.Link href={route('logout')} method="post" as="button">
                             Cerrar sesión
                         </Dropdown.Link>
@@ -65,6 +71,9 @@ export default function Authenticated({user = null, header, children}) {
                     <div className="mt-3 space-y-1">
                         {/*TODO – DESCOMENTAR CUANDO HAYA QUE MOSTRAR LA EDICION DE USUARIO*/}
                         {/*<ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>*/}
+                        <ResponsiveNavLink method="get" href={route('product.myProducts')} as="button">
+                            Mis productos
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink method="post" href={route('logout')} as="button">
                             Cerrar sesión
                         </ResponsiveNavLink>

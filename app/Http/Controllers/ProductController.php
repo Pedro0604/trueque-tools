@@ -12,6 +12,7 @@ use App\Http\Resources\CommentResource;
 use App\Models\Solicitud;
 use App\Models\Sucursal;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -72,6 +73,19 @@ class ProductController extends Controller
             'product' => new ProductResource($product),
             'comments' => CommentResource::collection($product->comments->sortByDesc('created_at')),
             'solicituds' => $product->user->id === auth()->id() ? SolicitudResource::collection($product->solicituds->sortByDesc('created_at')) : [],
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function myProducts(): Response|ResponseFactory
+    {
+        $products = Product::where('user_id', auth()->id())
+            ->sortByDesc('created_at')
+            ->get();
+        return inertia('Product/MyProducts', [
+            'products' => ProductResource::collection($products),
         ]);
     }
 
