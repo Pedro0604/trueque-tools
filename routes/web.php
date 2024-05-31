@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     // Product routes
     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product', [ProductController::class, 'store'])->name('product.store')->middleware(HandlePrecognitiveRequests::class);
+    Route::get('/product/my-products', [ProductController::class, 'myProducts'])->name('product.myProducts');
 
     // Comment routes
     Route::post('/product/{product}/comment', [CommentController::class, 'store'])->name('comment.store');
@@ -43,6 +44,5 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
-Route::get('/product/my-products', [ProductController::class, 'myProducts'])->name('product.myProducts');
 
 require __DIR__.'/auth.php';
