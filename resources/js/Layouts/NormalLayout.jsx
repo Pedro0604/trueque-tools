@@ -9,12 +9,12 @@ export default function NormalLayout({header, children}) {
         <CommonLayout
             header={header}
             navLinks={
-                <NavLink href={route('product.index')} active={route().current('product.*')}>
+                <NavLink href={route('product.index')} active={route().current('product.index')}>
                     Productos
                 </NavLink>
             }
             responsiveNavLinks={
-                <ResponsiveNavLink href={route('product.index')} active={route().current('product.*')}>
+                <ResponsiveNavLink href={route('product.index')} active={route().current('product.index')}>
                     Productos
                 </ResponsiveNavLink>
             }
