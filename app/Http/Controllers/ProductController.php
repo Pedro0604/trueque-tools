@@ -81,9 +81,9 @@ class ProductController extends Controller
      */
     public function myProducts(): Response|ResponseFactory
     {
-        $products = Product::where('user_id', auth()->id())
+        $products = Product::all()
             ->sortByDesc('created_at')
-            ->get();
+            ->where('user_id', auth()->id());
         return inertia('Product/MyProducts', [
             'products' => ProductResource::collection($products),
         ]);
