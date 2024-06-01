@@ -90,13 +90,14 @@ export default function CommonLayout({
                     </div>
                 </header>
             )}
-            {useMemo(()=>{
+            {
+                useMemo(()=>{
                     return (
                         error && <InformationBanner
                             severity="error"
-                            key={Math.random()}
+                            key={error.key}
                         >
-                            {error}
+                            {error.message}
                         </InformationBanner>
                     )
                 }, [error])
@@ -106,9 +107,9 @@ export default function CommonLayout({
                         success &&
                             <InformationBanner
                                 severity="success"
-                                key={Math.random()}
+                                key={success.key}
                             >
-                                {success}
+                                {success.message}
                             </InformationBanner>
                     )
                 }, [success])

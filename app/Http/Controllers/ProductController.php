@@ -61,9 +61,13 @@ class ProductController extends Controller
 
         unset($data['image']); // Unset the image value
 
-        $product = Product::create($data);
+        $created_product = Product::create($data);
 
-        return redirect($request->redirection_on_success ?? route('product.index'))->with('success', 'Producto creado correctamente')->with('product_created_id', $product->id);
+        return redirect($request->redirection_on_success ?? route('product.index'))
+            ->with('success', [
+                'message' => 'Producto creado correctamente',
+                'key' => $created_product->id
+            ])->with('product_created_id', $created_product->id);
     }
 
     /**

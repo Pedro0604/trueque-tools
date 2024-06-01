@@ -25,7 +25,7 @@ class SolicitudController extends Controller
         if (auth()->id() == $product->user->id) {
             return back()->with('error', 'Sos el dueño del producto, no podes solicitar un trueque!');
         }
-        if($product->offeredTrueque || $product->publishedTrueque) {
+        if ($product->offeredTrueque || $product->publishedTrueque) {
             return back()->with('error', 'El producto ya fue trocado!');
         }
 
@@ -54,10 +54,14 @@ class SolicitudController extends Controller
         $data = $request->validated();
         $data['was_rejected'] = false;
 
-        $solicitud = Solicitud::create($data);
+        $created_solicitud = Solicitud::create($data);
 
         // TODO - DESPUÉS REDIRIGIR A MIS SOLICITUDES (?
-        return to_route('product.show', $data['published_product_id'])->with('success', 'Solicitud creada correctamente');
+        return to_route('product.show', $data['published_product_id'])
+            ->with('success', [
+                'message' => 'Solicitud creada correctamente',
+                'key' => $created_solicitud->id
+            ]);
     }
 
     /**
