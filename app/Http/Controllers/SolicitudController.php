@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\SucursalResource;
+use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Solicitud;
 use App\Http\Requests\StoreSolicitudRequest;
@@ -12,6 +13,7 @@ use App\Models\Sucursal;
 use App\Models\Trueque;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 
@@ -22,11 +24,13 @@ class SolicitudController extends Controller
      */
     public function create(Product $product): Response|ResponseFactory|RedirectResponse
     {
-        if (auth()->id() == $product->user->id) {
-            return back()->with('error', 'Sos el dueño del producto, no podes solicitar un trueque!');
-        }
-        if ($product->offeredTrueque || $product->publishedTrueque) {
-            return back()->with('error', 'El producto ya fue trocado!');
+        $response = Gate::inspect('create', [Solicitud::class, $product]);
+
+        if ($response->denied()) {
+            return to_route('product.show', $product->id)->with('error', [
+                'message' => $response->message(),
+                'key' => rand()
+            ]);
         }
 
         $available_products = Product::where('user_id', auth()->id())
