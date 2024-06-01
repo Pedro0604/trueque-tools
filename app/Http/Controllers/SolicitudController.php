@@ -43,8 +43,10 @@ class SolicitudController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSolicitudRequest $request)
+    public function store(StoreSolicitudRequest $request, Product $product): RedirectResponse
     {
+        Gate::authorize('create', [Solicitud::class, $product]);
+
         $data = $request->validated();
         $data['was_rejected'] = false;
 
