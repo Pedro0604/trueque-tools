@@ -560,7 +560,16 @@
                 onclick="window.history.back()"
                 class="button"
             >
-                Go Back
+                Volver
+            </button>
+        </div>
+        <div class="flex justify-center mt-4">
+            <button
+                class="button"
+            >
+                <a href="/">
+                    Ir al inicio
+                </a>
             </button>
         </div>
     </div>
