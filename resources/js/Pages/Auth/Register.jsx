@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/Inputs/InputError.jsx';
 import InputLabel from '@/Components/Inputs/InputLabel.jsx';
@@ -12,10 +12,11 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import {useForm} from "laravel-precognition-react";
 
 export default function Register({sucursales}) {
+    const [disableSubmit, setDisableSubmit] = useState(false);
+
     const {
         data,
         setData,
-        processing,
         errors,
         reset,
         setValidationTimeout,
@@ -46,7 +47,9 @@ export default function Register({sucursales}) {
         if (hasErrors) {
             submit().catch()
         } else {
-            router.post(route('register'), data);
+            router.post(route('register'), data, {
+                onBefore: () => setDisableSubmit(true),
+            });
         }
     };
     setValidationTimeout(500);
@@ -257,8 +260,8 @@ export default function Register({sucursales}) {
 
                         <Divisor className="lg:hidden"/>
 
-                        <PrimaryButton className="lg:ms-4 w-full justify-center h-10" disabled={processing}>
-                            Registrate
+                        <PrimaryButton className="lg:ms-4 w-full justify-center h-10" disabled={disableSubmit}>
+                            {disableSubmit ? 'Registrando...' : 'Registrate'}
                         </PrimaryButton>
                     </div>
                 </div>
