@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\SucursalResource;
-use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Solicitud;
 use App\Http\Requests\StoreSolicitudRequest;
-use App\Http\Requests\UpdateSolicitudRequest;
 use App\Models\Sucursal;
-use App\Models\Trueque;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
@@ -24,14 +21,7 @@ class SolicitudController extends Controller
      */
     public function create(Product $product): Response|ResponseFactory|RedirectResponse
     {
-        $response = Gate::inspect('create', [Solicitud::class, $product]);
-
-        if ($response->denied()) {
-            return to_route('product.show', $product->id)->with('error', [
-                'message' => $response->message(),
-                'key' => rand()
-            ]);
-        }
+        Gate::authorize('create', [Solicitud::class, $product]);
 
         $available_products = Product::where('user_id', auth()->id())
             ->where('category', $product->category)
