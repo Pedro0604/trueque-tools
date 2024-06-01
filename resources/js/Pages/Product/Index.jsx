@@ -27,7 +27,11 @@ export default function Index({auth, products, productCreatedId = null}) {
         >
             <Head title="Productos"/>
 
-            <ProductsList products={products} productCreatedId={productCreatedId}/>
+            <ProductsList
+                products={products}
+                productCreatedId={productCreatedId}
+                emptyListMessage="No hay productos cargados en el sistema"
+            />
         </AuthenticatedOrNormalLayout>
     )
 }
