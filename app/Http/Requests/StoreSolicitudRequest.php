@@ -22,9 +22,6 @@ class StoreSolicitudRequest extends FormRequest
      */
     public function rules(): array
     {
-        // TODO - NO SE DEBERÍA PODER SOLICITAR UN TRUEQUE A UN PRODUCTO 1 (QUE LE SOLICITÓ
-        // UN TRUEQUE A MI PRODUCTO 2) CON MI PRODUCTO 2, DEBERÍA INFORMAR QUE YA HAY UNA SOLICITUD?
-        // TODO - VALIDAR QUE LA FECHA SEA ENTRE LAS 9 Y LAS 18 (O QSY)
         return [
             'published_product_id' => [
                 'required',
@@ -32,7 +29,7 @@ class StoreSolicitudRequest extends FormRequest
                 'exists:products,id',
                 function ($attribute, $value, $fail) {
                     $product = Product::find($value);
-                    if ($product->publishedTrueque || $product->offeredTrueque) {
+                    if ($product->hasTrueque()) {
                         $fail('El producto publicado ya fue trocado.');
                     }
                 },
@@ -44,7 +41,7 @@ class StoreSolicitudRequest extends FormRequest
                 'different:published_product_id',
                 function ($attribute, $value, $fail) {
                     $product = Product::find($value);
-                    if ($product->publishedTrueque || $product->offeredTrueque) {
+                    if ($product->hasTrueque()) {
                         $fail('El producto ofertado ya fue trocado.');
                     }
                     if ($product->offeredSolicituds()->where('published_product_id', $this->published_product_id)->exists()) {
