@@ -8,7 +8,7 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import Divisor from "@/Components/Divisor.jsx";
 
 export default function Login({ status, canResetPassword }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset, setError } = useForm({
         email: '',
         password: '',
         remember: false,
@@ -25,6 +25,15 @@ export default function Login({ status, canResetPassword }) {
 
         post(route('login'));
     };
+
+    useEffect(() => {
+        const credentialsError = "Estas credenciales no coinciden con nuestros registros."
+
+        if(errors.email === credentialsError){
+            setError('password', credentialsError)
+        }
+    }, [errors.email]);
+
 
     return (
         <GuestLayout>
