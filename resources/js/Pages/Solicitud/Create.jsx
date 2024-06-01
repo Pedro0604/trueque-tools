@@ -1,25 +1,28 @@
-import { Head, useForm, usePage } from "@inertiajs/react";
+import {Head, useForm, usePage} from "@inertiajs/react";
 import Authenticated from "@/Layouts/AuthenticatedLayout.jsx";
 import Product from "@/Pages/Product/Partials/Product.jsx";
 import MultipleStopIcon from "@mui/icons-material/MultipleStop";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
 import BusinessIcon from "@mui/icons-material/Business";
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
+import {useState} from "react";
 import ShowAvailableProducts from "@/Pages/Solicitud/Partials/ShowAvailableProducts.jsx";
 import InputError from "@/Components/Inputs/InputError.jsx";
 import InputLabel from "@/Components/Inputs/InputLabel.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import Modal from "@/Components/Modal";
-import { useMemo } from "react";
+import {useMemo} from "react";
+import CloseIcon from '@mui/icons-material/Close';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 
 export default function Create({
-    publishedProduct,
-    availableProducts,
-    sucursals,
-    productCreated,
-}) {
-    const { auth } = usePage().props;
+                                   publishedProduct,
+                                   availableProducts,
+                                   sucursals,
+                                   productCreated,
+                               }) {
+    const {auth} = usePage().props;
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -27,7 +30,7 @@ export default function Create({
 
     const [selectedProduct, setSelectedProduct] = useState(null);
 
-    const { data, setData, errors, post, processing } = useForm({
+    const {data, setData, errors, post, processing} = useForm({
         published_product_id: publishedProduct.id,
         offered_product_id: "",
         meeting_date_time: "",
@@ -79,13 +82,13 @@ export default function Create({
                     </div>
                     <div className="flex flex-col justify-center items-center gap-4">
                         <div className="flex items-center gap-1 mt-1 text-gray-600 dark:text-custom-beige-300">
-                            <BusinessIcon sx={{ fontSize: 32 }} />
+                            <BusinessIcon sx={{fontSize: 32}}/>
                             <p className="text-sm sm:text-base lg:text-xl">
                                 {publishedProduct.sucursal.name}
                             </p>
                         </div>
                         <div className="">
-                            <MultipleStopIcon sx={{ fontSize: 40 }} />
+                            <MultipleStopIcon sx={{fontSize: 40}}/>
                         </div>
                         <div className="max-w-60">
                             <form onSubmit={handleSubmit}>
@@ -133,15 +136,15 @@ export default function Create({
                                 flex justify-center items-center w-72 h-full ${
                                     errors.offered_product_id
                                         ? "border-red-600" +
-                                          " dark:border-red-400 focus:border-orange-900 dark:focus:border-orange-800 focus:ring-orange-900" +
-                                          " dark:focus:ring-orange-800"
+                                        " dark:border-red-400 focus:border-orange-900 dark:focus:border-orange-800 focus:ring-orange-900" +
+                                        " dark:focus:ring-orange-800"
                                         : ""
                                 }`}
                                 // TODO - ver como funciona el tabIndex
                                 tabIndex={3}
                                 onClick={handleOpen}
                             >
-                                <AddIcon sx={{ fontSize: 40 }} />
+                                <AddIcon sx={{fontSize: 40}}/>
                             </div>
 
                             <InputError
@@ -168,18 +171,41 @@ export default function Create({
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <div
-                    style={{ maxHeight: "90dvh" }}
-                    className="p-6 overflow-y-auto"
-                >
-                    <ShowAvailableProducts
-                        availableProducts={availableProducts}
-                        onSelectProduct={handleSelectProduct}
-                        sucursals={sucursals}
-                        publishedProduct={publishedProduct}
-                        onCloseModal={handleClose}
-                    />
-                </div>
+                <>
+                    <div
+                        style={{maxHeight: "7dvh"}}
+                        className="flex justify-between items-center p-6 border-b dark:border-gray-700"
+                    >
+                        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                            Productos disponibles para trueque
+                        </h2>
+                        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                            <AttachMoneyIcon/>{CATEGORIES_TEXT_MAP[publishedProduct.category]}
+                        </h2>
+                        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                            <BusinessIcon/> {publishedProduct.sucursal.name}
+                        </h2>
+
+                        <button
+                            onClick={handleClose}
+                            className="text-gray-800 dark:text-gray-200 hover:rounded-full hover:bg-gray-600 p-2 transition-all"
+                        >
+                            <CloseIcon/>
+                        </button>
+                    </div>
+                    <div
+                        style={{maxHeight: "85dvh"}}
+                        className="p-6 overflow-y-auto"
+                    >
+                        <ShowAvailableProducts
+                            availableProducts={availableProducts}
+                            onSelectProduct={handleSelectProduct}
+                            sucursals={sucursals}
+                            publishedProduct={publishedProduct}
+                            onCloseModal={handleClose}
+                        />
+                    </div>
+                </>
             </Modal>
         </Authenticated>
     );
