@@ -18,8 +18,6 @@ export default function Comment({
         setIsResponseFormOpen(prevValue => !prevValue)
     }
 
-    console.log(comment)
-
     return (
         <div
             {...props}
