@@ -2,7 +2,7 @@ import { CATEGORIES_TEXT_MAP } from "@/Categories.jsx";
 import StarIcon from "@mui/icons-material/Star";
 import BusinessIcon from "@mui/icons-material/Business";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
-import { Head } from "@inertiajs/react";
+import {Head, usePage} from "@inertiajs/react";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
@@ -10,7 +10,8 @@ import CommentsList from "../Comment/CommentsList";
 import Create from "@/Pages/Comment/Create.jsx";
 import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
 
-export default function Show({ product, auth, comments, solicituds }) {
+export default function Show({ product, comments, solicituds, canCreateComment }) {
+    const {auth} = usePage().props;
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -114,9 +115,9 @@ export default function Show({ product, auth, comments, solicituds }) {
                         </PrimaryButton>
                     </div>
                     <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
-                        {auth.user && product.user.id !== auth.user.id && (
+                        {canCreateComment &&
                             <Create productId={product.id} />
-                        )}
+                        }
                         <CommentsList
                             comments={comments}
                             productUserId={product.user.id}

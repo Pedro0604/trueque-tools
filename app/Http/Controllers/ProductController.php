@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\SolicitudResource;
 use App\Http\Resources\SucursalResource;
+use App\Models\Comment;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -12,6 +13,7 @@ use App\Http\Resources\CommentResource;
 use App\Models\Solicitud;
 use App\Models\Sucursal;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -73,6 +75,7 @@ class ProductController extends Controller
             'product' => new ProductResource($product),
             'comments' => CommentResource::collection($product->comments->sortByDesc('created_at')),
             'solicituds' => $product->user->id === auth()->id() ? SolicitudResource::collection($product->solicituds->sortByDesc('created_at')) : [],
+            'canCreateComment' => Gate::allows('create', [Comment::class, $product]),
         ]);
     }
 

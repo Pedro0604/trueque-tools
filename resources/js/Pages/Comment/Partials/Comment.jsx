@@ -18,11 +18,7 @@ export default function Comment({
         setIsResponseFormOpen(prevValue => !prevValue)
     }
 
-    const hasResponse = comment.response;
-    const isCommentAuthor = auth.user && comment.user.id === auth.user.id;
-    const isProductAuthor = auth.user && auth.user.id === productUserId;
-
-    const canBeResponded = !isResponse && !hasResponse && !isCommentAuthor && isProductAuthor;
+    console.log(comment)
 
     return (
         <div
@@ -43,7 +39,7 @@ export default function Comment({
             </div>
             <div className="flex justify-between">
                 <div className="mt-2">{comment.text}</div>
-                {canBeResponded &&
+                {comment.canBeResponded &&
                     <div className={"mt-4"}>
                         <PrimaryButton
                             onClick={handleClick}
