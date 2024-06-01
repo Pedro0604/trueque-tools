@@ -1,22 +1,26 @@
-import { useForm } from "laravel-precognition-react";
+import {useForm} from "laravel-precognition-react";
 import InputLabel from "@/Components/Inputs/InputLabel.jsx";
 import SelectInput from "@/Components/Inputs/SelectInput.jsx";
 import InputError from "@/Components/Inputs/InputError.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
 import TextAreaInput from "@/Components/Inputs/TextAreaInput.jsx";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
-import { CATEGORIES_TEXT_MAP } from "@/Categories.jsx";
+import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
-import { router } from "@inertiajs/react";
+import {router} from "@inertiajs/react";
+import {useEffect, useState} from "react";
 
 export default function CreateForm({
-    sucursals,
-    selectedSucursal = null,
-    selectedCategory = null,
-    onVolver = () => window.history.back(),
-    onSuccess = () => {},
-    redirectionOnSuccess = route("product.myProducts"),
-}) {
+                                       sucursals,
+                                       selectedSucursal = null,
+                                       selectedCategory = null,
+                                       onVolver = () => window.history.back(),
+                                       onSuccess = () => {
+                                       },
+                                       redirectionOnSuccess = route("product.myProducts"),
+                                   }) {
+    const [disableSubmit, setDisableSubmit] = useState(false);
+
     const {
         data,
         errors,
@@ -45,6 +49,7 @@ export default function CreateForm({
             submit().catch();
         } else {
             router.post(route("product.store"), data, {
+                onBefore: () => setDisableSubmit(true),
                 onSuccess: onSuccess,
             });
         }
@@ -64,7 +69,7 @@ export default function CreateForm({
                 autoComplete="off"
             >
                 <div className="h-24">
-                    <InputLabel htmlFor="product_name" value="Nombre *" />
+                    <InputLabel htmlFor="product_name" value="Nombre *"/>
                     <TextInput
                         id="product_name"
                         placeholder="Nombre del producto"
@@ -84,7 +89,7 @@ export default function CreateForm({
                         valid={valid("name")}
                         isFocused={true}
                     />
-                    <InputError message={errors.name} className="mt-2" />
+                    <InputError message={errors.name} className="mt-2"/>
                 </div>
                 <div className="mt-4">
                     <InputLabel
@@ -119,7 +124,7 @@ export default function CreateForm({
                         }`}
                     />
                     {invalid("description") ? (
-                        <InputError message={errors.description} />
+                        <InputError message={errors.description}/>
                     ) : (
                         <div className="mb-9"></div>
                     )}
@@ -151,7 +156,7 @@ export default function CreateForm({
                         <option value="2">{CATEGORIES_TEXT_MAP[2]}</option>
                         <option value="3">{CATEGORIES_TEXT_MAP[3]}</option>
                     </SelectInput>
-                    <InputError message={errors.category} className="mt-2" />
+                    <InputError message={errors.category} className="mt-2"/>
                 </div>
                 <div className="mt-4 h-24">
                     <InputLabel
@@ -186,7 +191,7 @@ export default function CreateForm({
                             </option>
                         ))}
                     </SelectInput>
-                    <InputError message={errors.sucursal_id} className="mt-2" />
+                    <InputError message={errors.sucursal_id} className="mt-2"/>
                 </div>
                 <div className="mt-4 h-24">
                     <InputLabel
@@ -224,14 +229,14 @@ export default function CreateForm({
                         invalid={invalid("image")}
                         valid={valid("image")}
                     />
-                    <InputError message={errors.image} className="mt-2" />
+                    <InputError message={errors.image} className="mt-2"/>
                 </div>
                 <div className="mt-4">
                     <CyanButton
                         className="w-full justify-center"
-                        disabled={processing}
+                        disabled={disableSubmit || processing}
                     >
-                        {processing ? "Creando Producto..." : "Crear Producto"}
+                        {disableSubmit || processing ? "Creando Producto..." : "Crear Producto"}
                     </CyanButton>
                 </div>
                 <div className="mt-4">
