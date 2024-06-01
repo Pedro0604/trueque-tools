@@ -29,7 +29,9 @@ export default function MyProducts({auth, products, productCreatedId = null}) {
 
             <ProductsList
                 products={products}
-                productCreatedId={productCreatedId}/>
+                productCreatedId={productCreatedId}
+                emptyListMessage="Todavía no cargaste ningún producto"
+            />
         </AuthenticatedOrNormalLayout>
     )
 }
