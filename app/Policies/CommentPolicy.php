@@ -27,7 +27,7 @@ class CommentPolicy
         $commentHasAnAnswer = $comment->response_id !== null;
         $commentIsAnAnswer = $comment->product_id === null;
         $commentIsFromUser = $comment->user_id === $user->id;
-        $productIsNotFromUser = !$commentIsAnAnswer && $comment->product->user_id !== $user->id;
+        $productIsNotFromUser = $comment->product && $comment->product->user_id !== $user->id;
 
         if($commentHasAnAnswer){
             return Response::deny('Este comentario ya tiene una respuesta');
