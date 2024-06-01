@@ -63,7 +63,7 @@ class ProductController extends Controller
 
         $created_product = Product::create($data);
 
-        return redirect($request->redirection_on_success ?? route('product.index'))
+        return redirect($request->redirection_on_success ?? route('product.myProducts'))
             ->with('success', [
                 'message' => 'Producto creado correctamente',
                 'key' => $created_product->id
@@ -95,6 +95,7 @@ class ProductController extends Controller
             ->where('user_id', auth()->id());
         return inertia('Product/MyProducts', [
             'products' => ProductResource::collection($products),
+            'productCreatedId' => session('product_created_id'),
         ]);
     }
 
