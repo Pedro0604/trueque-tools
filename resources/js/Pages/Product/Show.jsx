@@ -10,7 +10,7 @@ import CommentsList from "../Comment/CommentsList";
 import Create from "@/Pages/Comment/Create.jsx";
 import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
 
-export default function Show({product, comments, solicituds, canCreateComment, canViewSolicituds = true, canCreateSolicitud}) {
+export default function Show({product, comments, solicituds, canCreateComment, canListSolicituds = true, canCreateSolicitud}) {
     const {auth} = usePage().props;
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -123,7 +123,7 @@ export default function Show({product, comments, solicituds, canCreateComment, c
                         />
                     </div>
                 </div>
-                {canViewSolicituds && (
+                {canListSolicituds && (
                     <div
                         className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg w-80 h-fit`}
                     >

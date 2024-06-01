@@ -81,6 +81,7 @@ class ProductController extends Controller
             'solicituds' => $product->user->id === auth()->id() ? SolicitudResource::collection($product->solicituds->sortByDesc('created_at')) : [],
             'canCreateComment' => Gate::allows('create', [Comment::class, $product]),
             'canCreateSolicitud' => Gate::allows('create', [Solicitud::class, $product]),
+            'canListSolicituds' => Gate::allows('list', [Solicitud::class, $product]),
         ]);
     }
 

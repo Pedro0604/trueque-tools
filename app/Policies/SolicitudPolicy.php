@@ -12,11 +12,19 @@ class SolicitudPolicy
     /**
      * Determine whether the user can view the model.
      */
-    // Lo van a poder hacer solo los dueños de los productos involucrados
-//    public function view(User $user, Solicitud $solicitud): bool
-//    {
-//        //
-//    }
+    public function view(User $user, Solicitud $solicitud): bool
+    {
+        $solicitudIsFromUser = $user->id === $solicitud->publishedProduct()->user->id;
+        return $solicitudIsFromUser || $user->id === $solicitud->offeredProduct()->user->id;
+    }
+
+    /**
+     * Determine whether the user can list the model.
+     */
+    public function list(User $user, Product $product): bool
+    {
+        return $user->id === $product->user->id;
+    }
 
     /**
      * Determine whether the user can create models.
