@@ -15,7 +15,7 @@ export default function CreateForm({
     selectedCategory = null,
     onVolver = () => window.history.back(),
     onSuccess = () => {},
-    redirectionOnSuccess = route("product.index"),
+    redirectionOnSuccess = route("product.myProducts"),
 }) {
     const {
         data,
