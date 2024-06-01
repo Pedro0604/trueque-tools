@@ -1,7 +1,7 @@
 import {Alert, Slide, Snackbar} from "@mui/material";
 import {useState} from "react";
 
-export default function InformationBanner({children, severity = 'success', autoHideDuration = 6000}) {
+export default function InformationBanner({children, severity = 'success', autoHideDuration = 4000}) {
     const [open, setOpen] = useState(true);
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
