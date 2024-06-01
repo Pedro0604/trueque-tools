@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
@@ -15,8 +16,10 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request, Product $product): RedirectResponse
     {
-        if($product->user_id === auth()->id()) {
-            return back()->with('error', 'No podés comentar en tus propios productos');
+        $response = Gate::inspect('create', [Comment::class, $product]);
+
+        if($response->denied()){
+            return back()->with('error', $response->message());
         }
 
         $data = $request->validated();
@@ -33,17 +36,10 @@ class CommentController extends Controller
      */
     public function respond(StoreCommentRequest $request, Comment $comment): RedirectResponse
     {
-        if($comment->response_id !== null) {
-            return back()->with('error', 'Este comentario ya tiene una respuesta');
-        }
-        if($comment->product_id === null) {
-            return back()->with('error', 'No se puede responder una respuesta');
-        }
-        if($comment->user_id === auth()->id()) {
-            return back()->with('error', 'No podés responder tu propio comentario');
-        }
-        if($comment->product->user->id !== auth()->id()) {
-            return back()->with('error', 'Solo podés responder a comentarios en tus productos');
+        $response = Gate::inspect('respond', $comment);
+
+        if($response->denied()){
+            return back()->with('error', $response->message());
         }
 
         $data = $request->validated();
