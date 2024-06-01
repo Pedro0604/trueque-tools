@@ -1,6 +1,10 @@
 import Product from "@/Pages/Product/Partials/Product.jsx";
 
-export default function ProductsList({products, productCreatedId = null}) {
+export default function ProductsList({
+                                         products,
+                                         productCreatedId = null,
+                                         emptyListMessage = "No hay productos cargados"
+                                     }) {
     return (
         <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
             {products.length > 0 ?
@@ -13,8 +17,14 @@ export default function ProductsList({products, productCreatedId = null}) {
                             product={product}
                         />))}
                 </div>
-                :
-                <h3 className="text-center text-3xl font-bold">No hay productos cargados en el sistema</h3>
+                : <>
+                    <h3 className="text-center text-3xl font-bold">
+                        {emptyListMessage}
+                    </h3>
+                    <h4 className="text-center text-2xl font-bold mt-6">
+                        Cargá un producto ahora mismo haciendo click en el botón de arriba ⭡
+                    </h4>
+                </>
             }
         </div>
     )
