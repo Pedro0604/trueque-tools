@@ -14,9 +14,17 @@ class CommentPolicy
      */
     public function create(User $user, Product $product): Response
     {
-        return $product->user_id !== $user->id
-            ? Response::allow()
-            : Response::deny('No podés comentar en tu propio producto');
+        $productIsFromUser = $product->user_id === $user->id;
+        $productHasATrueque = $product->hasTrueque;
+
+        if($productIsFromUser){
+            return Response::deny('No podés comentar en tu propio producto');
+        }
+
+        if($productHasATrueque){
+            return Response::deny('No podés comentar en un producto con un trueque pactado');
+        }
+        return Response::allow();
     }
 
     /**
@@ -28,6 +36,7 @@ class CommentPolicy
         $commentIsAnAnswer = $comment->product_id === null;
         $commentIsFromUser = $comment->user_id === $user->id;
         $productIsNotFromUser = $comment->product && $comment->product->user_id !== $user->id;
+        $productHasATrueque = $comment->product && $comment->product->hasTrueque;
 
         if($commentHasAnAnswer){
             return Response::deny('Este comentario ya tiene una respuesta');
@@ -40,6 +49,9 @@ class CommentPolicy
         }
         if($productIsNotFromUser){
             return Response::deny('Solo podés responder a comentarios en tus productos');
+        }
+        if($productHasATrueque){
+            return Response::deny('No podés responder comentarios en un producto con un trueque pactado');
         }
         return Response::allow();
     }
