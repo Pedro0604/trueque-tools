@@ -12,6 +12,7 @@ use App\Models\Sucursal;
 use App\Models\Trueque;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -71,24 +72,34 @@ class SolicitudController extends Controller
         $data['ended_at'] = null;
         $data['is_failed'] = false;
 
-        $created_trueque = Trueque::create($data);
+        DB::transaction(function () use ($product, $data, $solicitud) {
+            $created_trueque = Trueque::create($data);
 
-        // Rechaza todas las solicitudes hacia el producto publicado
-        $product->solicituds()->where('solicitud_id', '<>', $solicitud->id)->update(['was_rejected' => true]);
+            // Rechaza todas las solicitudes hacia el producto publicado
+            $product->solicituds()->update(['was_rejected' => true]);
 
-        // Rechaza todas las solicitudes donde se ofreció el producto publicado
-        $product->offeredSolicituds()->where('solicitud_id', '<>', $solicitud->id)->update(['was_rejected' => true]);
+            // Rechaza todas las solicitudes donde se ofreció el producto publicado
+            $product->offeredSolicituds()->update(['was_rejected' => true]);
 
-        // Rechaza todas las solicitudes hacia el producto ofrecido
-        $solicitud->offeredProduct()->solicituds()->where('solicitud_id', '<>', $solicitud->id)->update(['was_rejected' => true]);
+            // Rechaza todas las solicitudes hacia el producto ofrecido
+            $solicitud->offeredProduct->solicituds()->update(['was_rejected' => true]);
 
-        // Rechaza todas las solicitudes donde se ofreció el producto ofrecido
-        $solicitud->offeredProduct()->offeredSolicituds()->where('solicitud_id', '<>', $solicitud->id)->update(['was_rejected' => true]);
+            // Rechaza todas las solicitudes donde se ofreció el producto ofrecido
+            $solicitud->offeredProduct->offeredSolicituds()->update(['was_rejected' => true]);
+
+            $solicitud->update(['was_rejected' => false]);
+
+            return to_route('product.show', $product->id)
+                ->with('success', [
+                    'message' => 'Trueque pactado exitosamente',
+                    'key' => $created_trueque->id
+                ]);
+        });
 
         return to_route('product.show', $product->id)
-            ->with('success', [
-                'message' => 'Trueque pactado exitosamente',
-                'key' => $created_trueque->id
+            ->with('error', [
+                'message' => 'Fallo al pactar el trueque',
+                'key' =>  rand()
             ]);
     }
 
