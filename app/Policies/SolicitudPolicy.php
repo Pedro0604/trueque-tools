@@ -49,6 +49,40 @@ class SolicitudPolicy
     }
 
     /**
+     * Determine whether the user can create models.
+     */
+    public function accept(User $user, Product $product): Response
+    {
+        $productIsNotFromUser = $user->id !== $product->user_id;
+        $productHasTrueque = $product->hasTrueque;
+
+        if($productIsNotFromUser){
+            return Response::deny('No sos el dueño del producto, no podés aceptar una solicitud de trueque!');
+        }
+        if($productHasTrueque){
+            return Response::deny('El producto ya fue trocado!');
+        }
+        return Response::allow();
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function reject(User $user, Product $product): Response
+    {
+        $productIsNotFromUser = $user->id !== $product->user_id;
+        $productHasTrueque = $product->hasTrueque;
+
+        if($productIsNotFromUser){
+            return Response::deny('No sos el dueño del producto, no podés rechazar una solicitud de trueque!');
+        }
+        if($productHasTrueque){
+            return Response::deny('El producto ya fue trocado!');
+        }
+        return Response::allow();
+    }
+
+    /**
      * Determine whether the user can update the model.
      */
 //    public function update(User $user, Solicitud $solicitud): bool
