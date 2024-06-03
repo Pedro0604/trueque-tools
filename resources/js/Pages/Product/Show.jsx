@@ -9,12 +9,24 @@ import {useState} from "react";
 import CommentsList from "../Comment/CommentsList";
 import Create from "@/Pages/Comment/Create.jsx";
 import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
+import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
 
-export default function Show({product, comments, solicituds, canCreateComment, canListSolicituds = true, canCreateSolicitud}) {
+export default function Show({
+                                 product,
+                                 comments,
+                                 solicituds,
+                                 canCreateComment,
+                                 canListSolicituds = true,
+                                 canCreateSolicitud,
+                                 trueque = null
+                             }) {
     const {auth} = usePage().props;
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    canCreateComment = canCreateComment && !trueque;
+    canCreateSolicitud = canCreateSolicitud && !trueque;
 
     return (
         <AuthenticatedOrNormalLayout
@@ -90,19 +102,19 @@ export default function Show({product, comments, solicituds, canCreateComment, c
                                     Dirección: {product.sucursal.address}
                                 </p>
                                 {canCreateSolicitud && (
-                                        <PrimaryButton
-                                            isLink
-                                            href={route(
-                                                "solicitud.create",
-                                                product.id
-                                            )}
-                                            isFullRounded
-                                            className="mt-4 md:mt-8 py-2.5 align-middle justify-center w-full"
-                                            preserveScroll
-                                        >
-                                            Solicitar Trueque
-                                        </PrimaryButton>
-                                    )}
+                                    <PrimaryButton
+                                        isLink
+                                        href={route(
+                                            "solicitud.create",
+                                            product.id
+                                        )}
+                                        isFullRounded
+                                        className="mt-4 md:mt-8 py-2.5 align-middle justify-center w-full"
+                                        preserveScroll
+                                    >
+                                        Solicitar Trueque
+                                    </PrimaryButton>
+                                )}
                             </div>
                         </div>
 
@@ -123,14 +135,29 @@ export default function Show({product, comments, solicituds, canCreateComment, c
                         />
                     </div>
                 </div>
-                {canListSolicituds && (
+                {canListSolicituds &&
                     <div
-                        className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg w-80 h-fit`}
+                        className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg h-fit`}
                     >
-                        <SolicitudsList solicituds={solicituds}/>
+                        {trueque ?
+                            <div className="max-w-lg">
+                                <h2 className="text-2xl font-bold text-black dark:text-white mb-2 text-center">
+                                    Trueque
+                                </h2>
+                                <Trueque
+                                    trueque={trueque}
+                                />
+                            </div>
+                            :
+                            <SolicitudsList
+                                solicituds={solicituds}
+                                className={"w-80"}
+                            />
+                        }
                     </div>
-                )}
+                }
             </div>
         </AuthenticatedOrNormalLayout>
-    );
+    )
+        ;
 }
