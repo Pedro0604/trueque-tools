@@ -102,9 +102,6 @@ class ProductController extends Controller
             'product' => new ProductResource($product),
             'comments' => CommentResource::collection($product->comments->sortByDesc('created_at')),
             'solicituds' => SolicitudResource::collection($solicituds),
-            'canCreateComment' => Gate::allows('create', [Comment::class, $product]),
-            'canCreateSolicitud' => Gate::allows('create', [Solicitud::class, $product]),
-            'canListSolicituds' => Gate::allows('list', [Solicitud::class, $product]),
             'trueque' => $trueque,
         ]);
     }
