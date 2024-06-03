@@ -13,7 +13,6 @@ import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import Modal from "@/Components/Modal";
 import {useMemo} from "react";
 import CloseIcon from '@mui/icons-material/Close';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 
 export default function Create({
@@ -184,7 +183,7 @@ export default function Create({
                             Productos disponibles para trueque
                         </h2>
                         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                            <AttachMoneyIcon/>{CATEGORIES_TEXT_MAP[publishedProduct.category]}
+                            {CATEGORIES_TEXT_MAP[publishedProduct.category]}
                         </h2>
                         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 leading-tight">
                             <BusinessIcon/> {publishedProduct.sucursal.name}
