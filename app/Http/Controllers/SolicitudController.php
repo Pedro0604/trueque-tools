@@ -87,7 +87,7 @@ class SolicitudController extends Controller
 
         return to_route('product.show', $product->id)
             ->with('success', [
-                'message' => 'Trueque realizado exitosamente',
+                'message' => 'Trueque pactado exitosamente',
                 'key' => $created_trueque->id
             ]);
     }
