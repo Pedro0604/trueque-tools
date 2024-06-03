@@ -24,11 +24,11 @@ class SolicitudPolicy
      */
     public function list(User $user, Product $product): bool
     {
-        // Solo el dueño del producto puede listarlas (si no tienen un trueque)
         $productIsFromUser = $product->user_id === $user->id;
+//        $offeredProductIsFromUser = $product->offeredSolicituds->contains('offered_product_id', $product->id);
         $productDoesntHaveATrueque = !$product->hasTrueque;
 
-        return $productIsFromUser && $productDoesntHaveATrueque;
+        return ($productIsFromUser) && $productDoesntHaveATrueque;
     }
 
     /**
