@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Solicitud;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTruequeRequest extends FormRequest
@@ -22,7 +23,18 @@ class StoreTruequeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'solicitud_id' => [
+                'required',
+                'integer',
+                'exists:solicituds,id',
+                'unique:trueques,solicitud_id',
+                function ($attribute, $value, $fail) {
+                    $solicitud = Solicitud::find($value);
+                    if ($solicitud->was_rejected) {
+                        $fail('La solicitud fue rechazada.');
+                    }
+                },
+            ],
         ];
     }
 }
