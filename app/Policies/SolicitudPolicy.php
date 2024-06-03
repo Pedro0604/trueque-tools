@@ -23,7 +23,10 @@ class SolicitudPolicy
      */
     public function list(User $user, Product $product): bool
     {
-        return $user->id === $product->user->id;
+        $productIsFromUser = $product->user_id === $user->id;
+        $productDoesntHaveATrueque = !$product->hasTrueque;
+
+        return $productIsFromUser && $productDoesntHaveATrueque;
     }
 
     /**
