@@ -86,7 +86,11 @@ class ProductController extends Controller
                 ->whereDoesntHave('trueque')
                 ->orderByDesc('created_at')
                 ->get()
-            : [];
+            : $product->offeredSolicituds()
+                ->where('was_rejected', false)
+                ->get();
+
+        // TODO - HACER QUE SE MUESTREN LAS SOLICITUDES QUE SON DEL USUARIO DUEÑO DEL PRODUCTO OFERTADO (QUIZAS $USER->OFFERED_SOLICITUDS->WHERE(PUBLISHEDPRODUCTID, $PRODUCT->ID))
 
         $trueque = null;
         if ($product->hasTrueque) {
