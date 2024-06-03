@@ -29,7 +29,7 @@ class StoreSolicitudRequest extends FormRequest
                 'exists:products,id',
                 function ($attribute, $value, $fail) {
                     $product = Product::find($value);
-                    if ($product->hasTrueque()) {
+                    if ($product->hasTrueque) {
                         $fail('El producto publicado ya fue trocado.');
                     }
                 },
@@ -41,7 +41,7 @@ class StoreSolicitudRequest extends FormRequest
                 'different:published_product_id',
                 function ($attribute, $value, $fail) {
                     $product = Product::find($value);
-                    if ($product->hasTrueque()) {
+                    if ($product->hasTrueque) {
                         $fail('El producto ofertado ya fue trocado.');
                     }
                     if ($product->offeredSolicituds()->where('published_product_id', $this->published_product_id)->exists()) {
@@ -60,6 +60,20 @@ class StoreSolicitudRequest extends FormRequest
                     }
                 },
             ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'published_product_id.required' => 'El producto publicado es obligatorio.',
+            'published_product_id.exists' => 'El producto publicado no existe.',
+            'offered_product_id.required' => 'El producto ofertado es obligatorio.',
+            'offered_product_id.exists' => 'El producto ofertado no existe. Recargue la página y vuelva a intentarlo.',
+            'offered_product_id.different' => 'El producto ofertado no puede ser el mismo que el publicado.',
+            'meeting_date_time.required' => 'La fecha y hora del encuentro es obligatoria.',
+            'meeting_date_time.date' => 'La fecha y hora de encuentro debe ser una fecha válida.',
+            'meeting_date_time.after' => 'La fecha y hora de encuentro debe ser al menos 24hs después de la solicitud.',
         ];
     }
 }
