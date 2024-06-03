@@ -19,24 +19,26 @@ export default function Trueque({trueque, onClick = null, className = "", ...pro
                 rounded-lg p-4 cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500
                  ${className}`}
         >
-            <h2 className="text-2xl text-center">
-                {trueque.ended_at ?
-                    ("Trocado el: " + trueque.ended_at) :
-                    ("Fecha del trueque: " + trueque.solicitud.meeting_date_time)
-                }
-            </h2>
-            <div className="flex justify-center items-center gap-1 mt-1 text-gray-600 dark:text-custom-beige-300">
-                <BusinessIcon/>
-                <p className="text-sm sm:text-base lg:text-lg">
-                    {trueque.solicitud.published_product.sucursal.name}
-                </p>
-            </div>
-            <div className="flex justify-center items-center gap-1 mt-1 text-gray-600 dark:text-custom-beige-300">
-                <BusinessIcon/>
-                <p className="text-sm sm:text-base lg:text-lg">
-                    CATEGORIA:
-                    {trueque.solicitud.published_product.category}
-                </p>
+            <div className="mb-4">
+                <h2 className="text-2xl text-center">
+                    {trueque.ended_at ?
+                        ("Trocado el: " + trueque.ended_at) :
+                        ("Fecha del trueque: " + trueque.solicitud.meeting_date_time)
+                    }
+                </h2>
+                <div className="flex justify-center items-center gap-1 mt-1 text-gray-600 dark:text-custom-beige-300">
+                    <BusinessIcon/>
+                    <p className="text-sm sm:text-base lg:text-lg">
+                        {trueque.solicitud.published_product.sucursal.name}
+                    </p>
+                </div>
+                <div className="flex justify-center items-center gap-1 mt-1 text-gray-600 dark:text-custom-beige-300">
+                    <BusinessIcon/>
+                    <p className="text-sm sm:text-base lg:text-lg">
+                        CATEGORIA:
+                        {trueque.solicitud.published_product.category}
+                    </p>
+                </div>
             </div>
             <div className="flex gap-4">
                 <Product
