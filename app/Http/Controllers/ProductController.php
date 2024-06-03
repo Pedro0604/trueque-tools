@@ -28,7 +28,11 @@ class ProductController extends Controller
      */
     public function index(): Response|ResponseFactory
     {
-        $products = Product::all()->sortByDesc('created_at');
+        $products = Product::whereDoesntHave('offeredTrueque')
+            ->whereDoesntHave('publishedTrueque')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return Inertia::render('Product/Index', [
             'products' => ProductResource::collection($products),
             'productCreatedId' => session('product_created_id'),
@@ -85,8 +89,8 @@ class ProductController extends Controller
             : [];
 
         $trueque = null;
-        if($product->hasTrueque){
-            if($product->offeredTrueque()->exists()){
+        if ($product->hasTrueque) {
+            if ($product->offeredTrueque()->exists()) {
                 $trueque = $product->offeredTrueque;
             } else {
                 $trueque = $product->publishedTrueque;
