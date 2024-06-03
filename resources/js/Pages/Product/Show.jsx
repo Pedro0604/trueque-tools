@@ -15,18 +15,12 @@ export default function Show({
                                  product,
                                  comments,
                                  solicituds,
-                                 canCreateComment,
-                                 canListSolicituds = true,
-                                 canCreateSolicitud,
                                  trueque = null
                              }) {
     const {auth} = usePage().props;
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    canCreateComment = canCreateComment && !trueque;
-    canCreateSolicitud = canCreateSolicitud && !trueque;
 
     return (
         <AuthenticatedOrNormalLayout
@@ -111,7 +105,7 @@ export default function Show({
                                 Volver
                             </PrimaryButton>
 
-                            {canCreateSolicitud && (
+                            {product.canCreateSolicitud && (
                                 <PrimaryButton
                                     isLink
                                     href={route(
@@ -128,7 +122,7 @@ export default function Show({
                         </div>
                     </div>
                     <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
-                        {canCreateComment &&
+                        {product.canCreateComment &&
                             <Create productId={product.id}/>
                         }
                         <CommentsList
@@ -137,27 +131,27 @@ export default function Show({
                         />
                     </div>
                 </div>
-                {canListSolicituds &&
-                    <div
-                        className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg h-fit`}
-                    >
-                        {trueque ?
-                            <div className="max-w-lg">
-                                <h2 className="text-2xl font-bold text-black dark:text-white mb-2 text-center">
-                                    Trueque
-                                </h2>
-                                <Trueque
-                                    trueque={trueque}
-                                />
-                            </div>
-                            :
-                            <SolicitudsList
-                                solicituds={solicituds}
-                                className={"w-80"}
+                <div
+                    className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg h-fit
+                    ${(product.canViewTrueque && trueque) || product.canListSolicituds ? 'block' : 'hidden'}`}
+                >
+                    {product.canViewTrueque && trueque &&
+                        <div className="max-w-lg">
+                            <h2 className="text-2xl font-bold text-black dark:text-white mb-2 text-center">
+                                Trueque
+                            </h2>
+                            <Trueque
+                                trueque={trueque}
                             />
-                        }
-                    </div>
-                }
+                        </div>
+                    }
+                    {product.canListSolicituds &&
+                        <SolicitudsList
+                            solicituds={solicituds}
+                            className={"w-80"}
+                        />
+                    }
+                </div>
             </div>
         </AuthenticatedOrNormalLayout>
     )
