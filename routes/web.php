@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     // Solicitud routes
     Route::get('product/{product}/solicitud/create', [SolicitudController::class, 'create'])->name('solicitud.create');
     Route::post('product/{product}/solicitud', [SolicitudController::class, 'store'])->name('solicitud.store');
+    Route::post('product/{product}/solicitud/{solicitud}/accept', [SolicitudController::class, 'accept'])->name('solicitud.accept');
+    Route::post('product/{product}/solicitud/{solicitud}/reject', [SolicitudController::class, 'reject'])->name('solicitud.reject');
 
     // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN PRODUCTO
 //    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
