@@ -20,7 +20,7 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $product = Product::find($this->id);
+        $product = $this->resource;
         $published_trueque = $product->hasTrueque ? $product->publishedTrueque : null;
         $offered_trueque = $product->hasTrueque ? $product->offeredTrueque : null;
         $trueque = $published_trueque ?? $offered_trueque;
