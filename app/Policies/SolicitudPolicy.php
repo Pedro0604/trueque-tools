@@ -14,8 +14,9 @@ class SolicitudPolicy
      */
     public function view(User $user, Solicitud $solicitud): bool
     {
-        $solicitudIsFromUser = $user->id === $solicitud->publishedProduct()->user->id;
-        return $solicitudIsFromUser || $user->id === $solicitud->offeredProduct()->user->id;
+        // Solo los usuarios involucrados en la solicitud pueden verla
+        $solicitudIsFromUser = $user->id === $solicitud->publishedProduct->user->id;
+        return $solicitudIsFromUser || $user->id === $solicitud->offeredProduct->user->id;
     }
 
     /**
@@ -23,6 +24,7 @@ class SolicitudPolicy
      */
     public function list(User $user, Product $product): bool
     {
+        // Solo el dueño del producto puede listarlas (si no tienen un trueque)
         $productIsFromUser = $product->user_id === $user->id;
         $productDoesntHaveATrueque = !$product->hasTrueque;
 
