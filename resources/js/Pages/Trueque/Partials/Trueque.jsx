@@ -43,6 +43,7 @@ export default function Trueque({trueque, onClick = null, className = "", ...pro
                     product={trueque.solicitud.published_product}
                     withCategory={false}
                     withSucursal={false}
+                    minImageWidth={'min-w-40'}
                 />
                 <div className="flex flex-col justify-center items-center gap-4">
                     <div className="">
@@ -50,9 +51,10 @@ export default function Trueque({trueque, onClick = null, className = "", ...pro
                     </div>
                 </div>
                 <Product
+                    product={trueque.solicitud.offered_product}
                     withCategory={false}
                     withSucursal={false}
-                    product={trueque.solicitud.offered_product}
+                    minImageWidth={'min-w-40'}
                 />
             </div>
         </div>
