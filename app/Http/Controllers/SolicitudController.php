@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTruequeRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\SucursalResource;
 use App\Models\Product;
 use App\Models\Solicitud;
 use App\Http\Requests\StoreSolicitudRequest;
 use App\Models\Sucursal;
+use App\Models\Trueque;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
@@ -53,7 +55,7 @@ class SolicitudController extends Controller
         $created_solicitud = Solicitud::create($data);
 
         // TODO - DESPUÉS REDIRIGIR A MIS SOLICITUDES (?
-        return to_route('product.show', $data['published_product_id'])
+        return to_route('product.show', $product->id)
             ->with('success', [
                 'message' => 'Solicitud creada correctamente',
                 'key' => $created_solicitud->id
@@ -63,17 +65,39 @@ class SolicitudController extends Controller
     /**
      * Accept a product exchange request.
      */
-    public function accept(StoreSolicitudRequest $request)
+    public function accept(StoreTruequeRequest $request, Product $product, Solicitud $solicitud)
     {
-        //
+        $data = $request->validated();
+        $data['ended_at'] = null;
+        $data['is_failed'] = false;
+
+        $created_trueque = Trueque::create($data);
+
+        // Rechaza todas las solicitudes hacia el producto publicado
+        $product->solicituds()->where('solicitud_id', '<>', $solicitud->id)->update(['was_rejected' => true]);
+
+        // Rechaza todas las solicitudes donde se ofreció el producto publicado
+        $product->offeredSolicituds()->where('solicitud_id', '<>', $solicitud->id)->update(['was_rejected' => true]);
+
+        // Rechaza todas las solicitudes hacia el producto ofrecido
+        $solicitud->offeredProduct()->solicituds()->where('solicitud_id', '<>', $solicitud->id)->update(['was_rejected' => true]);
+
+        // Rechaza todas las solicitudes donde se ofreció el producto ofrecido
+        $solicitud->offeredProduct()->offeredSolicituds()->where('solicitud_id', '<>', $solicitud->id)->update(['was_rejected' => true]);
+
+        return to_route('product.show', $product->id)
+            ->with('success', [
+                'message' => 'Trueque realizado exitosamente',
+                'key' => $created_trueque->id
+            ]);
     }
 
     /**
      * Reject a product exchange request.
      */
-    public function reject(StoreSolicitudRequest $request, Solicitud $solicitud)
+    public function reject(Product $product)
     {
-        //
+        dd("chau");
     }
 
     /**
