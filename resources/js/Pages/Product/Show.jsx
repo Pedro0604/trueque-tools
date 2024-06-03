@@ -10,6 +10,7 @@ import CommentsList from "../Comment/CommentsList";
 import Create from "@/Pages/Comment/Create.jsx";
 import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
 import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
+import Divisor from "@/Components/Divisor.jsx";
 
 export default function Show({
                                  product,
@@ -125,6 +126,9 @@ export default function Show({
                         {product.canCreateComment &&
                             <Create productId={product.id}/>
                         }
+                        <Divisor
+                            className="my-4 "
+                        />
                         <CommentsList
                             comments={comments}
                             productUserId={product.user.id}
@@ -147,6 +151,7 @@ export default function Show({
                     }
                     {product.canListSolicituds &&
                         <SolicitudsList
+                            isAuthor={product.user.id === auth.user.id}
                             solicituds={solicituds}
                             className={"w-80"}
                         />
