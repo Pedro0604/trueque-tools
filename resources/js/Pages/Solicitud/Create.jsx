@@ -79,6 +79,10 @@ export default function Create({
                             product={publishedProduct}
                             withSucursal={false}
                         />
+                        <InputError
+                            message={errors.published_product_id}
+                            className="mt-2"
+                        />
                     </div>
                     <div className="flex flex-col justify-center items-center gap-4">
                         <div className="flex items-center gap-1 mt-1 text-gray-600 dark:text-custom-beige-300">
