@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
             SucursalSeeder::class,
             UserSeeder::class,
             ProductSeeder::class,
-            CommentSeeder::class,
             SolicitudSeeder::class,
             TruequeSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }
