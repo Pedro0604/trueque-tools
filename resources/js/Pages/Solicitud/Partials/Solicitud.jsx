@@ -1,14 +1,21 @@
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
-import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import {router} from "@inertiajs/react";
 import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 
 export default function Solicitud({solicitud}) {
-    const {offered_product} = solicitud;
+    const {offered_product, published_product} = solicitud;
 
     const showProduct = (productId) => {
         router.get(route('product.show', productId));
+    }
+
+    const acceptSolicitud = (solicitudId) => {
+        router.post(route('solicitud.accept', [published_product.id, solicitudId]), {solicitud_id: solicitudId})
+    }
+
+    const rejectSolicitud = (solicitudId) => {
+        router.post(route('solicitud.reject', [published_product.id, solicitudId]), {solicitud_id: solicitudId})
     }
 
     return (
@@ -53,11 +60,13 @@ export default function Solicitud({solicitud}) {
                     <div className="flex flex-col gap-2 mt-4">
                         <CyanButton
                             className="w-full justify-center"
+                            onClick={() => acceptSolicitud(solicitud.id)}
                         >
                             Aceptar
                         </CyanButton>
                         <DangerButton
                             className="w-full justify-center"
+                            onClick={() => rejectSolicitud(solicitud.id)}
                         >
                             Rechazar
                         </DangerButton>
