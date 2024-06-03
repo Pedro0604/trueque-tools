@@ -43,8 +43,6 @@ export default function Trueque({trueque, onClick = null, className = "", ...pro
                     product={trueque.solicitud.published_product}
                     withCategory={false}
                     withSucursal={false}
-                    onClick={() => {
-                    }}
                 />
                 <div className="flex flex-col justify-center items-center gap-4">
                     <div className="">
