@@ -101,29 +101,31 @@ export default function Show({
                                 <p className="text-gray-600 dark:text-custom-beige-600">
                                     Dirección: {product.sucursal.address}
                                 </p>
-                                {canCreateSolicitud && (
-                                    <PrimaryButton
-                                        isLink
-                                        href={route(
-                                            "solicitud.create",
-                                            product.id
-                                        )}
-                                        isFullRounded
-                                        className="mt-4 md:mt-8 py-2.5 align-middle justify-center w-full"
-                                        preserveScroll
-                                    >
-                                        Solicitar Trueque
-                                    </PrimaryButton>
-                                )}
                             </div>
                         </div>
+                        <div className="flex justify-between">
+                            <PrimaryButton
+                                onClick={() => window.history.back()}
+                                className="mt-4 md:mt-8"
+                            >
+                                Volver
+                            </PrimaryButton>
 
-                        <PrimaryButton
-                            onClick={() => window.history.back()}
-                            className="mt-4 md:mt-8"
-                        >
-                            Volver
-                        </PrimaryButton>
+                            {canCreateSolicitud && (
+                                <PrimaryButton
+                                    isLink
+                                    href={route(
+                                        "solicitud.create",
+                                        product.id
+                                    )}
+                                    isFullRounded
+                                    className="mt-4 md:mt-8 py-2.5 align-middle justify-center w-1/2"
+                                    preserveScroll
+                                >
+                                    Solicitar Trueque
+                                </PrimaryButton>
+                            )}
+                        </div>
                     </div>
                     <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
                         {canCreateComment &&
