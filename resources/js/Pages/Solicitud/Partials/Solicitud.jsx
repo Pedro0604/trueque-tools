@@ -28,11 +28,11 @@ export default function Solicitud({solicitud}) {
                         {offered_product.user.name}
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-500 ml-2">
-                        {solicitud.created_at}
+                        Fecha: {solicitud.meeting_date_time}
                     </div>
                 </div>
                 <div>
-                    <div className="font-semibold text-sm text-gray-600 dark:text-gray-500">
+                    <div className="font-semibold text-lg text-gray-600 dark:text-gray-300">
                         {offered_product.name}
                     </div>
                     <div
