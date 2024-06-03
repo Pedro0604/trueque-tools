@@ -1,7 +1,11 @@
 import Solicitud from "@/Pages/Solicitud/Partials/Solicitud.jsx";
 
-export default function SolicitudsList({solicituds}) {
+export default function SolicitudsList({solicituds, className, ...props}) {
     return (
+        <div
+            {...props}
+            className={className}
+        >
         solicituds.length > 0 ? (
             <>
                 <h2 className="text-2xl font-bold text-black dark:text-white mb-2 text-center">
@@ -24,5 +28,6 @@ export default function SolicitudsList({solicituds}) {
                 No hay solicitudes
             </h2>
         )
+        </div>
     );
 }
