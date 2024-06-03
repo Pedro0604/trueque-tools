@@ -21,7 +21,7 @@ class TruequeFactory extends Factory
         return [
             'ended_at' => fake()->dateTime(),
             'is_failed' => fake()->boolean(),
-            'solicitud_id' => fake()->unique()->numberBetween(1, Solicitud::count()),
+            'solicitud_id' => Solicitud::factory(),
         ];
     }
 }
