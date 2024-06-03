@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\SolicitudResource;
 use App\Http\Resources\SucursalResource;
+use App\Http\Resources\TruequeResource;
 use App\Models\Comment;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
@@ -75,13 +76,32 @@ class ProductController extends Controller
      */
     public function show(Product $product): Response|ResponseFactory
     {
+        $solicituds = $product->user->id === auth()->id() ?
+            $product->solicituds()
+                ->where('was_rejected', false)
+                ->whereDoesntHave('trueque')
+                ->orderByDesc('created_at')
+                ->get()
+            : [];
+
+        $trueque = null;
+        if($product->hasTrueque){
+            if($product->offeredTrueque()->exists()){
+                $trueque = $product->offeredTrueque;
+            } else {
+                $trueque = $product->publishedTrueque;
+            }
+            $trueque = new TruequeResource($trueque);
+        }
+
         return inertia('Product/Show', [
             'product' => new ProductResource($product),
             'comments' => CommentResource::collection($product->comments->sortByDesc('created_at')),
-            'solicituds' => $product->user->id === auth()->id() ? SolicitudResource::collection($product->solicituds->sortByDesc('created_at')) : [],
+            'solicituds' => SolicitudResource::collection($solicituds),
             'canCreateComment' => Gate::allows('create', [Comment::class, $product]),
             'canCreateSolicitud' => Gate::allows('create', [Solicitud::class, $product]),
             'canListSolicituds' => Gate::allows('list', [Solicitud::class, $product]),
+            'trueque' => $trueque,
         ]);
     }
 
