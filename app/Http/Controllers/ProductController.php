@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Solicitud;
 use App\Models\Sucursal;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
@@ -86,11 +87,15 @@ class ProductController extends Controller
                 ->whereDoesntHave('trueque')
                 ->orderByDesc('created_at')
                 ->get()
-            : $product->offeredSolicituds()
-                ->where('was_rejected', false)
-                ->get();
+            : [];
 
-        // TODO - HACER QUE SE MUESTREN LAS SOLICITUDES QUE SON DEL USUARIO DUEÑO DEL PRODUCTO OFERTADO (QUIZAS $USER->OFFERED_SOLICITUDS->WHERE(PUBLISHEDPRODUCTID, $PRODUCT->ID))
+//        User::find(auth()->id())
+//            ->products()
+//            ->whereHas('solicituds', function ($query) use ($product) {
+//                $query->where('published_product_id', $product->id)
+//                    ->where('was_rejected', false);
+//            })->orderByDesc('created_at')
+//            ->get();
 
         $trueque = null;
         if ($product->hasTrueque) {
