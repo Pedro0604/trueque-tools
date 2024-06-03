@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -20,6 +20,9 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        // Add conditional unique index on published_product_id, offered_product_id and was_rejected
+        DB::statement('CREATE UNIQUE INDEX solicituds_published_offered_not_rejected_unique ON solicituds (published_product_id, offered_product_id) WHERE was_rejected = false');
     }
 
     /**
@@ -27,6 +30,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Drop the conditional unique index
+        DB::statement('DROP INDEX solicituds_published_offered_not_rejected_unique');
         Schema::dropIfExists('solicituds');
     }
 };
