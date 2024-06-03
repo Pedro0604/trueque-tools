@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Product extends Model
@@ -50,18 +51,28 @@ class Product extends Model
 
     public function publishedTrueque(): HasOneThrough
     {
-        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'published_product_id');
+        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'published_product_id')->where('is_failed', false);
     }
 
     public function offeredTrueque(): HasOneThrough
     {
-        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'offered_product_id');
+        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'offered_product_id')->where('is_failed', false);
     }
 
-    protected function hasTrueque(): Attribute
+    public function publishedFailedTrueques(): HasManyThrough
+    {
+        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'published_product_id')->where('is_failed', true);
+    }
+
+    public function offeredFailedTrueques(): HasManyThrough
+    {
+        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'offered_product_id')->where('is_failed', true);
+    }
+
+    public function hasTrueque(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->publishedTrueque()->exists() || $this->offeredTrueque()->exists(),
+            get: fn() => $this->publishedTrueque()->exists() || $this->offeredTrueque()->exists(),
         );
     }
 }
