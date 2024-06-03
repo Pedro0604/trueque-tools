@@ -13,13 +13,17 @@ export default function SolicitudsList({solicituds, className, ...props}) {
                     </h2>
                     <div className="flex flex-col gap-4">
                         {solicituds.map((solicitud) => (
-                            <div
-                                key={solicitud.id}
-                            >
-                                <Solicitud
-                                    solicitud={solicitud}
-                                />
-                            </div>
+                            <>{
+                                solicitud.canBeViewed &&
+                                < div
+                                    key={solicitud.id}
+                                >
+                                    < Solicitud
+                                        solicitud={solicitud}
+                                    />
+                                </div>
+                            }
+                            </>
                         ))}
                     </div>
                 </>
