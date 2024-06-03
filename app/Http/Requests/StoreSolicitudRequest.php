@@ -40,12 +40,20 @@ class StoreSolicitudRequest extends FormRequest
                 'exists:products,id',
                 'different:published_product_id',
                 function ($attribute, $value, $fail) {
-                    $product = Product::find($value);
-                    if ($product->hasTrueque) {
+                    $publishedProduct = Product::find($this->published_product_id);
+                    $offeredProduct = Product::find($value);
+
+                    if ($offeredProduct->hasTrueque) {
                         $fail('El producto ofertado ya fue trocado.');
                     }
-                    if ($product->offeredSolicituds()->where('published_product_id', $this->published_product_id)->exists()) {
+                    if ($offeredProduct->offeredSolicituds()->where('published_product_id', $this->published_product_id)->exists()) {
                         $fail('El producto ofertado ya tiene una solicitud para el producto publicado.');
+                    }
+                    if ($publishedProduct->category != $offeredProduct->category) {
+                        $fail('Ambos productos deben tener la misma categoría.');
+                    }
+                    if ($offeredProduct->user_id != auth()->id()) {
+                        $fail('El producto ofertado debe pertenecerte.');
                     }
                 },
             ],
