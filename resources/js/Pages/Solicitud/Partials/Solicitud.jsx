@@ -3,6 +3,7 @@ import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import {router} from "@inertiajs/react";
 import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 import Product from "@/Pages/Product/Partials/Product.jsx";
+import Divisor from "@/Components/Divisor.jsx";
 
 export default function Solicitud({solicitud}) {
     const {offered_product, published_product} = solicitud;
@@ -40,7 +41,8 @@ export default function Solicitud({solicitud}) {
                         withCategory={false}
                         withSucursal={false}
                     />
-                    <div className="flex flex-col gap-2 mt-8">
+                    <Divisor/>
+                    <div className="flex flex-col gap-2 mt-6">
                         <CyanButton
                             className="w-full justify-center"
                             onClick={() => acceptSolicitud(solicitud.id)}
