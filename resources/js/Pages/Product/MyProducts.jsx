@@ -31,6 +31,7 @@ export default function MyProducts({auth, products, productCreatedId = null}) {
                 products={products}
                 productCreatedId={productCreatedId}
                 emptyListMessage="Todavía no cargaste ningún producto"
+                blurIfPaused
             />
         </AuthenticatedOrNormalLayout>
     )

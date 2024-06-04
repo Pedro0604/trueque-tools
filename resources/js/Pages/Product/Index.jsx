@@ -31,6 +31,7 @@ export default function Index({auth, products, productCreatedId = null}) {
                 products={products}
                 productCreatedId={productCreatedId}
                 emptyListMessage="No hay productos cargados en el sistema"
+                blurIfPaused
             />
         </AuthenticatedOrNormalLayout>
     )

@@ -3,7 +3,8 @@ import Product from "@/Pages/Product/Partials/Product.jsx";
 export default function ProductsList({
                                          products,
                                          productCreatedId = null,
-                                         emptyListMessage = "No hay productos cargados"
+                                         emptyListMessage = "No hay productos cargados",
+                                         blurIfPaused = false
                                      }) {
     return (
         <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
@@ -15,7 +16,7 @@ export default function ProductsList({
                             key={product.id}
                             created={productCreatedId === product.id}
                             product={product}
-                            blurIfPaused
+                            blurIfPaused={blurIfPaused}
                         />))}
                 </div>
                 : <>
