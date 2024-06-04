@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +18,7 @@ class Solicitud extends Model
         'published_product_id',
         'offered_product_id',
         'meeting_date_time',
-        'was_rejected',
+        'state',
     ];
 
     public function publishedProduct(): BelongsTo
@@ -33,5 +34,33 @@ class Solicitud extends Model
     public function trueque(): HasOne
     {
         return $this->hasOne(Trueque::class);
+    }
+
+    public function isNormal(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->state === 'normal',
+        );
+    }
+
+    public function wasAccepted(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->state === 'accepted',
+        );
+    }
+
+    public function isFrozen(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->state === 'frozen',
+        );
+    }
+
+    public function wasRejected(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->state === 'rejected',
+        );
     }
 }
