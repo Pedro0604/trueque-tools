@@ -80,18 +80,14 @@ class Product extends Model
 
     public function trueque(): Attribute
     {
-        $published_trueque = $this->hasTrueque ? $this->publishedTrueque : null;
-        $offered_trueque = $this->hasTrueque ? $this->offeredTrueque : null;
         return Attribute::make(
-            get: fn() =>  $published_trueque ?? $offered_trueque,
+            get: fn() => $this->publishedTrueque ?? $this->offeredTrueque,
         );
     }
 
     public function isPaused(): Attribute
     {
-        $published_trueque = $this->hasTrueque ? $this->publishedTrueque : null;
-        $offered_trueque = $this->hasTrueque ? $this->offeredTrueque : null;
-        $trueque = $published_trueque ?? $offered_trueque;
+        $trueque = $this->trueque;
         return Attribute::make(
             get: fn() => $this->hasTrueque && $trueque->ended_at === null,
         );
