@@ -14,6 +14,6 @@ class SolicitudSeeder extends Seeder
      */
     public function run(): void
     {
-        Solicitud::factory(rand(Product::count(), Product::count() * 2))->create();
+        Solicitud::factory(Product::count())->create();
     }
 }
