@@ -95,15 +95,7 @@ class ProductController extends Controller
 //            })->orderByDesc('created_at')
 //            ->get();
 
-        $trueque = null;
-        if ($product->hasTrueque) {
-            if ($product->offeredTrueque()->exists()) {
-                $trueque = $product->offeredTrueque;
-            } else {
-                $trueque = $product->publishedTrueque;
-            }
-            $trueque = new TruequeResource($trueque);
-        }
+        $trueque = $product->hasTrueque ? new TruequeResource($product->trueque): null;
 
         return inertia('Product/Show', [
             'product' => new ProductResource($product),
