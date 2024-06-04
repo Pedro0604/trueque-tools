@@ -6,17 +6,12 @@ use App\Http\Resources\ProductResource;
 use App\Http\Resources\SolicitudResource;
 use App\Http\Resources\SucursalResource;
 use App\Http\Resources\TruequeResource;
-use App\Models\Comment;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\CommentResource;
-use App\Models\Solicitud;
 use App\Models\Sucursal;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -29,9 +24,12 @@ class ProductController extends Controller
      */
     public function index(): Response|ResponseFactory
     {
-        $products = Product::whereDoesntHave('offeredTrueque')
-            ->whereDoesntHave('publishedTrueque')
-            ->orderBy('created_at', 'desc')
+        // Trae los productos que no tienen trueques finalizados
+        $products = Product::whereDoesntHave('offeredTrueque', function ($query) {
+                $query->whereNotNull('ended_at');
+            })->whereDoesntHave('publishedTrueque', function ($query) {
+                $query->whereNotNull('ended_at');
+            })->orderBy('created_at', 'desc')
             ->get();
 
         return Inertia::render('Product/Index', [
