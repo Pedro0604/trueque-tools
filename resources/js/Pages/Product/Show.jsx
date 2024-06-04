@@ -11,6 +11,7 @@ import Create from "@/Pages/Comment/Create.jsx";
 import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
 import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
 import Divisor from "@/Components/Divisor.jsx";
+import PersonIcon from "@mui/icons-material/Person.js";
 
 export default function Show({
                                  product,
@@ -42,9 +43,12 @@ export default function Show({
                         className={`mb-1 text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-t-lg rounded-b-sm`}
                     >
                         <div className="flex justify-between items-center mb-1 h-6">
-                            <p className="text-gray-600 dark:text-custom-beige-500 text-sm">
-                                {product.user.name}
-                            </p>
+                            <div className="flex items-center">
+                                <PersonIcon className="text-gray-300 mr-1"/>
+                                <p className="text-gray-600 dark:text-custom-beige-500 text-sm">
+                                    {product.user.name}
+                                </p>
+                            </div>
                             {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
                             {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
                         </div>
