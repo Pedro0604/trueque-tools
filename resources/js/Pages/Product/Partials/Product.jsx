@@ -57,7 +57,7 @@ export default function Product({
                 {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
             </div>
             <div className="flex gap-2 sm:gap-4 sm:flex-col overflow-hidden">
-                <div className={`w - 2 / 5 ${minImageWidth} sm:w-full`}>
+                <div className={`w-2/5 ${minImageWidth} sm:w-full`}>
                     {product.image_path ?
                         <>
                             {isLoading &&
@@ -91,7 +91,7 @@ export default function Product({
                         </div>
                     }
                 </div>
-                <div className="mt-4">
+                <div>
                     <p className="text-xs sm:text-base text-gray-600 dark:text-custom-beige-600 text-ellipsis line-clamp-1">{product.name}</p>
                     {withCategory && <p className="text-sm sm:text-xl my-2">{CATEGORIES_TEXT_MAP[product.category]}</p>}
                     {withSucursal && <div
