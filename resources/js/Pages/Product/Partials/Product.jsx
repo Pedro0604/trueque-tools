@@ -3,6 +3,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import {router} from "@inertiajs/react";
 import {useEffect, useState} from "react";
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
+import PersonIcon from '@mui/icons-material/Person';
 
 export default function Product({
                                     product,
@@ -48,7 +49,11 @@ export default function Product({
         >
             <div className="flex justify-between items-center mb-1">
                 {withUserName &&
-                    <p className="text-gray-600 dark:text-custom-beige-600 text-sm">{product.user.name}</p>}
+                    <div className="flex items-center">
+                        <PersonIcon className="text-gray-300 mr-1"/>
+                        <p className="text-gray-600 dark:text-custom-beige-600 text-sm">{product.user.name}</p>
+                    </div>
+                }
                 {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
                 {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
             </div>
