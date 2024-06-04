@@ -50,10 +50,10 @@ class Solicitud extends Model
         );
     }
 
-    public function isFrozen(): Attribute
+    public function isPaused(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->state === 'frozen',
+            get: fn() => $this->state === 'paused',
         );
     }
 

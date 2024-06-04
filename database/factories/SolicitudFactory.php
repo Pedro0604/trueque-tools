@@ -21,7 +21,7 @@ class SolicitudFactory extends Factory
             'published_product_id' => Product::factory(),
             'offered_product_id' => Product::factory(),
             'meeting_date_time' => $this->faker->dateTimeBetween('now', '+1 year'),
-            'state' => $this->faker->randomElement(['normal', 'accepted', 'frozen', 'rejected']),
+            'state' => $this->faker->randomElement(['normal', 'accepted', 'paused', 'rejected']),
         ];
     }
 }

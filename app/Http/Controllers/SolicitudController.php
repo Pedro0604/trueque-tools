@@ -75,17 +75,17 @@ class SolicitudController extends Controller
         DB::transaction(function () use ($product, $data, $solicitud) {
             $created_trueque = Trueque::create($data);
 
-            // Congela todas las solicitudes hacia el producto publicado
-            $product->solicituds()->update(['state' => 'frozen']);
+            // Pausa todas las solicitudes hacia el producto publicado
+            $product->solicituds()->update(['state' => 'paused']);
 
-            // Congela todas las solicitudes donde se ofreció el producto publicado
-            $product->offeredSolicituds()->update(['state' => 'frozen']);
+            // Pausa todas las solicitudes donde se ofreció el producto publicado
+            $product->offeredSolicituds()->update(['state' => 'paused']);
 
-            // Congela todas las solicitudes hacia el producto ofrecido
-            $solicitud->offeredProduct->solicituds()->update(['state' => 'frozen']);
+            // Pausa todas las solicitudes hacia el producto ofrecido
+            $solicitud->offeredProduct->solicituds()->update(['state' => 'paused']);
 
-            // Congela todas las solicitudes donde se ofreció el producto ofrecido
-            $solicitud->offeredProduct->offeredSolicituds()->update(['state' => 'frozen']);
+            // Pausa todas las solicitudes donde se ofreció el producto ofrecido
+            $solicitud->offeredProduct->offeredSolicituds()->update(['state' => 'paused']);
 
             $solicitud->update(['state' => 'accepted']);
 
