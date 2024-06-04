@@ -52,9 +52,9 @@ export default function Authenticated({user = null, header, children}) {
                         <Dropdown.Link href={route('product.myProducts')} method="get" as="button">
                             Mis productos
                         </Dropdown.Link>
-                        {/*<Dropdown.Link href={route('logout')} method="post" as="button">
+                        <Dropdown.Link href={route('trueque.myTrueques')} method="get" as="button">
                             Mis trueques
-                        </Dropdown.Link>*/}
+                        </Dropdown.Link>
                         <Dropdown.Link href={route('logout')} method="post" as="button">
                             Cerrar sesión
                         </Dropdown.Link>
@@ -73,6 +73,9 @@ export default function Authenticated({user = null, header, children}) {
                         {/*<ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>*/}
                         <ResponsiveNavLink method="get" href={route('product.myProducts')} as="button">
                             Mis productos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink method="get" href={route('trueque.myTrueques')} as="button">
+                            Mis trueques
                         </ResponsiveNavLink>
                         <ResponsiveNavLink method="post" href={route('logout')} as="button">
                             Cerrar sesión

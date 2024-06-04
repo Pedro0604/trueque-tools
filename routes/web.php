@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::post('product/{product}/solicitud/{solicitud}/accept', [SolicitudController::class, 'accept'])->name('solicitud.accept');
     Route::post('product/{product}/solicitud/{solicitud}/reject', [SolicitudController::class, 'reject'])->name('solicitud.reject');
 
+    // Trueque routes
+    Route::get('/trueque/my-trueques', [\App\Http\Controllers\TruequeController::class, 'myTrueques'])->name('trueque.myTrueques');
+
     // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN PRODUCTO
 //    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
 //    Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
