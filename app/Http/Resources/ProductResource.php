@@ -35,6 +35,7 @@ class ProductResource extends JsonResource
             'user' => new UserResource($this->user),
             'sucursal' => new SucursalResource($this->sucursal),
             'hasTrueque' => $this->hasTrueque,
+            'isPaused' => $this->hasTrueque && $trueque->ended_at === null,
             'canCreateComment' => Gate::allows('create', [Comment::class, $product]),
             'canCreateSolicitud' => Gate::allows('create', [Solicitud::class, $product]),
             'canListSolicituds' => Gate::allows('list', [Solicitud::class, $product]),
