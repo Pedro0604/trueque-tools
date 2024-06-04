@@ -14,6 +14,7 @@ import Modal from "@/Components/Modal";
 import {useMemo} from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
+import Divisor from "@/Components/Divisor.jsx";
 
 export default function Create({
                                    publishedProduct,
@@ -182,9 +183,17 @@ export default function Create({
                         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 leading-tight">
                             Productos disponibles para trueque
                         </h2>
+                        <Divisor
+                            vertical
+                            className="h-8"
+                        />
                         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 leading-tight">
                             {CATEGORIES_TEXT_MAP[publishedProduct.category]}
                         </h2>
+                        <Divisor
+                            vertical
+                            className="h-8"
+                        />
                         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 leading-tight">
                             <BusinessIcon/> {publishedProduct.sucursal.name}
                         </h2>
