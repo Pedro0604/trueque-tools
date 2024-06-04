@@ -21,9 +21,6 @@ class ProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         $product = $this->resource;
-        $published_trueque = $product->hasTrueque ? $product->publishedTrueque : null;
-        $offered_trueque = $product->hasTrueque ? $product->offeredTrueque : null;
-        $trueque = $published_trueque ?? $offered_trueque;
 
         return [
             'id' => $this->id,
@@ -39,7 +36,7 @@ class ProductResource extends JsonResource
             'canCreateComment' => Gate::allows('create', [Comment::class, $product]),
             'canCreateSolicitud' => Gate::allows('create', [Solicitud::class, $product]),
             'canListSolicituds' => Gate::allows('list', [Solicitud::class, $product]),
-            'canViewTrueque' => $this->hasTrueque ? Gate::allows('view', $trueque) : false,
+            'canViewTrueque' => $this->hasTrueque ? Gate::allows('view', $this->trueque) : false,
         ];
     }
 }
