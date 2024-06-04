@@ -15,6 +15,7 @@ export default function ProductsList({
                             key={product.id}
                             created={productCreatedId === product.id}
                             product={product}
+                            blurIfPaused
                         />))}
                 </div>
                 : <>

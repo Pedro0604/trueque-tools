@@ -14,6 +14,7 @@ export default function Product({
                                     withCategory = true,
                                     minImageWidth = "min-w-24",
                                     className = "",
+                                    blurIfPaused = false,
                                     ...props
                                 }) {
     const [isPulsing, setIsPulsing] = useState(created);
@@ -38,81 +39,94 @@ export default function Product({
     }, [created]);
 
     return (
-
         <div
-            {...props}
+            className="relative cursor-pointer"
             onClick={onClick ? onClick : () => showProduct(product.id)}
-            className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
-                transition-all rounded-lg p-4 cursor-pointer border border-custom-beige-900 dark:border-custom-beige-500
-                ${isPulsing ? 'animate-pulse' : ''} ${className}`}
         >
-            <div className="flex justify-between items-center mb-1">
-                {withUserName &&
-                    <div className="flex items-center">
-                        <PersonIcon className="text-gray-300 mr-1"/>
-                        <p className="text-gray-600 dark:text-custom-beige-600 text-sm">{product.user.name}</p>
-                    </div>
-                }
-                {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
-                {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
-            </div>
-            <div className="flex gap-2 sm:gap-4 sm:flex-col overflow-hidden">
-                <div className={`w-2/5 ${minImageWidth} sm:w-full`}>
-                    {product.image_path ?
-                        <>
-                            {isLoading &&
-                                <div
-                                    className="flex items-center justify-center w-full aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
-                                    <p className="hidden sm:inline">Cargando imagen...</p>
-                                    <span className="sm:hidden">
+            {blurIfPaused && product.isPaused &&
+                <div
+                    className="w-2/3 absolute top-1/2 left-1/2 trans z-40 font-bold text-xl
+                    bg-white dark:bg-gray-300 text-gray-200 dark:text-gray-800 text-center px-3 py-2 rounded-lg
+                    transform -translate-x-1/2 -translate-y-1/2"
+                >
+                    <h3>El producto esta pausado</h3>
+                </div>
+            }
+            <div
+                {...props}
+                className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
+                transition-all rounded-lg p-4 border border-custom-beige-900 dark:border-custom-beige-500
+                ${isPulsing ? 'animate-pulse' : ''} ${(blurIfPaused && product.isPaused) ? 'blur-sm' : ''} ${className}`}
+            >
+                <div className="flex justify-between items-center mb-1">
+                    {withUserName &&
+                        <div className="flex items-center">
+                            <PersonIcon className="text-gray-300 mr-1"/>
+                            <p className="text-gray-600 dark:text-custom-beige-600 text-sm">{product.user.name}</p>
+                        </div>
+                    }
+                    {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
+                    {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
+                </div>
+                <div className="flex gap-2 sm:gap-4 sm:flex-col overflow-hidden">
+                    <div className={`w-2/5 ${minImageWidth} sm:w-full`}>
+                        {product.image_path ?
+                            <>
+                                {isLoading &&
+                                    <div
+                                        className="flex items-center justify-center w-full aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
+                                        <p className="hidden sm:inline">Cargando imagen...</p>
+                                        <span className="sm:hidden">
                                         <ImageNotSupportedIcon
                                             sx={{fontSize: 32}}
                                         />
                                     </span>
-                                </div>
-                            }
-                            <img
-                                src={product.image_path}
-                                alt={product.name}
-                                onLoad={handleImageLoad}
-                                style={{display: isLoading ? 'none' : 'block'}}
-                                className={`object-cover w-full aspect-square rounded-md  border border-custom-beige-900 dark:border-custom-beige-500`}
-                            />
-                        </>
-                        :
-                        <div
-                            className="flex items-center justify-center w-full aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
-                            <p className="hidden sm:inline">IMAGEN NO ENCONTRADA</p>
-                            <span className="sm:hidden">
+                                    </div>
+                                }
+                                <img
+                                    src={product.image_path}
+                                    alt={product.name}
+                                    onLoad={handleImageLoad}
+                                    style={{display: isLoading ? 'none' : 'block'}}
+                                    className={`object-cover w-full aspect-square rounded-md  border border-custom-beige-900 dark:border-custom-beige-500`}
+                                />
+                            </>
+                            :
+                            <div
+                                className="flex items-center justify-center w-full aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
+                                <p className="hidden sm:inline">IMAGEN NO ENCONTRADA</p>
+                                <span className="sm:hidden">
                                 <ImageNotSupportedIcon
                                     sx={{fontSize: 32}}
                                 />
                             </span>
-                        </div>
-                    }
-                </div>
-                <div>
-                    <p className="text-xs sm:text-base text-gray-600 dark:text-custom-beige-600 text-ellipsis line-clamp-1">{product.name}</p>
-                    {withCategory && <p className="text-sm sm:text-xl my-2">{CATEGORIES_TEXT_MAP[product.category]}</p>}
-                    {withSucursal && <div
-                        className="hidden sm:flex items-center gap-1 mt-1"
-                    >
-                        <BusinessIcon/>
-                        <p className="text-sm sm:text-base text-gray-600 dark:text-custom-beige-600">
-                            {product.sucursal.name}
-                        </p>
+                            </div>
+                        }
                     </div>
-                    }
+                    <div>
+                        <p className="text-xs sm:text-base text-gray-600 dark:text-custom-beige-600 text-ellipsis line-clamp-1">{product.name}</p>
+                        {withCategory &&
+                            <p className="text-sm sm:text-xl my-2">{CATEGORIES_TEXT_MAP[product.category]}</p>}
+                        {withSucursal && <div
+                            className="hidden sm:flex items-center gap-1 mt-1"
+                        >
+                            <BusinessIcon/>
+                            <p className="text-sm sm:text-base text-gray-600 dark:text-custom-beige-600">
+                                {product.sucursal.name}
+                            </p>
+                        </div>
+                        }
+                    </div>
                 </div>
-            </div>
-            <p className="sm:hidden text-gray-600 text-xs sm:text-sm dark:text-custom-beige-600 text-ellipsis line-clamp-2 my-2">{product.description}</p>
-            <div
-                className="flex sm:hidden items-center gap-1 mt-1"
-            >
-                <BusinessIcon/>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-custom-beige-600">
-                    {product.sucursal.name}
-                </p>
+                <p className="sm:hidden text-gray-600 text-xs sm:text-sm dark:text-custom-beige-600 text-ellipsis line-clamp-2 my-2">{product.description}</p>
+                <div
+                    className="flex sm:hidden items-center gap-1 mt-1"
+                >
+                    <BusinessIcon/>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-custom-beige-600">
+                        {product.sucursal.name}
+                    </p>
+                </div>
             </div>
         </div>
     )
