@@ -128,11 +128,13 @@ export default function Show({
                     </div>
                     <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
                         {product.canCreateComment &&
-                            <Create productId={product.id}/>
+                            <>
+                                <Create productId={product.id}/>
+                                <Divisor
+                                    className="my-4 "
+                                />
+                            </>
                         }
-                        <Divisor
-                            className="my-4 "
-                        />
                         <CommentsList
                             comments={comments}
                             productUserId={product.user.id}
