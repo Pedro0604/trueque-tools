@@ -27,13 +27,7 @@ class StoreTruequeRequest extends FormRequest
                 'required',
                 'integer',
                 'exists:solicituds,id',
-                'unique:trueques,solicitud_id',
-                function ($attribute, $value, $fail) {
-                    $solicitud = Solicitud::find($value);
-                    if ($solicitud->was_rejected) {
-                        $fail('La solicitud fue rechazada.');
-                    }
-                },
+                'unique:trueques,solicitud_id'
             ],
         ];
     }
