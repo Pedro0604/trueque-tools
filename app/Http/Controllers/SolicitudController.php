@@ -51,7 +51,7 @@ class SolicitudController extends Controller
         Gate::authorize('create', [Solicitud::class, $product]);
 
         $data = $request->validated();
-        $data['was_rejected'] = false;
+        $data['state'] = 'normal';
 
         $created_solicitud = Solicitud::create($data);
 
@@ -75,19 +75,19 @@ class SolicitudController extends Controller
         DB::transaction(function () use ($product, $data, $solicitud) {
             $created_trueque = Trueque::create($data);
 
-            // Rechaza todas las solicitudes hacia el producto publicado
-            $product->solicituds()->update(['was_rejected' => true]);
+            // Congela todas las solicitudes hacia el producto publicado
+            $product->solicituds()->update(['state' => 'frozen']);
 
-            // Rechaza todas las solicitudes donde se ofreció el producto publicado
-            $product->offeredSolicituds()->update(['was_rejected' => true]);
+            // Congela todas las solicitudes donde se ofreció el producto publicado
+            $product->offeredSolicituds()->update(['state' => 'frozen']);
 
-            // Rechaza todas las solicitudes hacia el producto ofrecido
-            $solicitud->offeredProduct->solicituds()->update(['was_rejected' => true]);
+            // Congela todas las solicitudes hacia el producto ofrecido
+            $solicitud->offeredProduct->solicituds()->update(['state' => 'frozen']);
 
-            // Rechaza todas las solicitudes donde se ofreció el producto ofrecido
-            $solicitud->offeredProduct->offeredSolicituds()->update(['was_rejected' => true]);
+            // Congela todas las solicitudes donde se ofreció el producto ofrecido
+            $solicitud->offeredProduct->offeredSolicituds()->update(['state' => 'frozen']);
 
-            $solicitud->update(['was_rejected' => false]);
+            $solicitud->update(['state' => 'accepted']);
 
             return to_route('product.show', $product->id)
                 ->with('success', [

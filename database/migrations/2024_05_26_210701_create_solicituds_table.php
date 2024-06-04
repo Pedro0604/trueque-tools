@@ -21,8 +21,8 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // Add conditional unique index on published_product_id, offered_product_id and was_rejected
-        DB::statement('CREATE UNIQUE INDEX solicituds_published_offered_not_rejected_unique ON solicituds (published_product_id, offered_product_id) WHERE was_rejected = false');
+        // Add conditional unique index on published_product_id, offered_product_id and was rejected
+        DB::statement("CREATE UNIQUE INDEX solicituds_published_offered_not_rejected_unique ON solicituds (published_product_id, offered_product_id) WHERE state = 'rejected'");
     }
 
     /**

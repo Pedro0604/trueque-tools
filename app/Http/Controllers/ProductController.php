@@ -83,7 +83,7 @@ class ProductController extends Controller
     {
         $solicituds = $product->user->id === auth()->id() ?
             $product->solicituds()
-                ->where('was_rejected', false)
+                ->whereNotIn('state', ['accepted', 'rejected'])
                 ->whereDoesntHave('trueque')
                 ->orderByDesc('created_at')
                 ->get()
@@ -93,7 +93,7 @@ class ProductController extends Controller
 //            ->products()
 //            ->whereHas('solicituds', function ($query) use ($product) {
 //                $query->where('published_product_id', $product->id)
-//                    ->where('was_rejected', false);
+//                    ->whereNotIn('state', ['accepted', 'rejected']);
 //            })->orderByDesc('created_at')
 //            ->get();
 
