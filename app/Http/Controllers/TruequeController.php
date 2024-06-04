@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TruequeResource;
 use App\Models\Trueque;
 use App\Http\Requests\StoreTruequeRequest;
 use App\Http\Requests\UpdateTruequeRequest;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 class TruequeController extends Controller
 {
@@ -55,4 +58,22 @@ class TruequeController extends Controller
     {
         //
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function myTrueques(): Response|ResponseFactory
+    {
+        $trueques = Trueque::all()
+            ->sortByDesc('created_at')
+            ->where('user_id', auth()->id())
+            ->union(Trueque::all()
+                ->sortByDesc('created_at')
+                ->where('solicitud_id', auth()->id()));
+        return inertia('Trueque/MyTrueques', [
+            'trueques' => TruequeResource::collection($trueques),
+            'truequeCreatedId' => session('trueque_created_id'),
+        ]);
+    }
+
 }
