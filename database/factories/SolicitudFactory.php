@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Product;
-use App\Models\Solicitud;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +21,7 @@ class SolicitudFactory extends Factory
             'published_product_id' => Product::factory(),
             'offered_product_id' => Product::factory(),
             'meeting_date_time' => $this->faker->dateTimeBetween('now', '+1 year'),
-            'was_rejected' => $this->faker->boolean(),
+            'state' => $this->faker->randomElement(['normal', 'accepted', 'frozen', 'rejected']),
         ];
     }
 }
