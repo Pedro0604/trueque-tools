@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TruequeResource;
+use App\Models\Product;
+use App\Models\Solicitud;
 use App\Models\Trueque;
 use App\Http\Requests\StoreTruequeRequest;
 use App\Http\Requests\UpdateTruequeRequest;
+use App\Models\User;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 
@@ -30,9 +33,11 @@ class TruequeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Trueque $trueque)
+    public function show(Trueque $trueque): Response|ResponseFactory
     {
-        //
+        return inertia('Trueque/show', [
+            'trueque' => new TruequeResource($trueque),
+        ]);
     }
 
     /**
@@ -64,12 +69,12 @@ class TruequeController extends Controller
      */
     public function myTrueques(): Response|ResponseFactory
     {
-        $trueques = Trueque::all()
-            ->sortByDesc('created_at')
-            ->where('user_id', auth()->id())
-            ->union(Trueque::all()
-                ->sortByDesc('created_at')
-                ->where('solicitud_id', auth()->id()));
+        $trueques = Trueque::whereHas('solicitud.publishedProduct', function ($query) {
+            $query->where('user_id', auth()->id());
+        })->orWhereHas('solicitud.offeredProduct', function ($query) {
+            $query->where('user_id', auth()->id());
+        })->get();
+
         return inertia('Trueque/MyTrueques', [
             'trueques' => TruequeResource::collection($trueques),
             'truequeCreatedId' => session('trueque_created_id'),

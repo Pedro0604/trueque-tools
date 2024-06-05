@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
 
     // Trueque routes
     Route::get('/trueque/my-trueques', [\App\Http\Controllers\TruequeController::class, 'myTrueques'])->name('trueque.myTrueques');
+    Route::get('/trueque/{trueque}', [\App\Http\Controllers\TruequeController::class, 'show'])->name('trueque.show');
 
     // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN PRODUCTO
 //    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
