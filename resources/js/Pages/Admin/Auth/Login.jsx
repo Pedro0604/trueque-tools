@@ -10,7 +10,7 @@ import Divisor from "@/Components/Divisor.jsx";
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset, setError } =
         useForm({
-            email: "",
+            dni: "",
             password: "",
             remember: false,
         });
@@ -24,12 +24,12 @@ export default function Login({ status, canResetPassword }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("login"));
+        post(route("admin.login.store"));
     };
 
     return (
         <GuestLayout>
-            <Head title="Inicio de sesión" />
+            <Head title="Inicio de sesión de administrador" />
 
             {status && (
                 <div className="mb-4 font-medium text-sm text-green-600">
@@ -39,21 +39,21 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Correo electrónico" />
+                    <InputLabel htmlFor="dni" value="DNI" />
 
                     <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
+                        id="dni"
+                        type="text"
+                        name="dni"
+                        value={data.dni}
                         className="mt-1 block w-full"
                         autoComplete="username"
                         isFocused={true}
-                        invalid={errors.email}
-                        onChange={(e) => setData("email", e.target.value)}
+                        invalid={errors.dni}
+                        onChange={(e) => setData("dni", e.target.value)}
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.dni} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
@@ -86,13 +86,6 @@ export default function Login({ status, canResetPassword }) {
                 {/*</div>*/}
 
                 <div className="flex flex-col-reverse sm:flex-row gap-6 sm:gap-3 items-center justify-end mt-4">
-                    <Link
-                        href={route("register")}
-                        className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    >
-                        ¿Todavía no te registraste?
-                    </Link>
-
                     {/*TODO - DESCOMENTAR SI VAMOS A USAR EL RESET PASSWORD*/}
                     {/*{canResetPassword && (*/}
                     {/*    <Link*/}
