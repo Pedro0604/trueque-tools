@@ -51,59 +51,71 @@ class Product extends Model
         return $this->hasMany(Solicitud::class, 'offered_product_id');
     }
 
-    public function publishedTrueque(): HasOneThrough
+    public function publishedTrueques(): HasManyThrough
     {
-        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'published_product_id')
-            ->whereNull('ended_at')
-            ->orWhere(function ($query) {
-                $query->whereNotNull('ended_at')
-                    ->where('is_failed', false);
-            });
+        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'published_product_id');
     }
 
-    public function offeredTrueque(): HasOneThrough
+    public function offeredTrueques(): HasManyThrough
     {
-        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'offered_product_id')
-            ->whereNull('ended_at')
-            ->orWhere(function ($query) {
-                $query->whereNotNull('ended_at')
-                    ->where('is_failed', false);
-            });
+        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'offered_product_id');
     }
 
-    public function publishedFailedTrueques(): HasManyThrough
-    {
-        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'published_product_id')
-            ->where('is_failed', true)
-            ->whereNotNull('ended_at');
-    }
-
-    public function offeredFailedTrueques(): HasManyThrough
-    {
-        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'offered_product_id')
-            ->where('is_failed', true)
-            ->whereNotNull('ended_at');
-    }
-
-    public function hasTrueque(): Attribute
+    public function hasPendingTrueque(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->publishedTrueque()->exists() || $this->offeredTrueque()->exists(),
+            get: fn() => $this->publishedTrueques()
+                    ->whereNull('ended_at')
+                    ->exists() ||
+                $this->offeredTrueques()
+                    ->whereNull('ended_at')
+                    ->exists(),
+        );
+    }
+
+    public function hasSuccessfulTrueque(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->publishedTrueques()
+                    ->whereNotNull('ended_at')
+                    ->where('is_failed', false)
+                    ->exists() ||
+                $this->offeredTrueques()
+                    ->whereNotNull('ended_at')
+                    ->where('is_failed', false)
+                    ->exists(),
         );
     }
 
     public function trueque(): Attribute
     {
-        return Attribute::make(
-            get: fn() => $this->publishedTrueque ?? $this->offeredTrueque,
-        );
-    }
-
-    public function isPaused(): Attribute
-    {
-        $trueque = $this->trueque;
-        return Attribute::make(
-            get: fn() => $this->hasTrueque && $trueque->ended_at === null,
-        );
+        if ($this->hasPendingTrueque()) {
+            return Attribute::make(
+                get: fn() => $this->publishedTrueques()
+                    ->whereNull('ended_at')
+                    ->get()
+                    ??
+                    $this->offeredTrueques()
+                        ->whereNull('ended_at')
+                        ->get()
+            );
+        } elseif ($this->hasSuccessfulTrueque()) {
+            return Attribute::make(
+                get: fn() => $this->publishedTrueques()
+                        ->whereNotNull('ended_at')
+                        ->where('is_failed', false)
+                        ->get()
+                    ??
+                    $this->offeredTrueques()
+                        ->whereNotNull('ended_at')
+                        ->where('is_failed', false)
+                        ->get()
+            );
+        }
+        else{
+            return Attribute::make(
+                get: fn() => null,
+            );
+        }
     }
 }
