@@ -53,22 +53,36 @@ class Product extends Model
 
     public function publishedTrueque(): HasOneThrough
     {
-        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'published_product_id')->where('is_failed', false);
+        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'published_product_id')
+            ->whereNull('ended_at')
+            ->orWhere(function ($query) {
+                $query->whereNotNull('ended_at')
+                    ->where('is_failed', false);
+            });
     }
 
     public function offeredTrueque(): HasOneThrough
     {
-        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'offered_product_id')->where('is_failed', false);
+        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'offered_product_id')
+            ->whereNull('ended_at')
+            ->orWhere(function ($query) {
+                $query->whereNotNull('ended_at')
+                    ->where('is_failed', false);
+            });
     }
 
     public function publishedFailedTrueques(): HasManyThrough
     {
-        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'published_product_id')->where('is_failed', true);
+        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'published_product_id')
+            ->where('is_failed', true)
+            ->whereNotNull('ended_at');
     }
 
     public function offeredFailedTrueques(): HasManyThrough
     {
-        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'offered_product_id')->where('is_failed', true);
+        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'offered_product_id')
+            ->where('is_failed', true)
+            ->whereNotNull('ended_at');
     }
 
     public function hasTrueque(): Attribute
