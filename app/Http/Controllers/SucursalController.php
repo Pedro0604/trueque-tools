@@ -15,7 +15,12 @@ class SucursalController extends Controller
      */
     public function index()
     {
-        //
+        // Obtener todas las sucursales
+        $sucursals = Sucursal::all();
+
+        return Inertia::render('Sucursal/Index', [
+            'sucursals' => SucursalResource::collection($sucursals)
+        ]);
     }
 
     /**
@@ -43,7 +48,7 @@ class SucursalController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Index the form for editing the specified resource.
      */
     public function edit(Sucursal $sucursal)
     {
