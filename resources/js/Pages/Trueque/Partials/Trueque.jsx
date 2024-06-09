@@ -2,13 +2,14 @@ import Product from "@/Pages/Product/Partials/Product.jsx";
 import BusinessIcon from "@mui/icons-material/Business";
 import MultipleStopIcon from "@mui/icons-material/MultipleStop";
 import {Chip} from "@mui/material";
+import {router} from "@inertiajs/react";
 
-export default function Trueque({trueque, onClick = null, className = "", ...props}) {
+export default function Trueque({trueque, onClick = null, className = "", withCategory = false, withSucursal = false, ...props}) {
 
     const showTrueque = (truequeId) => {
-        console.log("Mostrar trueque con id: " + truequeId);
-        console.error("DESCOMENTARRRRRR")
-        // router.get(route('trueque.show', truequeId));
+        //console.log("Mostrar trueque con id: " + truequeId);
+        //console.error("DESCOMENTARRRRRR")
+        router.get(route('trueque.show', truequeId));
     }
 
     let borderColor = 'border-custom-blue-700 dark:border-custom-blue-400';
@@ -64,8 +65,8 @@ export default function Trueque({trueque, onClick = null, className = "", ...pro
                 <div className="flex-1 flex justify-center">
                     <Product
                         product={trueque.solicitud.published_product}
-                        withCategory={false}
-                        withSucursal={false}
+                        withCategory={withCategory}
+                        withSucursal={withSucursal}
                         className="border-none px-2 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl"
                     />
                 </div>
@@ -73,8 +74,8 @@ export default function Trueque({trueque, onClick = null, className = "", ...pro
                 <div className="flex-1 flex justify-center">
                     <Product
                         product={trueque.solicitud.offered_product}
-                        withCategory={false}
-                        withSucursal={false}
+                        withCategory={withCategory}
+                        withSucursal={withSucursal}
                         className="w-full border-none px-2 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl"
                     />
                 </div>

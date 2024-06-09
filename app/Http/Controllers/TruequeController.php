@@ -39,7 +39,7 @@ class TruequeController extends Controller
      */
     public function show(Trueque $trueque): Response|ResponseFactory
     {
-        return inertia('Trueque/show', [
+        return inertia('Trueque/Show', [
             'trueque' => new TruequeResource($trueque),
         ]);
     }
