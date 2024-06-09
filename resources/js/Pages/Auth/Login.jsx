@@ -7,8 +7,8 @@ import TextInput from "@/Components/Inputs/TextInput.jsx";
 import {Head, Link, useForm} from "@inertiajs/react";
 import Divisor from "@/Components/Divisor.jsx";
 
-export default function Login({status, canResetPassword}) {
-    const {data, setData, post, processing, errors, reset, setError} =
+export default function Login({status}) {
+    const {data, setData, post, processing, errors, reset} =
         useForm({
             email: "",
             password: "",
@@ -94,16 +94,10 @@ export default function Login({status, canResetPassword}) {
                             ¿Todavía no te registraste?
                         </Link>
                         <Link
-                            href={route("admin.login")}
-                            className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                        >
-                            ¿Sos el administrador?
-                        </Link>
-                        <Link
                             href={route("empleado.login")}
                             className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                         >
-                            ¿Sos un empleado?
+                            ¿Sos empleado o administrador?
                         </Link>
                     </div>
 
