@@ -10,7 +10,7 @@ export default function TruequesList({
         <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
             {trueques.length > 0 ?
                 <div
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+                    className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                     {trueques.map(trueque => (
                         <Trueque
                             key={trueque.id}
