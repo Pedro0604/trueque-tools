@@ -20,4 +20,14 @@ class Admin extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function isAdmin(): bool
+    {
+        return true;
+    }
+
+    public function isEmpleado(): bool
+    {
+        return false;
+    }
 }

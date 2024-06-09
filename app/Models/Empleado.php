@@ -21,4 +21,14 @@ class Empleado extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function isAdmin(): bool
+    {
+        return false;
+    }
+
+    public function isEmpleado(): bool
+    {
+        return true;
+    }
 }
