@@ -51,8 +51,8 @@ Route::middleware('auth:web')->group(function () {
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
 
-// Rutas accesibles por usuarios y administrador
-Route::middleware('auth:web,admin')->group(function (){
+// Rutas accesibles por todos los usuarios
+Route::middleware('auth:web,admin,empleado')->group(function (){
     Route::get('/trueque/{trueque}', [TruequeController::class, 'show'])->name('trueque.show');
 });
 
