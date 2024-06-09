@@ -2,27 +2,25 @@
 
 namespace App\Policies;
 
-use App\Models\Admin;
 use App\Models\Comment;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class CommentPolicy
 {
-    public function before(Authenticatable $user, string $ability): bool|null
-    {
-        if($user->isAdmin()){
-            return true;
-        }
-        return null;
-    }
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user, Product $product): Response
+    public function create(Authenticatable $user, Product $product): Response
     {
+        if($user->isAdmin()){
+            return Response::deny('El administrador no puede realizar comentarios');
+        }
+        else if($user->isEmpleado()){
+            return Response::deny('Un empleado no puede realizar comentarios');
+        }
+
         $productIsFromUser = $product->user_id === $user->id;
         $productHasATrueque = $product->hasTrueque;
 
@@ -39,8 +37,15 @@ class CommentPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function respond(User $user, Comment $comment): Response
+    public function respond(Authenticatable $user, Comment $comment): Response
     {
+        if($user->isAdmin()){
+            return Response::deny('El administrador no puede responder comentarios');
+        }
+        else if($user->isEmpleado()){
+            return Response::deny('Un empleado no puede responder comentarios');
+        }
+
         $commentHasAnAnswer = $comment->response_id !== null;
         $commentIsAnAnswer = $comment->product_id === null;
         $commentIsFromUser = $comment->user_id === $user->id;
@@ -68,7 +73,7 @@ class CommentPolicy
     /**
      * Determine whether the user can update the model.
      */
-//    public function update(User $user, Comment $comment): bool
+//    public function update(Authenticatable $user, Comment $comment): bool
 //    {
 //        //
 //    }
@@ -76,7 +81,7 @@ class CommentPolicy
     /**
      * Determine whether the user can delete the model.
      */
-//    public function delete(User $user, Comment $comment): bool
+//    public function delete(Authenticatable $user, Comment $comment): bool
 //    {
 //        //
 //    }

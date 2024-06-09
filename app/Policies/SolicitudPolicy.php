@@ -2,28 +2,22 @@
 
 namespace App\Policies;
 
-use App\Models\Admin;
 use App\Models\Product;
 use App\Models\Solicitud;
-use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class SolicitudPolicy
 {
-    public function before(Authenticatable $user, string $ability): bool|null
-    {
-        if($user->isAdmin()){
-            return true;
-        }
-        return null;
-    }
-
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Solicitud $solicitud): bool
+    public function view(Authenticatable $user, Solicitud $solicitud): bool
     {
+        if($user->isEmpleado() || $user->isAdmin()){
+            return true;
+        }
+
         // Solo los usuarios involucrados en la solicitud pueden verla
         $solicitudIsFromUser = $user->id === $solicitud->publishedProduct->user->id;
         return $solicitudIsFromUser || $user->id === $solicitud->offeredProduct->user->id;
@@ -32,8 +26,12 @@ class SolicitudPolicy
     /**
      * Determine whether the user can list the model.
      */
-    public function list(User $user, Product $product): bool
+    public function list(Authenticatable $user, Product $product): bool
     {
+        if($user->isEmpleado() || $user->isAdmin()){
+            return true;
+        }
+
         $productIsFromUser = $product->user_id === $user->id;
 //        $offeredProductIsFromUser = $product->offeredSolicituds->contains('offered_product_id', $product->id);
         $productDoesntHaveATrueque = !$product->hasTrueque;
@@ -44,8 +42,15 @@ class SolicitudPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user, Product $product): Response
+    public function create(Authenticatable $user, Product $product): Response
     {
+        if($user->isAdmin()){
+            return Response::deny('El administrador no puede realizar solicitudes de trueque');
+        }
+        else if($user->isEmpleado()){
+            return Response::deny('Un empleado no puede realizar solicitudes de trueque');
+        }
+
         $productIsFromUser = $user->id === $product->user_id;
         $productHasTrueque = $product->hasTrueque;
 
@@ -61,8 +66,15 @@ class SolicitudPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function accept(User $user, Product $product): Response
+    public function accept(Authenticatable $user, Product $product): Response
     {
+        if($user->isAdmin()){
+            return Response::deny('El administrador no puede aceptar solicitudes de trueque');
+        }
+        else if($user->isEmpleado()){
+            return Response::deny('Un empleado no puede aceptar solicitudes de trueque');
+        }
+
         $productIsNotFromUser = $user->id !== $product->user_id;
         $productHasTrueque = $product->hasTrueque;
 
@@ -78,8 +90,15 @@ class SolicitudPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function reject(User $user, Product $product): Response
+    public function reject(Authenticatable $user, Product $product): Response
     {
+        if($user->isAdmin()){
+            return Response::deny('El administrador no puede rechazar solicitudes de trueque');
+        }
+        else if($user->isEmpleado()){
+            return Response::deny('Un empleado no puede rechazar solicitudes de trueque');
+        }
+
         $productIsNotFromUser = $user->id !== $product->user_id;
         $productHasTrueque = $product->hasTrueque;
 
@@ -95,7 +114,7 @@ class SolicitudPolicy
     /**
      * Determine whether the user can update the model.
      */
-//    public function update(User $user, Solicitud $solicitud): bool
+//    public function update(Authenticatable $user, Solicitud $solicitud): bool
 //    {
 //        //
 //    }
@@ -103,7 +122,7 @@ class SolicitudPolicy
     /**
      * Determine whether the user can delete the model.
      */
-//    public function delete(User $user, Solicitud $solicitud): bool
+//    public function delete(Authenticatable $user, Solicitud $solicitud): bool
 //    {
 //        //
 //    }

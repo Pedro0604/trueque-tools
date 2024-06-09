@@ -3,22 +3,14 @@
 namespace App\Policies;
 
 use App\Models\Trueque;
-use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class TruequePolicy
 {
-    public function before(Authenticatable $user, string $ability): bool|null
-    {
-        if($user->isAdmin()){
-            return true;
-        }
-        return null;
-    }
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(Authenticatable $user): bool
     {
         //
     }
@@ -26,8 +18,12 @@ class TruequePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Trueque $trueque): bool
+    public function view(Authenticatable $user, Trueque $trueque): bool
     {
+        if($user->isEmpleado() || $user->isAdmin()){
+            return true;
+        }
+
         $truequeIsFromUser = $user->id === $trueque->solicitud->publishedProduct->user->id;
         return $truequeIsFromUser || $user->id === $trueque->solicitud->offeredProduct->user->id;
     }
@@ -35,7 +31,7 @@ class TruequePolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(Authenticatable $user): bool
     {
         //
     }
@@ -43,7 +39,7 @@ class TruequePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Trueque $trueque): bool
+    public function update(Authenticatable $user, Trueque $trueque): bool
     {
         //
     }
@@ -51,7 +47,7 @@ class TruequePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Trueque $trueque): bool
+    public function delete(Authenticatable $user, Trueque $trueque): bool
     {
         //
     }
@@ -59,7 +55,7 @@ class TruequePolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Trueque $trueque): bool
+    public function restore(Authenticatable $user, Trueque $trueque): bool
     {
         //
     }
@@ -67,7 +63,7 @@ class TruequePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Trueque $trueque): bool
+    public function forceDelete(Authenticatable $user, Trueque $trueque): bool
     {
         //
     }
