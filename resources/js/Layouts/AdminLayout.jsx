@@ -19,6 +19,9 @@ export default function AdminLayout({header, children}) {
                     <NavLink href={route('trueque.index')} active={route().current('trueque.index')}>
                         Trueques
                     </NavLink>
+                    <NavLink href={route('sucursal.index')} active={route().current('sucursal.index')}>
+                        Sucursales
+                    </NavLink>
                 </>
             }
             responsiveNavLinks={
