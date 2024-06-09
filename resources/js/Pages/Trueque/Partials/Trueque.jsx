@@ -51,7 +51,7 @@ export default function Trueque({trueque, onClick = null, className = "", withCa
                 </div>
                 <p className="text-gray-600 dark:text-custom-beige-300 text-sm sm:text-base lg:text-lg">
                     CATEGORIA:
-                    {trueque.solicitud.published_product.category}
+                    <span className="ml-1">{trueque.solicitud.published_product.category}</span>
                 </p>
                 <Chip
                     label={chipText}
@@ -59,6 +59,14 @@ export default function Trueque({trueque, onClick = null, className = "", withCa
                         color: 'white'
                     }}
                     color={chipColor}
+                />
+                <Chip
+                    className="mt-2"
+                    label={`Código del trueque: ${trueque.code}`}
+                    sx={{
+                        color: 'white'
+                    }}
+                    color='warning'
                 />
             </div>
             <div className="flex items-center gap-4">
