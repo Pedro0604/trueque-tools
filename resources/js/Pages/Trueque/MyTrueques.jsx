@@ -2,7 +2,7 @@ import {Head} from "@inertiajs/react";
 import TruequesList from "@/Pages/Trueque/Partials/TruequesList.jsx";
 import UserLayout from "@/Layouts/UserLayout.jsx";
 
-export default function MyTrueques({trueques, truequeCreatedId = null}) {
+export default function MyTrueques({trueques}) {
     return (
         <UserLayout
             header={
@@ -17,9 +17,7 @@ export default function MyTrueques({trueques, truequeCreatedId = null}) {
 
             <TruequesList
                 trueques={trueques}
-                truequeCreatedId={truequeCreatedId}
                 emptyListMessage="Todavía no realizaste ningún trueque"
-                blurIfPaused
             />
         </UserLayout>
     )
