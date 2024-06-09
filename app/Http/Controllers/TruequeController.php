@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TruequeResource;
-use App\Models\Product;
-use App\Models\Solicitud;
 use App\Models\Trueque;
 use App\Http\Requests\StoreTruequeRequest;
 use App\Http\Requests\UpdateTruequeRequest;
-use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 
@@ -19,6 +17,8 @@ class TruequeController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Trueque::class);
+
         $trueques = Trueque::orderBy('created_at', 'desc')->get();
 
         return inertia('Trueque/Index', [
@@ -39,6 +39,8 @@ class TruequeController extends Controller
      */
     public function show(Trueque $trueque): Response|ResponseFactory
     {
+        Gate::authorize('view', $trueque);
+
         return inertia('Trueque/Show', [
             'trueque' => new TruequeResource($trueque),
         ]);

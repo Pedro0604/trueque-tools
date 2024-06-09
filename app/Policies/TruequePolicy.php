@@ -12,7 +12,10 @@ class TruequePolicy
      */
     public function viewAny(Authenticatable $user): bool
     {
-        //
+        if($user->isEmpleado() || $user->isAdmin()){
+            return true;
+        }
+        return false;
     }
 
     /**
