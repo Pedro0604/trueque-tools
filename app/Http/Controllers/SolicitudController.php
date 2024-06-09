@@ -101,9 +101,8 @@ class SolicitudController extends Controller
         }
         $data['code'] = $code;
 
-        DB::transaction(function () use ($product, $data, $solicitud) {
-            $created_trueque = Trueque::create($data);
-
+        $created_trueque = null;
+        DB::transaction(function () use ($product, $data, $solicitud, &$created_trueque) {
             // Pausa todas las solicitudes hacia el producto publicado
             $product->solicituds()->update(['state' => 'paused']);
 
@@ -118,12 +117,16 @@ class SolicitudController extends Controller
 
             $solicitud->update(['state' => 'accepted']);
 
-            return to_route('trueque.myTrueques')
+            $created_trueque = Trueque::create($data);
+        });
+
+        if ($created_trueque) {
+            return to_route('trueque.show', $created_trueque->id)
                 ->with('success', [
                     'message' => 'Trueque pactado exitosamente',
                     'key' => $created_trueque->id
                 ]);
-        });
+        }
 
         return to_route('product.show', $product->id)
             ->with('error', [
