@@ -15,18 +15,44 @@ class Authenticate extends Middleware
     protected function redirectTo(Request $request): ?string
     {
         if (!$request->expectsJson()) {
-            if (Route::is('admin.*')) {
-                Auth::shouldUse('admin');
-                return route('admin.login');
-            } elseif (Route::is('empleado.*')) {
-                Auth::shouldUse('empleado');
-                return route('empleado.login');
-            } else {
-                Auth::shouldUse('web');
-                return route('login');
+            $guards = $this->extractGuardsFromRoute($request);
+            foreach ($guards as $guard) {
+                if ($guard === 'admin') {
+                    Auth::shouldUse('admin');
+                    return route('admin.login');
+                } elseif ($guard === 'empleado') {
+                    Auth::shouldUse('empleado');
+                    return route('empleado.login');
+                } else {
+                    Auth::shouldUse('web');
+                    return route('login');
+                }
             }
         }
 
         return null;
+    }
+    /**
+     * Extract guards from the current route middleware.
+     *
+     * @param Request $request
+     * @return array
+     */
+    protected function extractGuardsFromRoute(Request $request): array
+    {
+        // Get the middleware applied to the current route
+        $routeMiddleware = $request->route()->gatherMiddleware();
+
+        // Filter out the 'auth:' middleware and extract guards
+        $guards = [];
+
+        foreach ($routeMiddleware as $middleware) {
+            if (strpos($middleware, 'auth:') === 0) {
+                $guardsString = substr($middleware, strlen('auth:'));
+                $guards = array_merge($guards, explode(',', $guardsString));
+            }
+        }
+
+        return $guards;
     }
 }
