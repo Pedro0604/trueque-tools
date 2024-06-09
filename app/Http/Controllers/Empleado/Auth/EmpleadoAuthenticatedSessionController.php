@@ -29,13 +29,13 @@ class EmpleadoAuthenticatedSessionController extends Controller
      */
     public function store(EmpleadoLoginRequest $request): RedirectResponse
     {
+        $request->authenticate();
+
         Auth::guard('admin')->logout();
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        $request->authenticate();
 
         $request->session()->regenerate();
 
