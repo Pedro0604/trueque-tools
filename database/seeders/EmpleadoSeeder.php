@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Empleado;
 use Illuminate\Database\Seeder;
 
 class EmpleadoSeeder extends Seeder
@@ -12,6 +12,6 @@ class EmpleadoSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Empleado::factory()->create();
     }
 }
