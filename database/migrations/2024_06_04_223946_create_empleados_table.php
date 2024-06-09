@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('dni')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignId('sucursal_id')->constrained();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

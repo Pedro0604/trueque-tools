@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EmpleadoResource;
 use App\Models\Empleado;
 use App\Http\Requests\StoreEmpleadoRequest;
 use App\Http\Requests\UpdateEmpleadoRequest;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 class EmpleadoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response | ResponseFactory
     {
-        //
+        $empleados = Empleado::all();
+
+        return inertia('Empleado/Index', [
+            'empleados' => EmpleadoResource::collection($empleados),
+        ]);
     }
 
     /**
