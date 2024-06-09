@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
+use App\Http\Controllers\EmpleadoController;
 use Illuminate\Support\Facades\Route;
 
 Route::as('admin.')->group(function () {
@@ -14,5 +15,7 @@ Route::as('admin.')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::post('logout', [AdminAuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
+
+        Route::get('empleado', [EmpleadoController::class, 'index'])->name('empleado.index');
     });
 });
