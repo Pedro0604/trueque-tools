@@ -1,14 +1,14 @@
-import { useEffect } from "react";
+import {useEffect} from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/Inputs/InputError.jsx";
 import InputLabel from "@/Components/Inputs/InputLabel.jsx";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
-import { Head, Link, useForm } from "@inertiajs/react";
+import {Head, Link, useForm} from "@inertiajs/react";
 import Divisor from "@/Components/Divisor.jsx";
 
-export default function Login({ status, canResetPassword }) {
-    const { data, setData, post, processing, errors, reset, setError } =
+export default function Login({status, canResetPassword}) {
+    const {data, setData, post, processing, errors, reset, setError} =
         useForm({
             email: "",
             password: "",
@@ -29,7 +29,7 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout>
-            <Head title="Inicio de sesión" />
+            <Head title="Inicio de sesión"/>
 
             {status && (
                 <div className="mb-4 font-medium text-sm text-green-600">
@@ -39,7 +39,7 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Correo electrónico" />
+                    <InputLabel htmlFor="email" value="Correo electrónico"/>
 
                     <TextInput
                         id="email"
@@ -53,11 +53,11 @@ export default function Login({ status, canResetPassword }) {
                         onChange={(e) => setData("email", e.target.value)}
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.email} className="mt-2"/>
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Contraseña" />
+                    <InputLabel htmlFor="password" value="Contraseña"/>
 
                     <TextInput
                         id="password"
@@ -70,7 +70,7 @@ export default function Login({ status, canResetPassword }) {
                         onChange={(e) => setData("password", e.target.value)}
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError message={errors.password} className="mt-2"/>
                 </div>
 
                 {/*TODO - LO COMENTO PARA LA DEMO, PERO CAPAZ ES MAS UTIL TENERLO DESCOMENTADO PARA DESAROLLAR*/}
@@ -86,12 +86,26 @@ export default function Login({ status, canResetPassword }) {
                 {/*</div>*/}
 
                 <div className="flex flex-col-reverse sm:flex-row gap-6 sm:gap-3 items-center justify-between mt-4">
-                    <Link
-                        href={route("register")}
-                        className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    >
-                        ¿Todavía no te registraste?
-                    </Link>
+                    <div className="flex flex-col gap-2">
+                        <Link
+                            href={route("register")}
+                            className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            ¿Todavía no te registraste?
+                        </Link>
+                        <Link
+                            href={route("admin.login")}
+                            className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            ¿Sos el administrador?
+                        </Link>
+                        <Link
+                            href={route("empleado.login")}
+                            className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            ¿Sos un empleado?
+                        </Link>
+                    </div>
 
                     {/*TODO - DESCOMENTAR SI VAMOS A USAR EL RESET PASSWORD*/}
                     {/*{canResetPassword && (*/}
@@ -102,7 +116,7 @@ export default function Login({ status, canResetPassword }) {
                     {/*        Forgot your password?*/}
                     {/*    </Link>*/}
                     {/*)}*/}
-                    <Divisor className="sm:hidden" />
+                    <Divisor className="sm:hidden"/>
 
                     <PrimaryButton
                         className="w-full justify-center sm:w-fit max-w-7xl sm:ms-4 h-10"
