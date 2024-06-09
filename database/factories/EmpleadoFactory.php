@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Sucursal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -21,6 +22,7 @@ class EmpleadoFactory extends Factory
         return [
             'name' => 'Empleado' . rand(0, 9),
             'dni' => '12341234',
+            'sucursal_id' => rand(1, Sucursal::all()->count()),
             'password' => Hash::make('12341234'),
             'remember_token' => Str::random(10),
         ];
