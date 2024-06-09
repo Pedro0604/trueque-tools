@@ -42,6 +42,8 @@ Route::middleware('auth:web')->group(function () {
     // Trueque routes
     Route::get('/trueque/my-trueques', [TruequeController::class, 'myTrueques'])->name('trueque.myTrueques');
 
+
+
     // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN PRODUCTO
 //    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
 //    Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
@@ -54,6 +56,10 @@ Route::get('/product/{product}', [ProductController::class, 'show'])->name('prod
 // Rutas accesibles por todos los usuarios
 Route::middleware('auth:web,admin,empleado')->group(function (){
     Route::get('/trueque/{trueque}', [TruequeController::class, 'show'])->name('trueque.show');
+
+    //Sucursal routes
+    Route::get('/sucursal', [\App\Http\Controllers\SucursalController::class, 'index'])->name('sucursal.index');
+
 });
 
 // Rutas accesibles por administrador y empleado
