@@ -2,13 +2,22 @@
 
 namespace App\Policies;
 
+use App\Models\Admin;
 use App\Models\Comment;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class CommentPolicy
 {
+    public function before(Authenticatable $user, string $ability): bool|null
+    {
+        if($user->isAdmin()){
+            return true;
+        }
+        return null;
+    }
     /**
      * Determine whether the user can create models.
      */

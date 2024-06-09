@@ -2,13 +2,23 @@
 
 namespace App\Policies;
 
+use App\Models\Admin;
 use App\Models\Product;
 use App\Models\Solicitud;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class SolicitudPolicy
 {
+    public function before(Authenticatable $user, string $ability): bool|null
+    {
+        if($user->isAdmin()){
+            return true;
+        }
+        return null;
+    }
+
     /**
      * Determine whether the user can view the model.
      */
