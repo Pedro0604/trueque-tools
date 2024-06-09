@@ -33,9 +33,6 @@ class AdminAuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
         Auth::guard('empleado')->logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
         $request->session()->regenerate();
 
         return redirect()->intended('/admin/home');
