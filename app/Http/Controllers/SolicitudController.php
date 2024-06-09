@@ -68,7 +68,7 @@ class SolicitudController extends Controller
     /**
      * Accept a product exchange request.
      */
-    public function accept(StoreTruequeRequest $request, Product $product, Solicitud $solicitud)
+    public function accept(StoreTruequeRequest $request, Product $product, Solicitud $solicitud): RedirectResponse
     {
         $data = $request->validated();
         $data['ended_at'] = null;
@@ -108,9 +108,15 @@ class SolicitudController extends Controller
     /**
      * Reject a product exchange request.
      */
-    public function reject(Product $product)
+    public function reject(Product $product, Solicitud $solicitud): RedirectResponse
     {
-        dd("chau");
+        $solicitud->update(['state' => 'rejected']);
+
+        return to_route('product.show', $product->id)
+            ->with('success', [
+                'message' => 'Solcitud de trueque rechazada correctamente',
+                'key' =>  rand()
+            ]);
     }
 
     /**
