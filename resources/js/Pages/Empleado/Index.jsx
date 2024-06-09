@@ -14,8 +14,7 @@ export default function Index({empleados}) {
                     </h2>
                     <CyanButton
                         isLink
-                        // href={route('admin.empleado.create')}
-                        href={route('product.index')}
+                        href={route('admin.empleado.create')}
                     >
                         <span className="hidden sm:block">Agregar nuevo Empleado</span>
                         <span className="sm:hidden"><AddIcon/></span>
