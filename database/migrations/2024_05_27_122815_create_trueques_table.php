@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->dateTime('ended_at')->nullable();
             $table->boolean('is_failed')->default(false);
+            $table->string('code')->unique();
             $table->foreignId('solicitud_id')->unique()->constrained();
             $table->softDeletes();
             $table->timestamps();
