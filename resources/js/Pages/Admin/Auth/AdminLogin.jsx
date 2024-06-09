@@ -4,10 +4,10 @@ import InputError from "@/Components/Inputs/InputError.jsx";
 import InputLabel from "@/Components/Inputs/InputLabel.jsx";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import Divisor from "@/Components/Divisor.jsx";
 
-export default function Login({ status, canResetPassword }) {
+export default function AdminLogin({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset, setError } =
         useForm({
             dni: "",
@@ -24,12 +24,12 @@ export default function Login({ status, canResetPassword }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("empleado.login"));
+        post(route("admin.login.store"));
     };
 
     return (
         <GuestLayout>
-            <Head title="Inicio de sesión de empleado" />
+            <Head title="Inicio de sesión de administrador" />
 
             {status && (
                 <div className="mb-4 font-medium text-sm text-green-600">

@@ -16,7 +16,7 @@ Route::as('empleado.')->group(function () {
             ->name('logout');
 
         Route::get('/home', function () {
-            return inertia('Empleado/Home');
+            return inertia('Empleado/AdminHome');
         })->name('home');
     });
 });

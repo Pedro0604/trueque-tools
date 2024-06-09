@@ -7,7 +7,7 @@ import TextInput from "@/Components/Inputs/TextInput.jsx";
 import { Head, Link, useForm } from "@inertiajs/react";
 import Divisor from "@/Components/Divisor.jsx";
 
-export default function Login({ status, canResetPassword }) {
+export default function EmpleadoLogin({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset, setError } =
         useForm({
             dni: "",
@@ -24,12 +24,12 @@ export default function Login({ status, canResetPassword }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("admin.login.store"));
+        post(route("empleado.login"));
     };
 
     return (
         <GuestLayout>
-            <Head title="Inicio de sesión de administrador" />
+            <Head title="Inicio de sesión de empleado" />
 
             {status && (
                 <div className="mb-4 font-medium text-sm text-green-600">

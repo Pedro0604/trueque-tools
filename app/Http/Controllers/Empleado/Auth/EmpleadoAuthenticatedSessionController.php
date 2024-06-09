@@ -18,7 +18,7 @@ class EmpleadoAuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Empleado/Auth/Login', [
+        return Inertia::render('Empleado/Auth/EmpleadoLogin', [
             'canResetPassword' => false,
             'status' => session('status'),
         ]);
