@@ -25,16 +25,10 @@ class ProductController extends Controller
     public function index(): Response|ResponseFactory
     {
         // Trae los productos que no tienen trueques finalizados exitosamente
-        $products = Product::query();
-        $products = $products->whereDoesntHave('publishedTrueques', function($query){
-            $query->whereNotNull('ended_at')
-                ->where('is_failed', false);
-        });
-        $products = $products->whereDoesntHave('offeredTrueques', function($query){
-            $query->whereNotNull('ended_at')
-                ->where('is_failed', false);
-        });
-        $products = $products->orderByDesc('created_at')->get();
+        $products = Product::query()
+            ->doesntHave('publishedSuccessfulTrueque')
+            ->doesntHave('offeredSuccessfulTrueque')
+            ->orderByDesc('created_at')->get();
 
         return Inertia::render('Product/Index', [
             'products' => ProductResource::collection($products),
@@ -99,8 +93,7 @@ class ProductController extends Controller
 //            })->orderByDesc('created_at')
 //            ->get();
 
-        $trueque = $product->hasPendingTrueque ? new TruequeResource($product->pendingTrueque): null;
-        $trueque = $trueque ?? $product->hasSuccessfulTrueque ? new TruequeResource($product->successfulTrueque): null;
+        $trueque = $product->hasTrueque ? new TruequeResource($product->trueque): null;
 
         return inertia('Product/Show', [
             'product' => new ProductResource($product),
