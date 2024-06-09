@@ -17,7 +17,7 @@ class AdminAuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Admin/Auth/Login', [
+        return Inertia::render('Admin/Auth/AdminLogin', [
             'canResetPassword' => false,
             'status' => session('status'),
         ]);
@@ -28,6 +28,12 @@ class AdminAuthenticatedSessionController extends Controller
      */
     public function store(AdminLoginRequest $request): RedirectResponse
     {
+        Auth::guard('web')->logout();
+        Auth::guard('empleado')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         $request->authenticate();
 
         $request->session()->regenerate();
