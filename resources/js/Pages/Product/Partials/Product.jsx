@@ -4,7 +4,7 @@ import {router} from "@inertiajs/react";
 import {useEffect, useState} from "react";
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import PersonIcon from '@mui/icons-material/Person';
-import Blur from "@/Components/Blur/Blur.jsx";
+import Blur from "@/Components/Blur.jsx";
 
 export default function Product({
                                     product,
