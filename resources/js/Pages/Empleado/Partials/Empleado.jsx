@@ -28,7 +28,7 @@ export default function Empleado({
             </div>
             <div className="flex gap-2 sm:gap-4 sm:flex-col overflow-hidden">
                 <div>
-                    <p className="text-sm sm:text-xl my-2">DNI: {empleado.dni}</p>
+                    <p className="text-sm sm:text-lg my-2">DNI: {empleado.dni}</p>
                     <div
                         className="flex items-center gap-1 mt-1"
                     >
