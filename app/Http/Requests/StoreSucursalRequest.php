@@ -22,7 +22,9 @@ class StoreSucursalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'code' => 'required|integer|unique:sucursals,code',
+            'address' => 'required|string|max:255',
         ];
     }
 }

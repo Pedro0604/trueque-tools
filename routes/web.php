@@ -67,4 +67,5 @@ Route::middleware('auth:admin,empleado')->group(function (){
     Route::get('/trueque', [TruequeController::class, 'index'])->name('trueque.index');
 });
 
+
 require __DIR__.'/auth.php';

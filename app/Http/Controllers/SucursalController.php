@@ -6,6 +6,8 @@ use App\Models\Sucursal;
 use Inertia\Inertia;
 use App\Http\Requests\StoreSucursalRequest;
 use App\Http\Requests\UpdateSucursalRequest;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 
 class SucursalController extends Controller
@@ -26,9 +28,9 @@ class SucursalController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response|ResponseFactory
     {
-        //
+        return Inertia::render('Sucursal/Create');
     }
 
     /**
@@ -36,7 +38,12 @@ class SucursalController extends Controller
      */
     public function store(StoreSucursalRequest $request)
     {
-        //
+        $data = $request->validated();
+        Sucursal::create($data);
+        return redirect(route('sucursal.index'))->with('success', [
+        'message' => 'Sucursal creada correctamente',
+        'key' => rand()
+    ]);
     }
 
     /**

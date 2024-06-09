@@ -13,9 +13,9 @@ class Sucursal extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'nombre',
-        'direccion',
-        'codigo',
+        'name',
+        'address',
+        'code',
     ];
 
     public function users(): HasMany

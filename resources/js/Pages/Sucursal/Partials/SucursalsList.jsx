@@ -18,6 +18,9 @@ export default function SucursalsList({ sucursals,
                     <h3 className="text-center text-3xl font-bold">
                         {emptyListMessage}
                     </h3>
+                    <h4 className="text-center text-2xl font-bold mt-6">
+                        Cargá una sucursal ahora mismo haciendo click en el botón de arriba ⭡
+                    </h4>
                 </>
             }
         </div>

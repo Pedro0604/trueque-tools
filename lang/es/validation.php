@@ -275,6 +275,7 @@ return [
         'surname'                  => 'apellido',
         'sucursal_id'              => 'sucursal',
         'category'                 => 'categoría',
+        'code'                     => 'codigo',
     ],
     'custom' => [
         'name' => [

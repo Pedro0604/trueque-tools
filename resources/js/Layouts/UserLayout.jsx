@@ -10,15 +10,26 @@ export default function UserLayout({header, children}) {
     return (
         <CommonLayout
             header={header}
+
             navLinks={
+                <>
                 <NavLink href={route('product.index')} active={route().current('product.index')}>
                     Productos
                 </NavLink>
+                <NavLink href={route('sucursal.index')} active={route().current('sucursal.index')}>
+                    Sucursales
+                </NavLink>
+                </>
             }
             responsiveNavLinks={
+                <>
                 <ResponsiveNavLink href={route('product.index')} active={route().current('product.index')}>
                     Productos
                 </ResponsiveNavLink>
+                <NavLink href={route('sucursal.index')} active={route().current('sucursal.index')}>
+                  Sucursales
+                </NavLink>
+                </>
             }
             headerOptions={
                 <Dropdown>
