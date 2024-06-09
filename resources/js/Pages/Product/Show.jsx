@@ -12,7 +12,7 @@ import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
 import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
 import Divisor from "@/Components/Divisor.jsx";
 import PersonIcon from '@mui/icons-material/Person';
-import Blur from "@/Components/Blur/Blur.jsx";
+import Blur from "@/Components/Blur.jsx";
 
 export default function Show({
                                  product,
@@ -38,7 +38,7 @@ export default function Show({
             <Head title={`Producto "${product.name}"`}/>
 
             <div className="flex gap-4 justify-center">
-                <div className="max-w-sm sm:max-w-lg lg:max-w-4xl lg:min-w-[800px]">
+                <div className="max-w-sm sm:max-w-lg lg:max-w-4xl lg:min-w-[600px]">
                     <div
                         className={`mb-1 text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-t-lg rounded-b-sm`}
                     >
@@ -152,9 +152,6 @@ export default function Show({
                 >
                     {product.canViewTrueque && trueque &&
                         <div className="max-w-lg">
-                            <h2 className="text-2xl font-bold text-black dark:text-white mb-2 text-center">
-                                Trueque
-                            </h2>
                             <Trueque
                                 trueque={trueque}
                             />
