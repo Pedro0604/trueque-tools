@@ -17,5 +17,10 @@ Route::as('admin.')->group(function () {
             ->name('logout');
 
         Route::get('empleado', [EmpleadoController::class, 'index'])->name('empleado.index');
+
+
+        Route::get('sucursal', [\App\Http\Controllers\SucursalController::class, 'create'])->name('sucursal.create');
+        Route::post('sucursal', [\App\Http\Controllers\SucursalController::class, 'store'])->name('sucursal.store');
+
     });
 });
