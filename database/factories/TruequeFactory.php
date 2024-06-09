@@ -24,6 +24,7 @@ class TruequeFactory extends Factory
             'ended_at' => $hasEnded ? fake()->dateTime() : null,
             'is_failed' => fake()->boolean(80),
             'solicitud_id' => Solicitud::factory(),
+            'code' => fake()->unique()->text(10),
         ];
     }
 }
