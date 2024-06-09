@@ -17,7 +17,7 @@ export default function CreateForm({
                                        onVolver = () => window.history.back(),
                                        onSuccess = () => {
                                        },
-                                       redirectionOnSuccess = route("product.myProducts"),
+                                       redirectionOnSuccess = null,
                                    }) {
     const [disableSubmit, setDisableSubmit] = useState(false);
 

@@ -65,7 +65,7 @@ class ProductController extends Controller
 
         $created_product = Product::create($data);
 
-        return redirect($request->redirection_on_success ?? route('product.myProducts'))
+        return redirect($request->redirection_on_success ?? route('product.show', $created_product->id))
             ->with('success', [
                 'message' => 'Producto creado correctamente',
                 'key' => $created_product->id
