@@ -11,14 +11,24 @@ export default function EmpleadoLayout({header, children}) {
         <CommonLayout
             header={header}
             navLinks={
-                <NavLink href={route('product.index')} active={route().current('product.index')}>
-                    Productos
-                </NavLink>
+                <>
+                    <NavLink href={route('product.index')} active={route().current('product.index')}>
+                        Productos
+                    </NavLink>
+                    <NavLink href={route('trueque.index')} active={route().current('trueque.index')}>
+                        Trueques
+                    </NavLink>
+                </>
             }
             responsiveNavLinks={
-                <ResponsiveNavLink href={route('product.index')} active={route().current('product.index')}>
-                    Productos
-                </ResponsiveNavLink>
+                <>
+                    <ResponsiveNavLink href={route('product.index')} active={route().current('product.index')}>
+                        Productos
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('trueque.index')} active={route().current('trueque.index')}>
+                        Trueques
+                    </ResponsiveNavLink>
+                </>
             }
             headerOptions={
                 <Dropdown>

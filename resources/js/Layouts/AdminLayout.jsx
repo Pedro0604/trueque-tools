@@ -6,19 +6,30 @@ import {usePage} from "@inertiajs/react";
 
 export default function AdminLayout({header, children}) {
     const admin = usePage().props.auth.admin
-    {/* TODO - NO OLVIDARSE DE AGREGAR LOS LINKS EN navLinks y responsiveNavLinks */}
+    {/* TODO - NO OLVIDARSE DE AGREGAR LOS LINKS EN navLinks y responsiveNavLinks */
+    }
     return (
         <CommonLayout
             header={header}
             navLinks={
-                <NavLink href={route('product.index')} active={route().current('product.index')}>
-                    Productos
-                </NavLink>
+                <>
+                    <NavLink href={route('product.index')} active={route().current('product.index')}>
+                        Productos
+                    </NavLink>
+                    <NavLink href={route('trueque.index')} active={route().current('trueque.index')}>
+                        Trueques
+                    </NavLink>
+                </>
             }
             responsiveNavLinks={
-                <ResponsiveNavLink href={route('product.index')} active={route().current('product.index')}>
-                    Productos
-                </ResponsiveNavLink>
+                <>
+                    <ResponsiveNavLink href={route('product.index')} active={route().current('product.index')}>
+                        Productos
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('trueque.index')} active={route().current('trueque.index')}>
+                        Trueques
+                    </ResponsiveNavLink>
+                </>
             }
             headerOptions={
                 <Dropdown>

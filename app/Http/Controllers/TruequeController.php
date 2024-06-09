@@ -19,7 +19,11 @@ class TruequeController extends Controller
      */
     public function index()
     {
-        //
+        $trueques = Trueque::orderBy('created_at', 'desc')->get();
+
+        return inertia('Trueque/Index', [
+            'trueques' => TruequeResource::collection($trueques),
+        ]);
     }
 
     /**
@@ -80,7 +84,6 @@ class TruequeController extends Controller
 
         return inertia('Trueque/MyTrueques', [
             'trueques' => TruequeResource::collection($trueques),
-            'truequeCreatedId' => session('trueque_created_id'),
         ]);
     }
 

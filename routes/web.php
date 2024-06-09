@@ -56,4 +56,9 @@ Route::middleware('auth:web,admin')->group(function (){
     Route::get('/trueque/{trueque}', [TruequeController::class, 'show'])->name('trueque.show');
 });
 
+// Rutas accesibles por administrador y empleado
+Route::middleware('auth:admin,empleado')->group(function (){
+    Route::get('/trueque', [TruequeController::class, 'index'])->name('trueque.index');
+});
+
 require __DIR__.'/auth.php';
