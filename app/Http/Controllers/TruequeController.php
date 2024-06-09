@@ -71,9 +71,12 @@ class TruequeController extends Controller
     {
         $trueques = Trueque::whereHas('solicitud.publishedProduct', function ($query) {
             $query->where('user_id', auth()->id());
-        })->orWhereHas('solicitud.offeredProduct', function ($query) {
-            $query->where('user_id', auth()->id());
-        })->get();
+        })
+            ->orWhereHas('solicitud.offeredProduct', function ($query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return inertia('Trueque/MyTrueques', [
             'trueques' => TruequeResource::collection($trueques),
