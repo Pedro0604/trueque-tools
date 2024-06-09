@@ -12,6 +12,7 @@ class Trueque extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'code',
         'ended_at',
         'is_failed',
         'solicitud_id',

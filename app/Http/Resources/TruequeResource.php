@@ -17,6 +17,7 @@ class TruequeResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'code' => $this->code,
             'ended_at' => $this->ended_at ? (new Carbon($this->ended_at))->format('d/m/Y H:i') : null,
             'failed' => $this->ended_at && $this->is_failed,
             'successful' => $this->ended_at && !$this->is_failed,
