@@ -15,10 +15,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SucursalSeeder::class,
             UserSeeder::class,
-            ProductSeeder::class,
-            SolicitudSeeder::class,
+//            ProductSeeder::class,
+//            SolicitudSeeder::class,
+        // Solo está truequeSeeder porque crea solicitudes que crean productos
             TruequeSeeder::class,
             CommentSeeder::class,
+            AdminSeeder::class,
+            EmpleadoSeeder::class,
         ]);
     }
 }
