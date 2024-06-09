@@ -3,9 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Comment;
-use App\Models\Product;
 use App\Models\Solicitud;
-use App\Models\Trueque;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -32,7 +30,7 @@ class ProductResource extends JsonResource
             'user' => new UserResource($this->user),
             'sucursal' => new SucursalResource($this->sucursal),
             'hasTrueque' => $this->hasTrueque,
-            'isPaused' => $this->isPaused,
+            'isPaused' => $this->hasPendingTrueque,
             'canCreateComment' => Gate::allows('create', [Comment::class, $product]),
             'canCreateSolicitud' => Gate::allows('create', [Solicitud::class, $product]),
             'canListSolicituds' => Gate::allows('list', [Solicitud::class, $product]),
