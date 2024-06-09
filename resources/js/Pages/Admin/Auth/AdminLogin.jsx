@@ -7,8 +7,8 @@ import TextInput from "@/Components/Inputs/TextInput.jsx";
 import {Head, Link, useForm} from "@inertiajs/react";
 import Divisor from "@/Components/Divisor.jsx";
 
-export default function AdminLogin({status, canResetPassword}) {
-    const {data, setData, post, processing, errors, reset, setError} =
+export default function AdminLogin({status}) {
+    const {data, setData, post, processing, errors, reset} =
         useForm({
             dni: "",
             password: "",
@@ -88,12 +88,20 @@ export default function AdminLogin({status, canResetPassword}) {
                 {/*</div>*/}
 
                 <div className="flex flex-col-reverse sm:flex-row gap-6 sm:gap-3 items-center justify-between mt-4">
-                    <Link
-                        href={route("empleado.login")}
-                        className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    >
-                        Login de empleado
-                    </Link>
+                    <div className="flex flex-col gap-2">
+                        <Link
+                            href={route("empleado.login")}
+                            className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            Login de empleado
+                        </Link>
+                        <Link
+                            href={route("login")}
+                            className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            ¿No sos el administrador?
+                        </Link>
+                    </div>
                     {/*TODO - DESCOMENTAR SI VAMOS A USAR EL RESET PASSWORD*/}
                     {/*{canResetPassword && (*/}
                     {/*    <Link*/}

@@ -1,14 +1,14 @@
-import { useEffect } from "react";
+import {useEffect} from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/Inputs/InputError.jsx";
 import InputLabel from "@/Components/Inputs/InputLabel.jsx";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
-import { Head, Link, useForm } from "@inertiajs/react";
+import {Head, Link, useForm} from "@inertiajs/react";
 import Divisor from "@/Components/Divisor.jsx";
 
-export default function EmpleadoLogin({ status, canResetPassword }) {
-    const { data, setData, post, processing, errors, reset, setError } =
+export default function EmpleadoLogin({status}) {
+    const {data, setData, post, processing, errors, reset} =
         useForm({
             dni: "",
             password: "",
@@ -88,12 +88,20 @@ export default function EmpleadoLogin({ status, canResetPassword }) {
                 {/*</div>*/}
 
                 <div className="flex flex-col-reverse sm:flex-row gap-6 sm:gap-3 items-center justify-between mt-4">
-                    <Link
-                        href={route("admin.login")}
-                        className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    >
-                        Login de administrador
-                    </Link>
+                    <div className="flex flex-col gap-2">
+                        <Link
+                            href={route("admin.login")}
+                            className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            Login de administrador
+                        </Link>
+                        <Link
+                            href={route("login")}
+                            className="underline mr-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            ¿No sos un empleado?
+                        </Link>
+                    </div>
                     {/*TODO - DESCOMENTAR SI VAMOS A USAR EL RESET PASSWORD*/}
                     {/*{canResetPassword && (*/}
                     {/*    <Link*/}
