@@ -61,38 +61,33 @@ class Product extends Model
         return $this->hasManyThrough(Trueque::class, Solicitud::class, 'offered_product_id');
     }
 
-    public function pendingTrueque(): HasOneThrough
+    public function publishedPendingTrueque(): HasOneThrough
     {
-        $hasPublishedPendingTrueque = $this->publishedTrueques()
-            ->whereNull('ended_at')
-            ->exists();
-        if ($hasPublishedPendingTrueque) {
-            return $this->hasOneThrough(Trueque::class, Solicitud::class, 'published_product_id')
-                ->whereNull('ended_at');
-        }
+        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'published_product_id')
+            ->whereNull('ended_at');
+    }
+
+    public function offeredPendingTrueque(): HasOneThrough
+    {
         return $this->hasOneThrough(Trueque::class, Solicitud::class, 'offered_product_id')
             ->whereNull('ended_at');
     }
 
-    public
-    function successfulTrueque(): HasOneThrough
+    public function publishedSuccessfulTrueque(): HasOneThrough
     {
-        $hasPublishedSuccessfulTrueque = $this->publishedTrueques()
+        return $this->hasOneThrough(Trueque::class, Solicitud::class, 'published_product_id')
             ->whereNotNull('ended_at')
-            ->where('is_failed', false)
-            ->exists();
-        if ($hasPublishedSuccessfulTrueque) {
-            return $this->hasOneThrough(Trueque::class, Solicitud::class, 'published_product_id')
-                ->whereNotNull('ended_at')
-                ->where('is_failed', false);
-        }
+            ->where('is_failed', false);
+    }
+
+    public function offeredSuccessfulTrueque(): HasOneThrough
+    {
         return $this->hasOneThrough(Trueque::class, Solicitud::class, 'offered_product_id')
             ->whereNotNull('ended_at')
             ->where('is_failed', false);
     }
 
-    public
-    function hasPendingTrueque(): Attribute
+    public function hasPendingTrueque(): Attribute
     {
         return Attribute::make(
             get: fn() => $this->publishedTrueques()
@@ -104,8 +99,7 @@ class Product extends Model
         );
     }
 
-    public
-    function hasSuccessfulTrueque(): Attribute
+    public function hasSuccessfulTrueque(): Attribute
     {
         return Attribute::make(
             get: fn() => $this->publishedTrueques()
@@ -119,11 +113,17 @@ class Product extends Model
         );
     }
 
-    public
-    function hasTrueque(): Attribute
+    public function hasTrueque(): Attribute
     {
         return Attribute::make(
             get: fn() => $this->hasPendingTrueque || $this->hasSuccessfulTrueque,
+        );
+    }
+
+    public function trueque(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->publishedSuccessfulTrueque ?? $this->offeredSuccessfulTrueque ?? $this->publishedPendingTrueque ?? $this->offeredPendingTrueque,
         );
     }
 }
