@@ -20,7 +20,7 @@ class TruequeFactory extends Factory
     {
         return [
             'ended_at' => fake()->dateTime(),
-            'is_failed' => fake()->boolean(90),
+            'is_failed' => fake()->boolean(80),
             'solicitud_id' => Solicitud::factory(),
         ];
     }

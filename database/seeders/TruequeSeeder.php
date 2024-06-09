@@ -15,6 +15,6 @@ class TruequeSeeder extends Seeder
      */
     public function run(): void
     {
-        Trueque::factory(Solicitud::count())->create();
+        Trueque::factory(3)->create();
     }
 }
