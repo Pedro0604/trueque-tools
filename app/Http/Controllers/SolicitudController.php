@@ -70,9 +70,35 @@ class SolicitudController extends Controller
      */
     public function accept(StoreTruequeRequest $request, Product $product, Solicitud $solicitud): RedirectResponse
     {
+        function generateRandomString($length = 10)
+        {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
+        }
+
         $data = $request->validated();
         $data['ended_at'] = null;
         $data['is_failed'] = false;
+
+        $code = generateRandomString();
+        $intentos = 100;
+        while (Trueque::where('code', $code)->exists() && $intentos > 0) {
+            $code = generateRandomString();
+            $intentos--;
+        }
+        if ($intentos == 0) {
+            return to_route('product.show', $product->id)
+                ->with('error', [
+                    'message' => 'Fallo al pactar el trueque. Por favor intente nuevamente',
+                    'key' => rand()
+                ]);
+        }
+        $data['code'] = $code;
 
         DB::transaction(function () use ($product, $data, $solicitud) {
             $created_trueque = Trueque::create($data);
@@ -100,8 +126,8 @@ class SolicitudController extends Controller
 
         return to_route('product.show', $product->id)
             ->with('error', [
-                'message' => 'Fallo al pactar el trueque',
-                'key' =>  rand()
+                'message' => 'Fallo al pactar el trueque. Por favor intente nuevamente',
+                'key' => rand()
             ]);
     }
 
@@ -115,7 +141,7 @@ class SolicitudController extends Controller
         return to_route('product.show', $product->id)
             ->with('success', [
                 'message' => 'Solcitud de trueque rechazada correctamente',
-                'key' =>  rand()
+                'key' => rand()
             ]);
     }
 
