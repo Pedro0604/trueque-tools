@@ -28,8 +28,10 @@ class SolicitudController extends Controller
 
         $available_products = Product::where('user_id', auth()->id())
             ->where('category', $product->category)
-            ->doesntHave('offeredTrueque')
-            ->doesntHave('publishedTrueque')
+            ->doesntHave('publishedSuccessfulTrueque')
+            ->doesntHave('offeredSuccessfulTrueque')
+            ->doesntHave('publishedPendingTrueque')
+            ->doesntHave('offeredPendingTrueque')
             ->whereDoesntHave('offeredSolicituds', function (Builder $query) use ($product) {
                 $query->where('published_product_id', $product->id);
             })
