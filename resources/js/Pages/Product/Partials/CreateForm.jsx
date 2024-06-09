@@ -51,6 +51,7 @@ export default function CreateForm({
             router.post(route("product.store"), data, {
                 onBefore: () => setDisableSubmit(true),
                 onSuccess: onSuccess,
+                onFinish: () => setDisableSubmit(false),
             });
         }
     };

@@ -49,6 +49,7 @@ export default function Register({sucursales}) {
         } else {
             router.post(route('register'), data, {
                 onBefore: () => setDisableSubmit(true),
+                onFinish: () => setDisableSubmit(false),
             });
         }
     };
