@@ -1,9 +1,6 @@
 import {Head, usePage} from "@inertiajs/react";
 import {useState} from "react";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
-import BusinessIcon from "@mui/icons-material/Business.js";
-import Product from "@/Pages/Product/Partials/Product.jsx";
-import MultipleStopIcon from "@mui/icons-material/MultipleStop";
 import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
 
 export default function Show({
@@ -30,6 +27,9 @@ export default function Show({
                     trueque={trueque}
                     withCategory={true}
                     withSucursal={true}
+                    onClick={() => {}}
+                    showHoverOnProduct
+                    showCursorPointer={false}
                 />
             </div>
         </AuthenticatedOrNormalLayout>

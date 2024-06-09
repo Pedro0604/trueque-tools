@@ -4,7 +4,16 @@ import MultipleStopIcon from "@mui/icons-material/MultipleStop";
 import {Chip} from "@mui/material";
 import {router} from "@inertiajs/react";
 
-export default function Trueque({trueque, onClick = null, className = "", withCategory = false, withSucursal = false, ...props}) {
+export default function Trueque({
+                                    trueque,
+                                    onClick = null,
+                                    className = "",
+                                    withCategory = false,
+                                    withSucursal = false,
+                                    showHoverOnProduct = false,
+                                    showCursorPointer = true,
+                                    ...props
+                                }) {
 
     const showTrueque = (truequeId) => {
         //console.log("Mostrar trueque con id: " + truequeId);
@@ -26,12 +35,14 @@ export default function Trueque({trueque, onClick = null, className = "", withCa
         chipColor = 'success'
     }
 
+    const productClass = `w-full border-none px-2 ${showHoverOnProduct ? 'lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl' : ''}`
+
     return (
         <div
             {...props}
             onClick={onClick ? onClick : () => showTrueque(trueque.id)}
             className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
-                transition-all rounded-lg p-4 cursor-pointer border ${borderColor}
+                transition-all rounded-lg p-4 ${showCursorPointer ?  'cursor-pointer' : '' } border ${borderColor}
                  ${className}`}
         >
             <div
@@ -75,7 +86,7 @@ export default function Trueque({trueque, onClick = null, className = "", withCa
                         product={trueque.solicitud.published_product}
                         withCategory={withCategory}
                         withSucursal={withSucursal}
-                        className="border-none px-2 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl"
+                        className={productClass}
                     />
                 </div>
                 <MultipleStopIcon sx={{fontSize: 40}}/>
@@ -84,7 +95,7 @@ export default function Trueque({trueque, onClick = null, className = "", withCa
                         product={trueque.solicitud.offered_product}
                         withCategory={withCategory}
                         withSucursal={withSucursal}
-                        className="w-full border-none px-2 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl"
+                        className={productClass}
                     />
                 </div>
             </div>
