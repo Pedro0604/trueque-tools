@@ -36,7 +36,7 @@ class EmpleadoAuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended('/empleado/home');
+        return redirect()->intended(env('EMPLEADO_HOME'));
     }
 
     /**
@@ -50,6 +50,6 @@ class EmpleadoAuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/empleado/home');
+        return redirect(env('EMPLEADO_HOME'));
     }
 }
