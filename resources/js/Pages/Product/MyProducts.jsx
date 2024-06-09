@@ -7,7 +7,6 @@ import ProductsList from "@/Pages/Product/Partials/ProductsList.jsx";
 export default function MyProducts({auth, products, productCreatedId = null}) {
     return (
         <AuthenticatedOrNormalLayout
-            user={auth.user}
             header={
                 <div className="flex gap-3 justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">

@@ -4,6 +4,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SolicitudController;
+use App\Http\Controllers\TruequeController;
 use App\Models\Comment;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
@@ -12,7 +13,7 @@ use Inertia\Inertia;
 
 Route::redirect('/', '/product');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:web')->group(function () {
     // TODO - DESCOMENTAR CUANDO SE NECESITE EL DASHBOARD
 //    Route::get('/dashboard', function () {
 //        return Inertia::render('Dashboard');
@@ -39,8 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('product/{product}/solicitud/{solicitud}/reject', [SolicitudController::class, 'reject'])->name('solicitud.reject');
 
     // Trueque routes
-    Route::get('/trueque/my-trueques', [\App\Http\Controllers\TruequeController::class, 'myTrueques'])->name('trueque.myTrueques');
-    Route::get('/trueque/{trueque}', [\App\Http\Controllers\TruequeController::class, 'show'])->name('trueque.show');
+    Route::get('/trueque/my-trueques', [TruequeController::class, 'myTrueques'])->name('trueque.myTrueques');
 
     // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN PRODUCTO
 //    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
@@ -50,5 +50,10 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
+
+// Rutas accesibles por usuarios y administrador
+Route::middleware('auth:web,admin')->group(function (){
+    Route::get('/trueque/{trueque}', [TruequeController::class, 'show'])->name('trueque.show');
+});
 
 require __DIR__.'/auth.php';

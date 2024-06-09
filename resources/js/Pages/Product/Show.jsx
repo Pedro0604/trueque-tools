@@ -11,7 +11,7 @@ import Create from "@/Pages/Comment/Create.jsx";
 import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
 import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
 import Divisor from "@/Components/Divisor.jsx";
-import PersonIcon from "@mui/icons-material/Person.js";
+import PersonIcon from '@mui/icons-material/Person';
 import Blur from "@/Components/Blur/Blur.jsx";
 
 export default function Show({
@@ -27,7 +27,6 @@ export default function Show({
 
     return (
         <AuthenticatedOrNormalLayout
-            user={auth.user}
             header={
                 <div className="flex gap-3 justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-custom-beige-500 leading-tight">

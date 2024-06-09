@@ -1,4 +1,3 @@
-import {usePage} from "@inertiajs/react";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import {useState} from "react";
 import CloseIcon from '@mui/icons-material/Close';
@@ -11,7 +10,6 @@ export default function Comment({
                                     productUserId = null,
                                     ...props
                                 }) {
-    const {auth} = usePage().props;
     const [isResponseFormOpen, setIsResponseFormOpen] = useState(false)
 
     const handleClick = () => {

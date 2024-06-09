@@ -24,7 +24,7 @@ class EmpleadoLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dni' => ['required', 'numeric'],
+            'dni' => ['required', 'integer'],
             'password' => ['required', 'string'],
         ];
     }

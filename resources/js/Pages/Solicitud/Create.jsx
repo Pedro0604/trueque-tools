@@ -1,5 +1,5 @@
 import {Head, useForm, usePage} from "@inertiajs/react";
-import Authenticated from "@/Layouts/AuthenticatedLayout.jsx";
+import UserLayout from "@/Layouts/UserLayout.jsx";
 import Product from "@/Pages/Product/Partials/Product.jsx";
 import MultipleStopIcon from "@mui/icons-material/MultipleStop";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
@@ -55,7 +55,7 @@ export default function Create({
     );
 
     return (
-        <Authenticated
+        <UserLayout
             user={auth.user}
             header={
                 <div className="flex gap-3 justify-between items-center">
@@ -219,6 +219,6 @@ export default function Create({
                     </div>
                 </>
             </Modal>
-        </Authenticated>
+        </UserLayout>
     );
 }
