@@ -6,7 +6,8 @@ import {usePage} from "@inertiajs/react";
 
 export default function UserLayout({header, children}) {
     const user = usePage().props.auth.user
-    {/* TODO - NO OLVIDARSE DE AGREGAR LOS LINKS EN navLinks y responsiveNavLinks */}
+    {/* TODO - NO OLVIDARSE DE AGREGAR LOS LINKS EN navLinks y responsiveNavLinks */
+    }
     return (
         <CommonLayout
             header={header}
@@ -60,14 +61,20 @@ export default function UserLayout({header, children}) {
                     <Dropdown.Content>
                         {/*TODO – DESCOMENTAR CUANDO HAYA QUE MOSTRAR LA EDICION DE USUARIO*/}
                         {/*<Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>*/}
+                        <Dropdown.Link href={route('logout')} method="post" as="button">
+                            Cerrar sesión
+                        </Dropdown.Link>
                         <Dropdown.Link href={route('product.myProducts')} method="get" as="button">
                             Mis productos
                         </Dropdown.Link>
                         <Dropdown.Link href={route('trueque.myTrueques')} method="get" as="button">
                             Mis trueques
                         </Dropdown.Link>
-                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                            Cerrar sesión
+                        <Dropdown.Link href={route('solicitud.mySolicitudsReceived')} method="get" as="button">
+                            Mis solicitudes recibidas
+                        </Dropdown.Link>
+                        <Dropdown.Link href={route('solicitud.mySolicitudsSent')} method="get" as="button">
+                            Mis solicitudes enviadas
                         </Dropdown.Link>
                     </Dropdown.Content>
                 </Dropdown>
@@ -82,14 +89,20 @@ export default function UserLayout({header, children}) {
                     <div className="mt-3 space-y-1">
                         {/*TODO – DESCOMENTAR CUANDO HAYA QUE MOSTRAR LA EDICION DE USUARIO*/}
                         {/*<ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>*/}
+                        <ResponsiveNavLink method="post" href={route('logout')} as="button">
+                            Cerrar sesión
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink method="get" href={route('product.myProducts')} as="button">
                             Mis productos
                         </ResponsiveNavLink>
                         <ResponsiveNavLink method="get" href={route('trueque.myTrueques')} as="button">
                             Mis trueques
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                            Cerrar sesión
+                        <ResponsiveNavLink method="get" href={route('solicitud.mySolicitudsReceived')} as="button">
+                            Mis solicitudes Recibidas
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink method="get" href={route('solicitud.mySolicitudsSent')} as="button">
+                            Mis solicitudes Enviadas
                         </ResponsiveNavLink>
                     </div>
                 </div>

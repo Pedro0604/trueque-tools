@@ -36,6 +36,8 @@ Route::middleware('auth:web')->group(function () {
     // Solicitud routes
     Route::get('product/{product}/solicitud/create', [SolicitudController::class, 'create'])->name('solicitud.create');
     Route::post('product/{product}/solicitud', [SolicitudController::class, 'store'])->name('solicitud.store');
+    Route::get('/solicitud/my-solicitudes-recibidas', [SolicitudController::class, 'mySolicitudsReceived'])->name('solicitud.mySolicitudsReceived');
+    Route::get('/solicitud/my-solicitudes-enviadas', [SolicitudController::class, 'mySolicitudsSent'])->name('solicitud.mySolicitudsSent');
     Route::post('product/{product}/solicitud/{solicitud}/accept', [SolicitudController::class, 'accept'])->name('solicitud.accept');
     Route::post('product/{product}/solicitud/{solicitud}/reject', [SolicitudController::class, 'reject'])->name('solicitud.reject');
 

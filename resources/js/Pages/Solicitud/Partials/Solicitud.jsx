@@ -42,6 +42,7 @@ export default function Solicitud({solicitud}) {
                         withSucursal={false}
                     />
                     <Divisor/>
+                    {!solicitud.onlyView &&
                     <div className="flex flex-col gap-2 mt-6">
                         <CyanButton
                             className="w-full justify-center"
@@ -56,6 +57,7 @@ export default function Solicitud({solicitud}) {
                             Rechazar
                         </DangerButton>
                     </div>
+                    }
                 </div>
             </div>
         </div>

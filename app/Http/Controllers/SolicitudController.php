@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTruequeRequest;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\SolicitudResource;
 use App\Http\Resources\SucursalResource;
 use App\Models\Product;
 use App\Models\Solicitud;
@@ -151,5 +152,27 @@ class SolicitudController extends Controller
     public function destroy(Solicitud $solicitud)
     {
         //
+    }
+
+    public function mySolicitudsReceived(): Response|ResponseFactory
+    {
+        $solicituds = Solicitud::whereHas('publishedProduct', function ($query) {
+            $query->where('user_id', auth()->id());
+        })->get();
+
+        return inertia('Solicitud/MySolicituds', [
+            'solicituds' => SolicitudResource::collection($solicituds),
+        ]);
+    }
+
+    public function mySolicitudsSent(): Response|ResponseFactory
+    {
+        $solicituds = Solicitud::whereHas('offeredProduct', function ($query) {
+            $query->where('user_id', auth()->id());
+        })->get();
+
+        return inertia('Solicitud/MySolicituds', [
+            'solicituds' => SolicitudResource::collection($solicituds),
+        ]);
     }
 }
