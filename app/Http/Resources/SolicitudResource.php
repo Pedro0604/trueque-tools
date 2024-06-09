@@ -25,8 +25,7 @@ class SolicitudResource extends JsonResource
             'state' => $this->state,
             'created_at' => (new Carbon($this->created_at))->format('d/m/Y H:i'),
             'canBeViewed' => Gate::allows('view', $this->resource),
-            'canBeAccepted' => Gate::allows('accept', [Solicitud::class, $this->publishedProduct]),
-            'canBeRejected' => Gate::allows('reject', [Solicitud::class, $this->publishedProduct]),
+            'onlyView' => !Gate::allows('accept', [Solicitud::class, $this->publishedProduct]) && !Gate::allows('reject', [Solicitud::class, $this->publishedProduct]),
         ];
     }
 }
