@@ -13,6 +13,7 @@ import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
 import Divisor from "@/Components/Divisor.jsx";
 import PersonIcon from '@mui/icons-material/Person';
 import Blur from "@/Components/Blur.jsx";
+import SpeedIcon from "@mui/icons-material/Speed.js";
 
 export default function Show({
                                  product,
@@ -44,10 +45,12 @@ export default function Show({
                     >
                         <div className="flex justify-between items-center mb-1 h-6">
                             <div className="flex items-center">
-                                <PersonIcon className="text-gray-300 mr-1"/>
-                                <p className="text-gray-600 dark:text-custom-beige-500 text-sm">
+                                <PersonIcon className="text-gray-300 mr-0.5"/>
+                                <p className="text-gray-600 dark:text-custom-beige-500 text-sm mr-2">
                                     {product.user.name}
                                 </p>
+                                <SpeedIcon/>
+                                <p className="text-gray-600 dark:text-custom-beige-600 text-sm ml-0.5">{product.user.reputation}</p>
                             </div>
                             {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
                             {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}

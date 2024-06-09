@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import PersonIcon from '@mui/icons-material/Person';
 import Blur from "@/Components/Blur.jsx";
+import SpeedIcon from '@mui/icons-material/Speed';
 
 export default function Product({
                                     product,
@@ -50,8 +51,10 @@ export default function Product({
             <div className="flex justify-between items-center mb-1">
                 {withUserName &&
                     <div className="flex items-center">
-                        <PersonIcon className="text-gray-300 mr-1"/>
-                        <p className="text-gray-600 dark:text-custom-beige-600 text-sm">{product.user.name}</p>
+                        <PersonIcon className="text-gray-300 mr-0.5"/>
+                        <p className="text-gray-600 dark:text-custom-beige-600 text-sm mr-2">{product.user.name}</p>
+                        <SpeedIcon/>
+                        <p className="text-gray-600 dark:text-custom-beige-600 text-sm ml-0.5">{product.user.reputation}</p>
                     </div>
                 }
                 {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
