@@ -75,7 +75,7 @@ export default function Trueque({trueque, onClick = null, className = "", ...pro
                         product={trueque.solicitud.offered_product}
                         withCategory={false}
                         withSucursal={false}
-                        className="border-none px-2 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl"
+                        className="w-full border-none px-2 lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl"
                     />
                 </div>
             </div>
