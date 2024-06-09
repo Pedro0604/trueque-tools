@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Solicitud;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -24,6 +25,8 @@ class SolicitudResource extends JsonResource
             'state' => $this->state,
             'created_at' => (new Carbon($this->created_at))->format('d/m/Y H:i'),
             'canBeViewed' => Gate::allows('view', $this->resource),
+            'canBeAccepted' => Gate::allows('accept', [Solicitud::class, $this->publishedProduct]),
+            'canBeRejected' => Gate::allows('reject', [Solicitud::class, $this->publishedProduct]),
         ];
     }
 }
