@@ -15,6 +15,6 @@ class TruequeSeeder extends Seeder
      */
     public function run(): void
     {
-        Trueque::factory(3)->create();
+        Trueque::factory(5)->create();
     }
 }

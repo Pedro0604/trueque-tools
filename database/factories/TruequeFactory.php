@@ -18,8 +18,10 @@ class TruequeFactory extends Factory
      */
     public function definition(): array
     {
+        $hasEnded = fake()->boolean(30);
+
         return [
-            'ended_at' => fake()->dateTime(),
+            'ended_at' => $hasEnded ? fake()->dateTime() : null,
             'is_failed' => fake()->boolean(80),
             'solicitud_id' => Solicitud::factory(),
         ];
