@@ -91,7 +91,7 @@ class SolicitudController extends Controller
 
             $solicitud->update(['state' => 'accepted']);
 
-            return to_route('product.show', $product->id)
+            return to_route('trueque.myTrueques')
                 ->with('success', [
                     'message' => 'Trueque pactado exitosamente',
                     'key' => $created_trueque->id
