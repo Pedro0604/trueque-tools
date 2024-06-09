@@ -2,10 +2,20 @@ import {Head, usePage} from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import TruequesList from "@/Pages/Trueque/Partials/TruequesList.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
-import {InputLabel} from "@mui/material";
+import {useState} from "react";
+import InputLabel from "@/Components/Inputs/InputLabel.jsx";
+import InputError from "@/Components/Inputs/InputError.jsx";
 
 export default function Index({trueques}) {
     const auth = usePage().props.auth;
+    const [code, setCode] = useState("")
+    const [filteredTrueques, setFilteredTrueques] = useState(trueques);
+
+    const changeCode = (code) => {
+        setCode(code)
+        setFilteredTrueques(trueques.filter(trueque => trueque.code.toLowerCase().includes(code.toLowerCase())))
+    }
+
     return (
         <AuthenticatedLayout
             header={
@@ -13,19 +23,26 @@ export default function Index({trueques}) {
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                         Listado de Trueques
                     </h2>
-                    {(auth.admin || auth.empleado) && <>
-                        <InputLabel htmlFor="trueque_code" value="Codigo"/>
+                    {(auth.admin || auth.empleado) &&
+                        <div className="flex items-center">
+                            <InputLabel
+                                htmlFor="code"
+                                value="Código de trueque: "
+                                className="mr-2 text-xl"
+                            />
 
-                        <TextInput
-                            id="trueque_code"
-                            type="trueque_code"
-                            name="trueque_code"
-                            value={data.trueque_code}
-                            className="mt-1 block w-full"
-                            isFocused={true}
-                            onChange={(e) => setData("trueque_code", e.target.value)}
-                        />
-                    </>
+                            <TextInput
+                                id="code"
+                                type="text"
+                                name="code"
+                                value={code}
+                                className="block w-full"
+                                invalid={false}
+                                onChange={(e) => changeCode(e.target.value)}
+                            />
+
+                            <InputError message={""} className="mt-2"/>
+                        </div>
                     }
                 </div>
             }
@@ -33,8 +50,8 @@ export default function Index({trueques}) {
             <Head title="Trueques"/>
 
             <TruequesList
-                trueques={trueques}
-                emptyListMessage="No hay trueques realizados"
+                trueques={filteredTrueques}
+                emptyListMessage={code ? `No hay trueques con el código ${code}` :"No hay trueques realizados"}
             />
         </AuthenticatedLayout>
     )
