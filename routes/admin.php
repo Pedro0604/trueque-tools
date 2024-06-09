@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\SucursalController;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
 
 Route::as('admin.')->group(function () {
@@ -20,9 +21,9 @@ Route::as('admin.')->group(function () {
         Route::get('empleado', [EmpleadoController::class, 'index'])->name('empleado.index');
 
         Route::get('sucursal/create', [SucursalController::class, 'create'])->name('sucursal.create');
-        Route::post('sucursal', [SucursalController::class, 'store'])->name('sucursal.store');
+        Route::post('sucursal', [SucursalController::class, 'store'])->name('sucursal.store')->middleware(HandlePrecognitiveRequests::class);
 
         Route::get('empleado/create', [EmpleadoController::class, 'create'])->name('empleado.create');
-        Route::post('empleado', [EmpleadoController::class, 'store'])->name('empleado.store');
+        Route::post('empleado', [EmpleadoController::class, 'store'])->name('empleado.store')->middleware(HandlePrecognitiveRequests::class);
     });
 });
