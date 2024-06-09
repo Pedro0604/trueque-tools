@@ -24,7 +24,6 @@ export default function AuthenticatedLayout({header, children}) {
         )
     }
     else if (auth.admin){
-        console.log(auth.admin.name)
         return (
             <AdminLayout
                 header={header}
