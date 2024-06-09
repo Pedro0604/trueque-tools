@@ -14,9 +14,5 @@ Route::as('empleado.')->group(function () {
     Route::middleware('auth:empleado')->group(function () {
         Route::post('logout', [EmpleadoAuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
-
-        Route::get('/home', function () {
-            return inertia('Empleado/EmpleadoHome');
-        })->name('home');
     });
 });

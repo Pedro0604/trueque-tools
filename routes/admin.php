@@ -14,9 +14,5 @@ Route::as('admin.')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::post('logout', [AdminAuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
-
-        Route::get('/home', function () {
-            return inertia('Admin/AdminHome');
-        })->name('home');
     });
 });
