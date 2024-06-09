@@ -50,6 +50,6 @@ class EmpleadoAuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect(env('EMPLEADO_HOME'));
+        return redirect('/');
     }
 }

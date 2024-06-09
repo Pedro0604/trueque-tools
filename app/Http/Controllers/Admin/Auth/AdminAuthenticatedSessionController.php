@@ -49,6 +49,6 @@ class AdminAuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect(env('ADMIN_HOME'));
+        return redirect('/');
     }
 }
