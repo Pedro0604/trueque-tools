@@ -12,6 +12,7 @@ import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
 import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
 import Divisor from "@/Components/Divisor.jsx";
 import PersonIcon from "@mui/icons-material/Person.js";
+import Blur from "@/Components/Blur/Blur.jsx";
 
 export default function Show({
                                  product,
@@ -54,36 +55,41 @@ export default function Show({
                         </div>
 
                         <div className="md:flex">
-                            <div className={`w-full md:w-80`}>
-                                {product.image_path ? (
-                                    <>
-                                        <Modal
-                                            open={open}
-                                            onClose={handleClose}
-                                            aria-labelledby="modal-modal-title"
-                                            aria-describedby="modal-modal-description"
-                                            className="flex items-center justify-center"
-                                        >
+                            <Blur
+                                blur={product.isPaused}
+                                message={"El producto esta pausado"}
+                            >
+                                <div className={`w-full md:w-80`}>
+                                    {product.image_path ? (
+                                        <>
+                                            <Modal
+                                                open={open}
+                                                onClose={handleClose}
+                                                aria-labelledby="modal-modal-title"
+                                                aria-describedby="modal-modal-description"
+                                                className="flex items-center justify-center"
+                                            >
+                                                <img
+                                                    src={product.image_path}
+                                                    alt={product.name}
+                                                    className={`object-contain w-1/2 max-h-dvh`}
+                                                />
+                                            </Modal>
                                             <img
                                                 src={product.image_path}
                                                 alt={product.name}
-                                                className={`object-contain w-1/2 max-h-dvh`}
+                                                onClick={handleOpen}
+                                                className={`object-cover w-full aspect-video md:aspect-square rounded-md cursor-zoom-in border border-custom-beige-900 dark:border-custom-beige-500`}
                                             />
-                                        </Modal>
-                                        <img
-                                            src={product.image_path}
-                                            alt={product.name}
-                                            onClick={handleOpen}
-                                            className={`object-cover w-full aspect-video md:aspect-square rounded-md cursor-zoom-in border border-custom-beige-900 dark:border-custom-beige-500`}
-                                        />
-                                    </>
-                                ) : (
-                                    <div
-                                        className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                                        <p>IMAGEN NO ENCONTRADA</p>
-                                    </div>
-                                )}
-                            </div>
+                                        </>
+                                    ) : (
+                                        <div
+                                            className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                            <p>IMAGEN NO ENCONTRADA</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </Blur>
                             <div className="mt-4 left-2 ml-5">
                                 <p className="text-xl mb-2">
                                     {CATEGORIES_TEXT_MAP[product.category]}
