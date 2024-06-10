@@ -73,7 +73,7 @@ class SolicitudController extends Controller
      */
     public function accept(StoreTruequeRequest $request, Product $product, Solicitud $solicitud): RedirectResponse
     {
-        $response = Gate::inspect('accept', [$product, $solicitud]);
+        $response = Gate::inspect('accept', [$solicitud, $product]);
 
         if ($response->denied()) {
             return back()->with('error', [
@@ -151,7 +151,7 @@ class SolicitudController extends Controller
      */
     public function reject(Request $request, Product $product, Solicitud $solicitud): RedirectResponse
     {
-        $response = Gate::inspect('reject', [$product, $solicitud]);
+        $response = Gate::inspect('reject', [$solicitud, $product]);
 
         if ($response->denied()) {
             return back()->with('error', [
