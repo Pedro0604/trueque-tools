@@ -25,6 +25,7 @@ class TruequeResource extends JsonResource
             'solicitud' => new SolicitudResource($this->solicitud),
             'canBeCanceled' => Gate::allows('cancel', $this->resource),
             'canBeEnded' => Gate::allows('end', $this->resource),
+            'canBeFailed' => Gate::allows('fail', $this->resource),
             'created_at' => (new Carbon($this->created_at))->format('d/m/Y H:i'),
         ];
     }
