@@ -72,7 +72,7 @@ class SolicitudController extends Controller
      */
     public function accept(StoreTruequeRequest $request, Product $product, Solicitud $solicitud): RedirectResponse
     {
-        Gate::authorize('accept', [Solicitud::class, $product, $solicitud]);
+        Gate::authorize('accept', [$product, $solicitud]);
 
         function generateRandomString($length = 10)
         {
@@ -143,7 +143,7 @@ class SolicitudController extends Controller
      */
     public function reject(Request $request, Product $product, Solicitud $solicitud): RedirectResponse
     {
-        Gate::authorize('accept', [Solicitud::class, $product, $solicitud]);
+        Gate::authorize('reject', [$product, $solicitud]);
 
         $solicitud->update(['state' => 'rejected']);
 
