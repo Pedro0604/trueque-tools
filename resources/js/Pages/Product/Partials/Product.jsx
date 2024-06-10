@@ -17,6 +17,7 @@ export default function Product({
                                     minImageWidth = "min-w-24",
                                     className = "",
                                     blurIfPaused = false,
+                                    error = null,
                                     ...props
                                 }) {
     const [isPulsing, setIsPulsing] = useState(created);
@@ -48,6 +49,13 @@ export default function Product({
                 ${isPulsing ? 'animate-pulse' : ''} ${className}`}
             onClick={onClick ? onClick : () => showProduct(product.id)}
         >
+            {error &&
+                <div
+                    className="w-full text-lg text-red-600 dark:text-red-400"
+                >
+                    {error.message}
+                </div>
+            }
             <div className="flex justify-between items-center mb-1">
                 {withUserName &&
                     <div className="flex items-center">

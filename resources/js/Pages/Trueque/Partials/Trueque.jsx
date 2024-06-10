@@ -102,6 +102,7 @@ export default function Trueque({
                         withCategory={withCategory}
                         withSucursal={withSucursal}
                         className={productClass}
+                        error={trueque.published_error}
                     />
                 </div>
                 <MultipleStopIcon sx={{fontSize: 40}}/>
@@ -111,6 +112,7 @@ export default function Trueque({
                         withCategory={withCategory}
                         withSucursal={withSucursal}
                         className={productClass}
+                        error={trueque.offered_error}
                     />
                 </div>
             </div>

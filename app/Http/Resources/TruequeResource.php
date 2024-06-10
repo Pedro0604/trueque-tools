@@ -21,6 +21,8 @@ class TruequeResource extends JsonResource
             'code' => $this->code,
             'ended_at' => $this->ended_at ? (new Carbon($this->ended_at))->format('d/m/Y H:i') : null,
             'failed' => $this->ended_at && $this->is_failed,
+            'published_error' => $this->published_error ? new TruequeErrorResource($this->published_error): null,
+            'offered_error' => $this->offered_error ? new TruequeErrorResource($this->offered_error): null,
             'successful' => $this->ended_at && !$this->is_failed,
             'solicitud' => new SolicitudResource($this->solicitud),
             'canBeCanceled' => Gate::allows('cancel', $this->resource),
