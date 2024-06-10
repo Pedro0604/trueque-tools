@@ -157,6 +157,9 @@ class SolicitudController extends Controller
         //
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function mySolicitudsReceived(): Response|ResponseFactory
     {
         $solicituds = Solicitud::whereHas('publishedProduct', function ($query) {
@@ -168,6 +171,9 @@ class SolicitudController extends Controller
         ]);
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function mySolicitudsSent(): Response|ResponseFactory
     {
         $solicituds = Solicitud::whereHas('offeredProduct', function ($query) {

@@ -16,6 +16,7 @@ class Trueque extends Model
         'ended_at',
         'is_failed',
         'solicitud_id',
+        'failedReason',
     ];
 
     public function solicitud()

@@ -2,7 +2,8 @@ import Product from "@/Pages/Product/Partials/Product.jsx";
 import BusinessIcon from "@mui/icons-material/Business";
 import MultipleStopIcon from "@mui/icons-material/MultipleStop";
 import {Chip} from "@mui/material";
-import {router} from "@inertiajs/react";
+import {router, usePage} from "@inertiajs/react";
+import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 
 export default function Trueque({
                                     trueque,
@@ -15,10 +16,16 @@ export default function Trueque({
                                     ...props
                                 }) {
 
+    const auth = usePage().props.auth;
+
     const showTrueque = (truequeId) => {
         //console.log("Mostrar trueque con id: " + truequeId);
         //console.error("DESCOMENTARRRRRR")
         router.get(route('trueque.show', truequeId));
+    }
+
+    const cancelTrueque = (truequeId) => {
+        router.post(route('trueque.cancel', [auth.user, truequeId]), {trueque_id: truequeId})
     }
 
     let borderColor = 'border-custom-blue-700 dark:border-custom-blue-400';
@@ -99,6 +106,14 @@ export default function Trueque({
                     />
                 </div>
             </div>
+            {trueque.canBeCanceled &&
+                <DangerButton
+                    className="w-full justify-center mt-6"
+                    onClick={() => cancelTrueque(trueque.id)}
+                >
+                    Cancelar
+                </DangerButton>
+            }
         </div>
     )
 }

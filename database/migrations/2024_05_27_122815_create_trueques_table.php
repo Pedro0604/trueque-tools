@@ -16,6 +16,11 @@ return new class extends Migration {
             $table->dateTime('ended_at')->nullable();
             $table->boolean('is_failed')->default(false);
             $table->string('code')->unique();
+            $table->enum('failedReason', [
+                'Un usuario cancelo',
+                'otra2',
+                'otra3',
+            ])->nullable();
             $table->foreignId('solicitud_id')->unique()->constrained();
             $table->softDeletes();
             $table->timestamps();

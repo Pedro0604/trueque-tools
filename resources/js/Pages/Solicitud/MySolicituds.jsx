@@ -1,6 +1,5 @@
 import UserLayout from "@/Layouts/UserLayout.jsx";
 import {Head} from "@inertiajs/react";
-import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
 import Solicitud from "@/Pages/Solicitud/Partials/Solicitud.jsx";
 
 export default function MySolicituds({solicituds, isAuthor = true}) {

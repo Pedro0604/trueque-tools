@@ -6,6 +6,8 @@ use App\Http\Resources\TruequeResource;
 use App\Models\Trueque;
 use App\Http\Requests\StoreTruequeRequest;
 use App\Http\Requests\UpdateTruequeRequest;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -87,6 +89,21 @@ class TruequeController extends Controller
         return inertia('Trueque/MyTrueques', [
             'trueques' => TruequeResource::collection($trueques),
         ]);
+    }
+
+    public function cancel(User $user, Trueque $trueque): RedirectResponse
+    {
+        $user->update(['reputation' => ($user->reputation - 1)]);
+
+        $trueque->update(['is_failed' => true]);
+        $trueque->update(['failedReason' => 'Un usuario cancelo']);
+        $trueque->update(['ended_at' => now()]);
+
+        return to_route('trueque.show', $trueque->id)
+            ->with('success', [
+                'message' => 'Trueque cancelado correctamente',
+                'key' => rand()
+            ]);
     }
 
 }

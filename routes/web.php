@@ -43,6 +43,7 @@ Route::middleware('auth:web')->group(function () {
 
     // Trueque routes
     Route::get('/trueque/my-trueques', [TruequeController::class, 'myTrueques'])->name('trueque.myTrueques');
+    Route::post('/trueque/{trueque}/cancel', [TruequeController::class, 'cancel'])->name('trueque.cancel');
 
 
 

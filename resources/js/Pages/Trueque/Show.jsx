@@ -1,12 +1,13 @@
-import {Head, usePage} from "@inertiajs/react";
+import {Head, router, usePage} from "@inertiajs/react";
 import {useState} from "react";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
 import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
+import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 
 export default function Show({
                                  trueque = null
                              }) {
-    const {auth} = usePage().props;
+    const auth = usePage().props.auth;
     const [open, setOpen] = useState(false);
 
     return (
@@ -27,7 +28,8 @@ export default function Show({
                     trueque={trueque}
                     withCategory={true}
                     withSucursal={true}
-                    onClick={() => {}}
+                    onClick={() => {
+                    }}
                     showHoverOnProduct
                     showCursorPointer={false}
                 />
