@@ -24,7 +24,7 @@ class AdminLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dni' => ['required', 'integer'],
+            'dni' => ['required', 'integer', 'min_digits:7', 'max_digits:8'],
             'password' => ['required', 'string'],
         ];
     }
