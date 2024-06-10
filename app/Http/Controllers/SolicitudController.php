@@ -105,16 +105,16 @@ class SolicitudController extends Controller
         $created_trueque = null;
         DB::transaction(function () use ($product, $data, $solicitud, &$created_trueque) {
             // Pausa todas las solicitudes hacia el producto publicado
-            $product->solicituds()->update(['state' => 'paused']);
+            $product->solicituds()->where('state', 'normal')->update(['state' => 'paused']);
 
             // Pausa todas las solicitudes donde se ofreció el producto publicado
-            $product->offeredSolicituds()->update(['state' => 'paused']);
+            $product->offeredSolicituds()->where('state', 'normal')->update(['state' => 'paused']);
 
             // Pausa todas las solicitudes hacia el producto ofrecido
-            $solicitud->offeredProduct->solicituds()->update(['state' => 'paused']);
+            $solicitud->offeredProduct->solicituds()->where('state', 'normal')->update(['state' => 'paused']);
 
             // Pausa todas las solicitudes donde se ofreció el producto ofrecido
-            $solicitud->offeredProduct->offeredSolicituds()->update(['state' => 'paused']);
+            $solicitud->offeredProduct->offeredSolicituds()->where('state', 'normal')->update(['state' => 'paused']);
 
             $solicitud->update(['state' => 'accepted']);
 
