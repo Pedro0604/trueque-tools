@@ -1,14 +1,11 @@
-import {Head, router, usePage} from "@inertiajs/react";
-import {useState} from "react";
+import {Head, usePage} from "@inertiajs/react";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
 import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
-import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 
 export default function Show({
                                  trueque = null
                              }) {
     const auth = usePage().props.auth;
-    const [open, setOpen] = useState(false);
 
     return (
         <AuthenticatedOrNormalLayout
@@ -23,15 +20,18 @@ export default function Show({
         >
             <Head title={`Trueque`}/>
 
-            <div className="flex gap-4 justify-center text-xl text-gray-800 dark:text-custom-beige-500 leading-tight">
+            <div className="flex justify-center text-xl text-gray-800 dark:text-custom-beige-500 w-full">
                 <Trueque
                     trueque={trueque}
                     withCategory={true}
                     withSucursal={true}
                     onClick={() => {
                     }}
+                    showHover={false}
                     showHoverOnProduct
                     showCursorPointer={false}
+                    showActionButtons
+                    className="max-w-6xl"
                 />
             </div>
         </AuthenticatedOrNormalLayout>

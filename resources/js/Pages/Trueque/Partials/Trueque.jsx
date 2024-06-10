@@ -12,8 +12,10 @@ export default function Trueque({
                                     className = "",
                                     withCategory = false,
                                     withSucursal = false,
+                                    showHover = true,
                                     showHoverOnProduct = false,
                                     showCursorPointer = true,
+                                    showActionButtons = false,
                                     ...props
                                 }) {
 
@@ -46,16 +48,17 @@ export default function Trueque({
         chipText = "Exitoso"
         chipColor = 'success'
     }
+    const hoverClasses = 'lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl'
 
-    const productClass = `w-full border-none px-2 ${showHoverOnProduct ? 'lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl' : ''}`
+    const productClass = `w-full border-none px-2 ${showHoverOnProduct ? hoverClasses : ''}`
 
     return (
         <div
             {...props}
             onClick={onClick ? onClick : () => showTrueque(trueque.id)}
             className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800
-                transition-all rounded-lg p-4 ${showCursorPointer ?  'cursor-pointer' : '' } border ${borderColor}
-                 ${className}`}
+                transition-all rounded-lg p-4 ${showCursorPointer ? 'cursor-pointer' : ''} border ${borderColor}
+                 ${showHover ? hoverClasses : ''} ${className}`}
         >
             <div
                 className="flex flex-col justify-center items-center gap-0.5 mb-2"
@@ -111,21 +114,36 @@ export default function Trueque({
                     />
                 </div>
             </div>
-            {trueque.canBeCanceled &&
-                <DangerButton
-                    className="w-full justify-center mt-6"
-                    onClick={() => cancelTrueque(trueque.id)}
+            {showActionButtons &&
+                <div
+                    className="flex flex-col gap-4 mt-6"
                 >
-                    Cancelar
-                </DangerButton>
-            }
-            {(auth.admin || auth.empleado) && trueque.canBeEnded &&
-                <CyanButton
-                    className="w-full justify-center mt-6"
-                    onClick={() => endTrueque(trueque.id)}
-                >
-                    Finalizar Trueque
-                </CyanButton>
+                    {trueque.canBeCanceled &&
+                        <DangerButton
+                            className="w-full justify-center"
+                            onClick={() => cancelTrueque(trueque.id)}
+                        >
+                            Cancelar
+                        </DangerButton>
+                    }
+                    {(auth.admin || auth.empleado) && trueque.canBeFailed &&
+                        <DangerButton
+                            className="w-full justify-center"
+                            isLink
+                            href={route('trueque.failForm', trueque.id)}
+                        >
+                            Informar fallo en un trueque
+                        </DangerButton>
+                    }
+                    {(auth.admin || auth.empleado) && trueque.canBeEnded &&
+                        <CyanButton
+                            className="w-full justify-center"
+                            onClick={() => endTrueque(trueque.id)}
+                        >
+                            Finalizar Trueque
+                        </CyanButton>
+                    }
+                </div>
             }
         </div>
     )
