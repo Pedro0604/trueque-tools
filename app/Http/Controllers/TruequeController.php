@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FailTruequeRequest;
 use App\Http\Resources\TruequeResource;
+use App\Models\Solicitud;
 use App\Models\Trueque;
 use App\Http\Requests\StoreTruequeRequest;
 use App\Http\Requests\UpdateTruequeRequest;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -97,6 +98,7 @@ class TruequeController extends Controller
      */
     public function cancel(Trueque $trueque): RedirectResponse
     {
+        Gate::authorize('cancel', $trueque);
         $user = auth()->user();
 
         DB::transaction(function () use ($trueque, $user) {
@@ -134,6 +136,60 @@ class TruequeController extends Controller
      */
     public function end(Trueque $trueque): RedirectResponse
     {
+        Gate::authorize('end', $trueque);
+
+        DB::transaction(function () use ($trueque) {
+            $user1 = $trueque->solicitud->publishedProduct->user;
+            $user2 = $trueque->solicitud->offeredProduct->user;
+
+            $user1->update(['reputation' => ($user1->reputation + 1)]);
+            $user2->update(['reputation' => ($user2->reputation + 1)]);
+
+            $product1 = $trueque->solicitud->publishedProduct;
+            $product2 = $trueque->solicitud->offeredProduct;
+
+            // Pausa todas las solicitudes hacia el producto publicado
+            $product1->solicituds()->where('state', 'paused')->update(['state' => 'rejected']);
+
+            // Pausa todas las solicitudes donde se ofreció el producto publicado
+            $product1->offeredSolicituds()->where('state', 'paused')->update(['state' => 'rejected']);
+
+            // Pausa todas las solicitudes hacia el producto ofrecido
+            $product2->solicituds()->where('state', 'paused')->update(['state' => 'rejected']);
+
+            // Pausa todas las solicitudes donde se ofreció el producto ofrecido
+            $product2->offeredSolicituds()->where('state', 'paused')->update(['state' => 'rejected']);
+
+            $trueque->update(['ended_at' => now()]);
+        });
+
+        return to_route('trueque.show', $trueque->id)
+            ->with('success', [
+                'message' => 'Trueque finalizado correctamente',
+                'key' => rand()
+            ]);
+    }
+
+    /**
+     * Register the trueque finalization by an admin/employee
+     */
+    public function failForm(FailTruequeRequest $request, Trueque $trueque): Response|ResponseFactory
+    {
+        Gate::authorize('fail', $trueque);
+
+        return inertia('Trueque/Fail', [
+            'trueque' => new TruequeResource($trueque),
+        ]);
+    }
+
+    /**
+     * Register the trueque finalization by an admin/employee
+     */
+    public function fail(FailTruequeRequest $request, Trueque $trueque): RedirectResponse
+    {
+        Gate::authorize('fail', $trueque);
+        $data = $request->validated();
+
         DB::transaction(function () use ($trueque) {
             $user1 = $trueque->solicitud->publishedProduct->user;
             $user2 = $trueque->solicitud->offeredProduct->user;
