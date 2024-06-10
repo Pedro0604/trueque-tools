@@ -165,7 +165,9 @@ class SolicitudController extends Controller
     {
         $solicituds = Solicitud::whereHas('publishedProduct', function ($query) {
             $query->where('user_id', auth()->id());
-        })->get();
+        })
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return inertia('Solicitud/MySolicituds', [
             'solicituds' => SolicitudResource::collection($solicituds),
@@ -180,7 +182,9 @@ class SolicitudController extends Controller
     {
         $solicituds = Solicitud::whereHas('offeredProduct', function ($query) {
             $query->where('user_id', auth()->id());
-        })->get();
+        })
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return inertia('Solicitud/MySolicituds', [
             'solicituds' => SolicitudResource::collection($solicituds),
