@@ -48,6 +48,21 @@ class TruequePolicy
     }
 
     /**
+     * Determine whether the user can cancel a trueque.
+     */
+    public function cancel(Authenticatable $user, Trueque $trueque): bool
+    {
+        if($user->isEmpleado() || $user->isAdmin()){
+            return false;
+        }
+
+        $truequeIsFromUser = $user->id === $trueque->solicitud->publishedProduct->user->id;
+        $truequeWasOfferedByUser = $user->id === $trueque->solicitud->offeredProduct->user->id;
+        $truequeIsPending = !$trueque->ended_at;
+        return ($truequeIsFromUser || $truequeWasOfferedByUser) && $truequeIsPending;
+    }
+
+    /**
      * Determine whether the user can delete the model.
      */
     public function delete(Authenticatable $user, Trueque $trueque): bool

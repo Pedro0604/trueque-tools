@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Gate;
 
 class TruequeResource extends JsonResource
 {
@@ -22,6 +23,7 @@ class TruequeResource extends JsonResource
             'failed' => $this->ended_at && $this->is_failed,
             'successful' => $this->ended_at && !$this->is_failed,
             'solicitud' => new SolicitudResource($this->solicitud),
+            'canBeCanceled' => Gate::allows('cancel', $this->resource),
             'created_at' => (new Carbon($this->created_at))->format('d/m/Y H:i'),
         ];
     }
