@@ -22,7 +22,6 @@ export default function Create({
                                    sucursals,
                                    productCreated,
                                }) {
-    const {auth} = usePage().props;
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -56,7 +55,6 @@ export default function Create({
 
     return (
         <UserLayout
-            user={auth.user}
             header={
                 <div className="flex gap-3 justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
