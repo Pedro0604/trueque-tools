@@ -75,6 +75,19 @@ class TruequePolicy
     }
 
     /**
+     * Determine whether the user can end a trueque.
+     */
+    public function fail(Authenticatable $user, Trueque $trueque): bool
+    {
+        if($user->isEmpleado() || $user->isAdmin()){
+            $hasEnded = $trueque->ended_at;
+            return !$hasEnded;
+        }
+        return false;
+    }
+
+
+    /**
      * Determine whether the user can delete the model.
      */
     public function delete(Authenticatable $user, Trueque $trueque): bool
