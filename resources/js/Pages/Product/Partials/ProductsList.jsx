@@ -23,9 +23,11 @@ export default function ProductsList({
                     <h3 className="text-center text-3xl font-bold">
                         {emptyListMessage}
                     </h3>
-                    <h4 className="text-center text-2xl font-bold mt-6">
-                        Cargá un producto ahora mismo haciendo click en el botón de arriba ⭡
-                    </h4>
+                    {auth.user &&
+                        <h4 className="text-center text-2xl font-bold mt-6">
+                            Cargá un producto ahora mismo haciendo click en el botón de arriba ⭡
+                        </h4>
+                    }
                 </>
             }
         </div>
