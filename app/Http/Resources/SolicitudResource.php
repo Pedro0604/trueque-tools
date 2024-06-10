@@ -22,10 +22,13 @@ class SolicitudResource extends JsonResource
             'published_product' => new ProductResource($this->publishedProduct),
             'offered_product' => new ProductResource($this->offeredProduct),
             'meeting_date_time' => (new Carbon($this->meeting_date_time))->format('d/m/Y H:i'),
-            'state' => $this->state,
+            'isNormal' => $this->isNormal,
+            'wasAccepted' => $this->wasAccepted,
+            'isPaused' => $this->isPaused,
+            'wasRejected' => $this->wasRejected,
             'created_at' => (new Carbon($this->created_at))->format('d/m/Y H:i'),
             'canBeViewed' => Gate::allows('view', $this->resource),
-            'onlyView' => !Gate::allows('accept', [Solicitud::class, $this->publishedProduct]) && !Gate::allows('reject', [Solicitud::class, $this->publishedProduct]),
+            'onlyView' => !Gate::allows('accept', [$this->resource, $this->publishedProduct]) && !Gate::allows('reject', [$this->resource, $this->publishedProduct]),
         ];
     }
 }

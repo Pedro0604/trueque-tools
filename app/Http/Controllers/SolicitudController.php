@@ -11,6 +11,7 @@ use App\Models\Solicitud;
 use App\Http\Requests\StoreSolicitudRequest;
 use App\Models\Sucursal;
 use App\Models\Trueque;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -138,11 +139,11 @@ class SolicitudController extends Controller
     /**
      * Reject a product exchange request.
      */
-    public function reject(Product $product, Solicitud $solicitud): RedirectResponse
+    public function reject(Request $request, Product $product, Solicitud $solicitud): RedirectResponse
     {
         $solicitud->update(['state' => 'rejected']);
 
-        return to_route('product.show', $product->id)
+        return redirect($request->redirectOnReject ?? route('product.show', $product->id))
             ->with('success', [
                 'message' => 'Solcitud de trueque rechazada correctamente',
                 'key' => rand()
@@ -168,6 +169,7 @@ class SolicitudController extends Controller
 
         return inertia('Solicitud/MySolicituds', [
             'solicituds' => SolicitudResource::collection($solicituds),
+            'isPublishedProductOwner' => true,
         ]);
     }
 
@@ -182,6 +184,7 @@ class SolicitudController extends Controller
 
         return inertia('Solicitud/MySolicituds', [
             'solicituds' => SolicitudResource::collection($solicituds),
+            'isPublishedProductOwner' => false,
         ]);
     }
 }

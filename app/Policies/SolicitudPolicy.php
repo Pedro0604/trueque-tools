@@ -66,7 +66,7 @@ class SolicitudPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function accept(Authenticatable $user, Product $product): Response
+    public function accept(Authenticatable $user, Solicitud $solicitud, Product $product): Response
     {
         if($user->isAdmin()){
             return Response::deny('El administrador no puede aceptar solicitudes de trueque');
@@ -77,6 +77,9 @@ class SolicitudPolicy
 
         $productIsNotFromUser = $user->id !== $product->user_id;
         $productHasTrueque = $product->hasTrueque;
+        $solicitudWasAccepted = $solicitud->wasAccepted;
+        $solicitudWasRejected = $solicitud->wasRejected;
+        $solicitudIsPaused = $solicitud->isPaused;
 
         if($productIsNotFromUser){
             return Response::deny('No sos el dueño del producto, no podés aceptar una solicitud de trueque!');
@@ -84,13 +87,22 @@ class SolicitudPolicy
         if($productHasTrueque){
             return Response::deny('El producto ya fue trocado!');
         }
+        if($solicitudWasAccepted){
+            return Response::deny('La solicitud ya fue aceptada!');
+        }
+        if($solicitudWasRejected){
+            return Response::deny('La solicitud ya fue rechazada!');
+        }
+        if($solicitudIsPaused){
+            return Response::deny('La solicitud está pausada porque alguno de los productos está matcheado');
+        }
         return Response::allow();
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function reject(Authenticatable $user, Product $product): Response
+    public function reject(Authenticatable $user, Solicitud $solicitud, Product $product): Response
     {
         if($user->isAdmin()){
             return Response::deny('El administrador no puede rechazar solicitudes de trueque');
@@ -101,12 +113,24 @@ class SolicitudPolicy
 
         $productIsNotFromUser = $user->id !== $product->user_id;
         $productHasTrueque = $product->hasTrueque;
+        $solicitudWasAccepted = $solicitud->wasAccepted;
+        $solicitudWasRejected = $solicitud->wasRejected;
+        $solicitudIsPaused = $solicitud->isPaused;
 
         if($productIsNotFromUser){
             return Response::deny('No sos el dueño del producto, no podés rechazar una solicitud de trueque!');
         }
         if($productHasTrueque){
             return Response::deny('El producto ya fue trocado!');
+        }
+        if($solicitudWasAccepted){
+            return Response::deny('La solicitud ya fue aceptada!');
+        }
+        if($solicitudWasRejected){
+            return Response::deny('La solicitud ya fue rechazada!');
+        }
+        if($solicitudIsPaused){
+            return Response::deny('La solicitud está pausada porque alguno de los productos está matcheado');
         }
         return Response::allow();
     }
