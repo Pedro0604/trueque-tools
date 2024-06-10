@@ -12,12 +12,10 @@ export default function EmpleadosList({
                 <div
                     className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-10 gap-6">
                     {empleados.map(empleado => (
-                        <>
-                            <Empleado
-                                key={empleado.id}
-                                empleado={empleado}
-                            />
-                        </>
+                        <Empleado
+                            key={empleado.id}
+                            empleado={empleado}
+                        />
                     ))}
                 </div>
                 : <>

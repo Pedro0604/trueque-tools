@@ -15,6 +15,7 @@ class Empleado extends Authenticatable
     protected $fillable = [
         'name',
         'dni',
+        'sucursal_id',
         'password',
     ];
 

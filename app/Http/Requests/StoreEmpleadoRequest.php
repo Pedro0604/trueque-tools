@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class StoreEmpleadoRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StoreEmpleadoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,9 @@ class StoreEmpleadoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string'],
+            'dni' => ['required', 'integer', 'unique:empleados,dni', 'min_digits:7', 'max_digits:8'],
+            'sucursal_id' => ['required', 'exists:sucursals,id'],
         ];
     }
 }

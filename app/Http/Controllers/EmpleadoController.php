@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\EmpleadoResource;
+use App\Http\Resources\SucursalResource;
 use App\Models\Empleado;
 use App\Http\Requests\StoreEmpleadoRequest;
 use App\Http\Requests\UpdateEmpleadoRequest;
+use App\Models\Product;
+use App\Models\Sucursal;
+use Illuminate\Support\Str;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 
@@ -14,7 +18,7 @@ class EmpleadoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response | ResponseFactory
+    public function index(): Response|ResponseFactory
     {
         $empleados = Empleado::all();
 
@@ -26,9 +30,12 @@ class EmpleadoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response|ResponseFactory
     {
-        //
+        $sucursals = Sucursal::all();
+        return inertia('Empleado/Create', [
+            'sucursals' => SucursalResource::collection($sucursals),
+        ]);
     }
 
     /**
@@ -36,7 +43,16 @@ class EmpleadoController extends Controller
      */
     public function store(StoreEmpleadoRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['password'] = bcrypt($data['dni']);
+
+        $empleado_created = Empleado::create($data);
+
+        return redirect(route('admin.empleado.index'))
+            ->with('success', [
+                'message' => 'Producto creado correctamente',
+                'key' => $empleado_created->id
+            ]);
     }
 
     /**
