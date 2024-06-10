@@ -4,6 +4,7 @@ import MultipleStopIcon from "@mui/icons-material/MultipleStop";
 import {Chip} from "@mui/material";
 import {router, usePage} from "@inertiajs/react";
 import DangerButton from "@/Components/Buttons/DangerButton.jsx";
+import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 
 export default function Trueque({
                                     trueque,
@@ -25,7 +26,11 @@ export default function Trueque({
     }
 
     const cancelTrueque = (truequeId) => {
-        router.post(route('trueque.cancel', [auth.user, truequeId]), {trueque_id: truequeId})
+        router.post(route('trueque.cancel', [truequeId]))
+    }
+
+    const endTrueque = (truequeId) => {
+        router.post(route('trueque.end', [truequeId]))
     }
 
     let borderColor = 'border-custom-blue-700 dark:border-custom-blue-400';
@@ -113,6 +118,14 @@ export default function Trueque({
                 >
                     Cancelar
                 </DangerButton>
+            }
+            {(auth.admin || auth.empleado) && trueque.canBeEnded &&
+                <CyanButton
+                    className="w-full justify-center mt-6"
+                    onClick={() => endTrueque(trueque.id)}
+                >
+                    Finalizar Trueque
+                </CyanButton>
             }
         </div>
     )

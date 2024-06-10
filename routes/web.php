@@ -68,6 +68,7 @@ Route::middleware('auth:web,admin,empleado')->group(function (){
 // Rutas accesibles por administrador y empleado
 Route::middleware('auth:admin,empleado')->group(function (){
     Route::get('/trueque', [TruequeController::class, 'index'])->name('trueque.index');
+    Route::post('/trueque/{trueque}/end', [TruequeController::class, 'end'])->name('trueque.end');
 });
 
 

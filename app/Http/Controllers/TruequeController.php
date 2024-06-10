@@ -8,6 +8,7 @@ use App\Http\Requests\StoreTruequeRequest;
 use App\Http\Requests\UpdateTruequeRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -91,13 +92,35 @@ class TruequeController extends Controller
         ]);
     }
 
-    public function cancel(User $user, Trueque $trueque): RedirectResponse
+    /**
+     * Register the trueque cancelation by an owner
+     */
+    public function cancel(Trueque $trueque): RedirectResponse
     {
-        $user->update(['reputation' => ($user->reputation - 1)]);
+        $user = auth()->user();
 
-        $trueque->update(['is_failed' => true]);
-        $trueque->update(['failedReason' => 'Un usuario cancelo']);
-        $trueque->update(['ended_at' => now()]);
+        DB::transaction(function () use ($trueque, $user) {
+            $user->update(['reputation' => ($user->reputation - 1)]);
+
+            $product1 = $trueque->solicitud->publishedProduct;
+            $product2 = $trueque->solicitud->offeredProduct;
+
+            // Pausa todas las solicitudes hacia el producto publicado
+            $product1->solicituds()->where('state', 'paused')->update(['state' => 'normal']);
+
+            // Pausa todas las solicitudes donde se ofreció el producto publicado
+            $product1->offeredSolicituds()->where('state', 'paused')->update(['state' => 'normal']);
+
+            // Pausa todas las solicitudes hacia el producto ofrecido
+            $product2->solicituds()->where('state', 'paused')->update(['state' => 'normal']);
+
+            // Pausa todas las solicitudes donde se ofreció el producto ofrecido
+            $product2->offeredSolicituds()->where('state', 'paused')->update(['state' => 'normal']);
+
+            $trueque->update(['is_failed' => true,
+                'failedReason' => 'Un usuario cancelo',
+                'ended_at' => now()]);
+        });
 
         return to_route('trueque.show', $trueque->id)
             ->with('success', [
@@ -106,4 +129,40 @@ class TruequeController extends Controller
             ]);
     }
 
+    /**
+     * Register the trueque finalization by an admin/employee
+     */
+    public function end(Trueque $trueque): RedirectResponse
+    {
+        DB::transaction(function () use ($trueque) {
+            $user1 = $trueque->solicitud->publishedProduct->user;
+            $user2 = $trueque->solicitud->offeredProduct->user;
+
+            $user1->update(['reputation' => ($user1->reputation + 1)]);
+            $user2->update(['reputation' => ($user2->reputation + 1)]);
+
+            $product1 = $trueque->solicitud->publishedProduct;
+            $product2 = $trueque->solicitud->offeredProduct;
+
+            // Pausa todas las solicitudes hacia el producto publicado
+            $product1->solicituds()->where('state', 'paused')->update(['state' => 'rejected']);
+
+            // Pausa todas las solicitudes donde se ofreció el producto publicado
+            $product1->offeredSolicituds()->where('state', 'paused')->update(['state' => 'rejected']);
+
+            // Pausa todas las solicitudes hacia el producto ofrecido
+            $product2->solicituds()->where('state', 'paused')->update(['state' => 'rejected']);
+
+            // Pausa todas las solicitudes donde se ofreció el producto ofrecido
+            $product2->offeredSolicituds()->where('state', 'paused')->update(['state' => 'rejected']);
+
+            $trueque->update(['ended_at' => now()]);
+        });
+
+        return to_route('trueque.show', $trueque->id)
+            ->with('success', [
+                'message' => 'Trueque finalizado correctamente',
+                'key' => rand()
+            ]);
+    }
 }
