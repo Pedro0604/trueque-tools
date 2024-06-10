@@ -1,4 +1,4 @@
-import {Head, useForm, usePage} from "@inertiajs/react";
+import {Head, useForm} from "@inertiajs/react";
 import UserLayout from "@/Layouts/UserLayout.jsx";
 import Product from "@/Pages/Product/Partials/Product.jsx";
 import MultipleStopIcon from "@mui/icons-material/MultipleStop";
