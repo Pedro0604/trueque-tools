@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTruequeRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\SolicitudResource;
 use App\Http\Resources\SucursalResource;
+use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Solicitud;
 use App\Http\Requests\StoreSolicitudRequest;
@@ -72,7 +73,14 @@ class SolicitudController extends Controller
      */
     public function accept(StoreTruequeRequest $request, Product $product, Solicitud $solicitud): RedirectResponse
     {
-        Gate::authorize('accept', [$product, $solicitud]);
+        $response = Gate::inspect('accept', [$product, $solicitud]);
+
+        if ($response->denied()) {
+            return back()->with('error', [
+                'message' => $response->message(),
+                'key' => rand()
+            ]);
+        }
 
         function generateRandomString($length = 10)
         {
@@ -143,7 +151,14 @@ class SolicitudController extends Controller
      */
     public function reject(Request $request, Product $product, Solicitud $solicitud): RedirectResponse
     {
-        Gate::authorize('reject', [$product, $solicitud]);
+        $response = Gate::inspect('reject', [$product, $solicitud]);
+
+        if ($response->denied()) {
+            return back()->with('error', [
+                'message' => $response->message(),
+                'key' => rand()
+            ]);
+        }
 
         $solicitud->update(['state' => 'rejected']);
 
