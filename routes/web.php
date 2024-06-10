@@ -4,6 +4,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SolicitudController;
+use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\TruequeController;
 use App\Models\Comment;
 use Illuminate\Foundation\Application;
@@ -61,15 +62,15 @@ Route::middleware('auth:web,admin,empleado')->group(function (){
     Route::get('/trueque/{trueque}', [TruequeController::class, 'show'])->name('trueque.show');
 
     //Sucursal routes
-    Route::get('/sucursal', [\App\Http\Controllers\SucursalController::class, 'index'])->name('sucursal.index');
-
+    Route::get('/sucursal', [SucursalController::class, 'index'])->name('sucursal.index');
 });
 
 // Rutas accesibles por administrador y empleado
 Route::middleware('auth:admin,empleado')->group(function (){
     Route::get('/trueque', [TruequeController::class, 'index'])->name('trueque.index');
     Route::post('/trueque/{trueque}/end', [TruequeController::class, 'end'])->name('trueque.end');
+    Route::get('/trueque/{trueque}/fail', [TruequeController::class, 'failForm'])->name('trueque.failForm');
+    Route::post('/trueque/{trueque}/fail', [TruequeController::class, 'fail'])->name('trueque.fail');
 });
-
 
 require __DIR__.'/auth.php';
