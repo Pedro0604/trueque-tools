@@ -1,4 +1,5 @@
 import Product from "@/Pages/Product/Partials/Product.jsx";
+import {usePage} from "@inertiajs/react";
 
 export default function ProductsList({
                                          products,
@@ -6,6 +7,9 @@ export default function ProductsList({
                                          emptyListMessage = "No hay productos cargados",
                                          blurIfPaused = false
                                      }) {
+
+    const auth = usePage().props.auth;
+
     return (
         <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
             {products.length > 0 ?
