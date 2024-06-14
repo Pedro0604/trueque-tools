@@ -36,6 +36,7 @@ class HandleInertiaRequests extends Middleware
                 'empleado' => Auth::guard('empleado')->user(),
                 'admin' => Auth::guard('admin')->user(),
             ],
+            'queryParams' => $request->query(),
             'flash' => [
                 'success' => $request->session()->get('success'),
                 'error' => $request->session()->get('error'),
