@@ -15,21 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//        $this->call([
-//            SucursalSeeder::class,
-//            UserSeeder::class,
-////            ProductSeeder::class,
-////            SolicitudSeeder::class,
-//        // Solo está truequeSeeder porque crea solicitudes que crean productos
-//            TruequeSeeder::class,
-//            CommentSeeder::class,
-//            AdminSeeder::class,
-//            EmpleadoSeeder::class,
-//        ]);
-        Admin::factory()->create();
-        TruequeError::factory()->create(['message' => 'El usuario canceló el trueque.']);
-        TruequeError::factory()->create(['message' => 'El usuario no se presentó al trueque.']);
-        TruequeError::factory()->create(['message' => 'El usuario no trajo ningún producto.']);
-        TruequeError::factory()->create(['message' => 'El usuario trajo otro producto.']);
+        $this->call([
+            SucursalSeeder::class,
+            UserSeeder::class,
+//            ProductSeeder::class,
+//            SolicitudSeeder::class,
+        // Solo está truequeSeeder porque crea solicitudes que crean productos
+            TruequeSeeder::class,
+            CommentSeeder::class,
+            AdminSeeder::class,
+            EmpleadoSeeder::class,
+            TruequeErrorSeeder::class,
+        ]);
     }
 }
