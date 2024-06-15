@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
 //            SolicitudSeeder::class,
         // Solo está truequeSeeder porque crea solicitudes que crean productos
             TruequeSeeder::class,
+            VentaSeeder::class,
             CommentSeeder::class,
             AdminSeeder::class,
             EmpleadoSeeder::class,
