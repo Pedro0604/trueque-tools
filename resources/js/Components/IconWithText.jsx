@@ -1,4 +1,4 @@
-export default function IconWithText({icon, text, textSize = "text-base"}){
+export default function IconWithText({icon, text, textSize = "text-sm sm:text-base", textColor = "text-gray-600 dark:text-custom-beige-600"}){
     return (
         <div
             className="flex items-center gap-1"
@@ -8,7 +8,7 @@ export default function IconWithText({icon, text, textSize = "text-base"}){
             >
                 {icon}
             </span>
-            <p className={`${textSize} text-gray-600 dark:text-custom-beige-600`}>
+            <p className={`${textSize} ${textColor}`}>
                 {text}
             </p>
         </div>

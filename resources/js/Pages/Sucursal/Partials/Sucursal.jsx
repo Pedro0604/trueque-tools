@@ -10,14 +10,16 @@ export default function Sucursal({
     return (
         <div className="border border-cyan-500 rounded-md p-4">
             <div className="flex justify-between mb-4">
-                <BusinessIcon/>
+                <IconWithText
+                    icon={<BusinessIcon/>}
+                    text={sucursal.name}
+                    textSize={"text-2xl"}
+                    textColor={"text-custom-beige-200"}
+                />
                 <p className="text-sm sm:text-base text-gray-600 dark:text-custom-beige-600">
                     {sucursal.code}
                 </p>
             </div>
-            <p className="text-sm sm:text-base lg:text-2xl text-gray-600 dark:text-custom-beige-600 mb-2">
-                {sucursal.name}
-            </p>
             <IconWithText
                 icon={<LocationOnIcon/>}
                 text={sucursal.address}

@@ -1,4 +1,3 @@
-import PersonIcon from "@mui/icons-material/Person";
 import BusinessIcon from "@mui/icons-material/Business";
 import SpeedIcon from "@mui/icons-material/Speed";
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
@@ -18,10 +17,7 @@ export default function User({
             rounded-lg p-4 border border-custom-beige-900 dark:border-custom-beige-500 ${className}`}
         >
             <div className="flex gap-3 flex-col overflow-hidden">
-                <IconWithText
-                    icon={<PersonIcon/>}
-                    text={`${user.name} ${user.surname}`}
-                />
+                <span className="text-xl">{user.name} {user.surname}</span>
                 <IconWithText
                     icon={<SpeedIcon/>}
                     text={`${user.reputation}`}
