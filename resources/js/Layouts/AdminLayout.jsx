@@ -25,6 +25,9 @@ export default function AdminLayout({header, children}) {
                     <NavLink href={route('admin.empleado.index')} active={route().current('admin.empleado.index')}>
                         Empleados
                     </NavLink>
+                    <NavLink href={route('admin.user.index')} active={route().current('admin.user.index')}>
+                        Usuarios
+                    </NavLink>
                 </>
             }
             responsiveNavLinks={
@@ -39,6 +42,9 @@ export default function AdminLayout({header, children}) {
                         Sucursales
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('admin.empleado.index')} active={route().current('admin.empleado.index')}>
+                        Empleados
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('admin.user.index')} active={route().current('admin.user.index')}>
                         Empleados
                     </ResponsiveNavLink>
                 </>
