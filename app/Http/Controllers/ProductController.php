@@ -28,10 +28,18 @@ class ProductController extends Controller
         $products = Product::query()
             ->doesntHave('publishedSuccessfulTrueque')
             ->doesntHave('offeredSuccessfulTrueque')
-            ->orderByDesc('created_at')->get();
+            ->orderByDesc('created_at');
+
+
+        if (request('sucursal')) {
+            $products->where('sucursal_id', request('sucursal'));
+        }
+        if (request('category')) {
+            $products->where('category', request('category'));
+        }
 
         return Inertia::render('Product/Index', [
-            'products' => ProductResource::collection($products),
+            'products' => ProductResource::collection($products->get()),
             'productCreatedId' => session('product_created_id'),
         ]);
     }
