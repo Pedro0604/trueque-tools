@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             'birth_date' => (new Carbon($this->birth_date))->format('d/m/Y'),
             'reputation' => $this->reputation,
             'sucursal' => new SucursalResource($this->sucursal),
+            'total_trueques' => $this->total_trueques ?? 0,
         ];
     }
 }

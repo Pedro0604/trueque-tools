@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\UserController;
@@ -18,6 +19,11 @@ Route::as('admin.')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::post('logout', [AdminAuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
+
+        Route::as('statistics.')->prefix('statistics')->group(function () {
+            Route::get('most-trueques', [AdminController::class, 'showMostTruequesUsers'])
+                ->name('mostTrueques');
+        });
 
         // Rutas usuarios
         Route::get('user', [UserController::class, 'index'])->name('user.index');

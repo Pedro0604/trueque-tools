@@ -6,6 +6,7 @@ import IconWithText from "@/Components/IconWithText.jsx";
 
 export default function User({
                                  user,
+                                 withCantTrueques = false,
                                  className = "",
                                  ...props
                              }) {
@@ -34,6 +35,7 @@ export default function User({
                     icon={<BusinessIcon/>}
                     text={`${user.sucursal.name}`}
                 />
+                Realizó {user.total_trueques} {user.total_trueques === 1 ? 'trueque' : 'trueques'}
             </div>
         </div>
     )
