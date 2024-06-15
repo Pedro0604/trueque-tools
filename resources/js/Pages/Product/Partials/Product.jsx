@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Blur from "@/Components/Blur.jsx";
 import SpeedIcon from '@mui/icons-material/Speed';
 import StarIcon from "@mui/icons-material/Star";
+import IconWithText from "@/Components/IconWithText.jsx";
 
 export default function Product({
                                     product,
@@ -59,11 +60,17 @@ export default function Product({
             }
             <div className="flex justify-between items-center mb-1">
                 {withUserName &&
-                    <div className="flex items-center">
-                        <PersonIcon className="text-gray-300 mr-0.5"/>
-                        <p className="text-gray-600 dark:text-custom-beige-600 text-sm mr-2">{product.user.name}</p>
-                        <SpeedIcon/>
-                        <p className="text-gray-600 dark:text-custom-beige-600 text-sm ml-0.5">{product.user.reputation}</p>
+                    <div className="flex gap-3 items-center">
+                        <IconWithText
+                            icon={<PersonIcon/>}
+                            text={product.user.name}
+                            textSize={"text-sm"}
+                        />
+                        <IconWithText
+                            icon={<SpeedIcon/>}
+                            text={product.user.reputation}
+                            textSize={"text-sm"}
+                        />
                     </div>
                 }
                 {product.promoted_at && <StarIcon className="text-yellow-500"/>}
@@ -112,25 +119,24 @@ export default function Product({
                     <p className="text-xs sm:text-base text-gray-600 dark:text-custom-beige-600 text-ellipsis line-clamp-1">{product.name}</p>
                     {withCategory &&
                         <p className="text-sm sm:text-xl my-2">{CATEGORIES_TEXT_MAP[product.category]}</p>}
-                    {withSucursal && <div
-                        className="hidden sm:flex items-center gap-1 mt-1"
-                    >
-                        <BusinessIcon/>
-                        <p className="text-sm sm:text-base text-gray-600 dark:text-custom-beige-600">
-                            {product.sucursal.name}
-                        </p>
-                    </div>
+                    {withSucursal &&
+                        <IconWithText
+                            icon={<BusinessIcon/>}
+                            text={product.sucursal.name}
+                        />
                     }
                 </div>
             </div>
             <p className="sm:hidden text-gray-600 text-xs sm:text-sm dark:text-custom-beige-600 text-ellipsis line-clamp-2 my-2">{product.description}</p>
             <div
-                className="flex sm:hidden items-center gap-1 mt-1"
+                className="sm:hidden"
             >
-                <BusinessIcon/>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-custom-beige-600">
-                    {product.sucursal.name}
-                </p>
+                {withSucursal &&
+                    <IconWithText
+                        icon={<BusinessIcon/>}
+                        text={product.sucursal.name}
+                    />
+                }
             </div>
         </div>
     )

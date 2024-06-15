@@ -5,6 +5,8 @@ import {Chip} from "@mui/material";
 import {router, usePage} from "@inertiajs/react";
 import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
+import IconWithText from "@/Components/IconWithText.jsx";
+import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 
 export default function Trueque({
                                     trueque,
@@ -69,15 +71,13 @@ export default function Trueque({
                         ("Fecha del trueque: " + trueque.solicitud.meeting_date_time)
                     }
                 </h2>
-                <div className="flex justify-center items-center gap-1 mt-1 text-gray-600 dark:text-custom-beige-300">
-                    <BusinessIcon/>
-                    <p className="text-sm sm:text-base lg:text-lg">
-                        {trueque.solicitud.published_product.sucursal.name}
-                    </p>
-                </div>
-                <p className="text-gray-600 dark:text-custom-beige-300 text-sm sm:text-base lg:text-lg">
-                    CATEGORIA:
-                    <span className="ml-1">{trueque.solicitud.published_product.category}</span>
+                <IconWithText
+                    icon={<BusinessIcon/>}
+                    text={trueque.solicitud.published_product.sucursal.name}
+                    textSize={"text-sm sm:text-base lg:text-lg"}
+                />
+                <p className="text-gray-600 dark:text-custom-beige-300 text-sm sm:text-base lg:text-lg mb-2">
+                    {CATEGORIES_TEXT_MAP[trueque.solicitud.published_product.category]}
                 </p>
                 <Chip
                     label={chipText}

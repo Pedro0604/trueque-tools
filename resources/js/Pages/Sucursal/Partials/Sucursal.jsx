@@ -1,5 +1,7 @@
 import BusinessIcon from '@mui/icons-material/Business';
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
+import IconWithText from "@/Components/IconWithText.jsx";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 
 export default function Sucursal({
@@ -8,17 +10,18 @@ export default function Sucursal({
     return (
         <div className="border border-cyan-500 rounded-md p-4">
             <div className="flex justify-between mb-4">
-                <BusinessIcon></BusinessIcon>
+                <BusinessIcon/>
                 <p className="text-sm sm:text-base text-gray-600 dark:text-custom-beige-600">
                     {sucursal.code}
                 </p>
             </div>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-custom-beige-600">
-                Nombre: {sucursal.name}
+            <p className="text-sm sm:text-base lg:text-2xl text-gray-600 dark:text-custom-beige-600 mb-2">
+                {sucursal.name}
             </p>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-custom-beige-600">
-                Dirección: {sucursal.address}
-            </p>
+            <IconWithText
+                icon={<LocationOnIcon/>}
+                text={sucursal.address}
+            />
             <CyanButton
                 href={route('product.index', {sucursal: sucursal.id})}
                 isLink

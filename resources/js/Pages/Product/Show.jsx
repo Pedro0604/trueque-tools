@@ -14,6 +14,7 @@ import Divisor from "@/Components/Divisor.jsx";
 import PersonIcon from '@mui/icons-material/Person';
 import Blur from "@/Components/Blur.jsx";
 import SpeedIcon from "@mui/icons-material/Speed";
+import IconWithText from "@/Components/IconWithText.jsx";
 
 export default function Show({
                                  product,
@@ -44,13 +45,15 @@ export default function Show({
                         className={`mb-1 text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-t-lg rounded-b-sm`}
                     >
                         <div className="flex justify-between items-center mb-1 h-6">
-                            <div className="flex items-center">
-                                <PersonIcon className="text-gray-300 mr-0.5"/>
-                                <p className="text-gray-600 dark:text-custom-beige-500 text-sm mr-2">
-                                    {product.user.name}
-                                </p>
-                                <SpeedIcon/>
-                                <p className="text-gray-600 dark:text-custom-beige-600 text-sm ml-0.5">{product.user.reputation}</p>
+                            <div className="flex gap-3 items-center">
+                                <IconWithText
+                                    icon={<PersonIcon/>}
+                                    text={product.user.name}
+                                />
+                                <IconWithText
+                                    icon={<SpeedIcon/>}
+                                    text={product.user.reputation}
+                                />
                             </div>
                             {product.promoted_at && <StarIcon className="text-yellow-500"/>}
                         </div>
@@ -98,12 +101,10 @@ export default function Show({
                                 <p className="text-gray-600 text-sm dark:text-custom-beige-600 overflow-hidden h-16 break-all">
                                     {product.description}
                                 </p>
-                                <div className="flex items-center gap-1 mt-1 ">
-                                    <BusinessIcon/>
-                                    <p className="text-gray-600 dark:text-custom-beige-600">
-                                        {product.sucursal.name}
-                                    </p>
-                                </div>
+                                <IconWithText
+                                    icon={<BusinessIcon/>}
+                                    text={product.sucursal.name}
+                                />
                                 <p className="text-gray-600 dark:text-custom-beige-600">
                                     Dirección: {product.sucursal.address}
                                 </p>

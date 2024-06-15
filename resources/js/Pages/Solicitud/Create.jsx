@@ -15,6 +15,7 @@ import {useMemo} from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import Divisor from "@/Components/Divisor.jsx";
+import IconWithText from "@/Components/IconWithText.jsx";
 
 export default function Create({
                                    publishedProduct,
@@ -74,6 +75,7 @@ export default function Create({
                         <Product
                             product={publishedProduct}
                             withSucursal={false}
+                            withCategory={false}
                         />
                         <InputError
                             message={errors.published_product_id}
@@ -81,15 +83,13 @@ export default function Create({
                         />
                     </div>
                     <div className="flex flex-col justify-center items-center gap-4">
-                        <div className="flex items-center gap-1 mt-1 text-gray-600 dark:text-custom-beige-300">
-                            <BusinessIcon sx={{fontSize: 32}}/>
-                            <p className="text-sm sm:text-base lg:text-xl">
-                                {publishedProduct.sucursal.name}
-                            </p>
-                        </div>
-                        <div className="">
-                            <MultipleStopIcon sx={{fontSize: 40}}/>
-                        </div>
+                        <p className="text-sm sm:text-xl">{CATEGORIES_TEXT_MAP[publishedProduct.category]}</p>
+                        <IconWithText
+                            icon={<BusinessIcon sx={{fontSize: 32}}/>}
+                            text={publishedProduct.sucursal.name}
+                            textSize={"text-sm sm:text-base lg:text-xl"}
+                        />
+                        <MultipleStopIcon sx={{fontSize: 40}}/>
                         <div className="max-w-60">
                             <form onSubmit={handleSubmit}>
                                 <InputLabel
@@ -157,6 +157,7 @@ export default function Create({
                             <Product
                                 product={selectedProduct}
                                 withSucursal={false}
+                                withCategory={false}
                                 onClick={handleOpen}
                                 created={true}
                                 key={selectedProduct.id}
@@ -190,10 +191,11 @@ export default function Create({
                             vertical
                             className="h-8"
                         />
-                        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                            <BusinessIcon/> {publishedProduct.sucursal.name}
-                        </h2>
-
+                        <IconWithText
+                            icon={<BusinessIcon/>}
+                            text={publishedProduct.sucursal.name}
+                            textSize={"text-sm sm:text-base lg:text-lg"}
+                        />
                         <button
                             onClick={handleClose}
                             className="text-gray-800 dark:text-gray-200 hover:rounded-full hover:bg-gray-600 p-2 transition-all"
