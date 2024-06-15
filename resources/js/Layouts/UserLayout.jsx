@@ -14,22 +14,22 @@ export default function UserLayout({header, children}) {
 
             navLinks={
                 <>
-                <NavLink href={route('product.index')} active={route().current('product.index')}>
-                    Productos
-                </NavLink>
-                <NavLink href={route('sucursal.index')} active={route().current('sucursal.index')}>
-                    Sucursales
-                </NavLink>
+                    <NavLink href={route('product.index')} active={route().current('product.index')}>
+                        Productos
+                    </NavLink>
+                    <NavLink href={route('sucursal.index')} active={route().current('sucursal.index')}>
+                        Sucursales
+                    </NavLink>
                 </>
             }
             responsiveNavLinks={
                 <>
-                <ResponsiveNavLink href={route('product.index')} active={route().current('product.index')}>
-                    Productos
-                </ResponsiveNavLink>
-                <NavLink href={route('sucursal.index')} active={route().current('sucursal.index')}>
-                  Sucursales
-                </NavLink>
+                    <ResponsiveNavLink href={route('product.index')} active={route().current('product.index')}>
+                        Productos
+                    </ResponsiveNavLink>
+                    <NavLink href={route('sucursal.index')} active={route().current('sucursal.index')}>
+                        Sucursales
+                    </NavLink>
                 </>
             }
             headerOptions={
@@ -61,9 +61,6 @@ export default function UserLayout({header, children}) {
                     <Dropdown.Content>
                         {/*TODO – DESCOMENTAR CUANDO HAYA QUE MOSTRAR LA EDICION DE USUARIO*/}
                         {/*<Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>*/}
-                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                            Cerrar sesión
-                        </Dropdown.Link>
                         <Dropdown.Link href={route('product.myProducts')} method="get" as="button">
                             Mis productos
                         </Dropdown.Link>
@@ -75,6 +72,9 @@ export default function UserLayout({header, children}) {
                         </Dropdown.Link>
                         <Dropdown.Link href={route('solicitud.mySolicitudsSent')} method="get" as="button">
                             Mis solicitudes enviadas
+                        </Dropdown.Link>
+                        <Dropdown.Link href={route('logout')} method="post" as="button">
+                            Cerrar sesión
                         </Dropdown.Link>
                     </Dropdown.Content>
                 </Dropdown>
@@ -89,9 +89,6 @@ export default function UserLayout({header, children}) {
                     <div className="mt-3 space-y-1">
                         {/*TODO – DESCOMENTAR CUANDO HAYA QUE MOSTRAR LA EDICION DE USUARIO*/}
                         {/*<ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>*/}
-                        <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                            Cerrar sesión
-                        </ResponsiveNavLink>
                         <ResponsiveNavLink method="get" href={route('product.myProducts')} as="button">
                             Mis productos
                         </ResponsiveNavLink>
@@ -103,6 +100,9 @@ export default function UserLayout({header, children}) {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink method="get" href={route('solicitud.mySolicitudsSent')} as="button">
                             Mis solicitudes Enviadas
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink method="post" href={route('logout')} as="button">
+                            Cerrar sesión
                         </ResponsiveNavLink>
                     </div>
                 </div>
