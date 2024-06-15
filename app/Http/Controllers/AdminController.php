@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TruequeResource;
 use App\Http\Resources\UserResource;
 use App\Models\Admin;
 use App\Models\Trueque;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -45,6 +47,31 @@ class AdminController extends Controller
 
         return inertia('Admin/Statistics/MostTruequesUsers', [
             'users' => UserResource::collection($users),
+        ]);
+    }
+    public function showTruequesBetweenDates(): Response|ResponseFactory|RedirectResponse
+    {
+        if(request('start_date') && request('end_date')) {
+            if(request('start_date') > request('end_date')){
+                return redirect()->back()
+                    ->with('error', [
+                        'message' => 'La fecha de inicio no puede ser mayor a la fecha de fin.',
+                        'key' => rand()
+                    ]);
+            }
+        }
+
+        $trueques = Trueque::query();
+
+        if(request('start_date')){
+            $trueques->where('trueques.ended_at', '>=', request('start_date'));
+        }
+        if (request('end_date')) {
+            $trueques->where('trueques.ended_at', '<=', request('end_date'));
+        }
+
+        return inertia('Admin/Statistics/TruequesBetweenDates', [
+            'trueques' => TruequeResource::collection($trueques->get()),
         ]);
     }
 

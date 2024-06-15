@@ -23,6 +23,8 @@ Route::as('admin.')->group(function () {
         Route::as('statistics.')->prefix('statistics')->group(function () {
             Route::get('most-trueques', [AdminController::class, 'showMostTruequesUsers'])
                 ->name('mostTrueques');
+            Route::get('trueques-between-dates', [AdminController::class, 'showTruequesBetweenDates'])
+                ->name('truequesBetweenDates');
         });
 
         // Rutas usuarios

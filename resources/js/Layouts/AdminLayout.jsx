@@ -13,7 +13,7 @@ export default function AdminLayout({header, children}) {
             header={header}
             navLinks={
                 <>
-                    <NavLink href={route('admin.statistics.mostTrueques')} active={route().current('admin.statistics.mostTrueques')}>
+                    <NavLink href={route('admin.statistics.mostTrueques')} active={route().current('admin.statistics.*')}>
                         Estadísticas
                     </NavLink>
                     <NavLink href={route('product.index')} active={route().current('product.index')}>
@@ -35,7 +35,7 @@ export default function AdminLayout({header, children}) {
             }
             responsiveNavLinks={
                 <>
-                    <ResponsiveNavLink href={route('admin.statistics.mostTrueques')} active={route().current('admin.statistics.mostTrueques')}>
+                    <ResponsiveNavLink href={route('admin.statistics.mostTrueques')} active={route().current('admin.statistics.*')}>
                         Estadísticas
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('product.index')} active={route().current('product.index')}>
