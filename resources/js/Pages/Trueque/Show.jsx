@@ -18,7 +18,7 @@ export default function Show({
                 </div>
             }
         >
-            <Head title={`Trueque`}/>
+            <Head title={`Trueque "${trueque.solicitud.published_product.user.name}" - "${trueque.solicitud.offered_product.user.name}"`}/>
 
             <div className="flex justify-center text-xl text-gray-800 dark:text-custom-beige-500 w-full">
                 <Trueque

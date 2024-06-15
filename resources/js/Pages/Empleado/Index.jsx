@@ -22,7 +22,7 @@ export default function Index({empleados}) {
                 </div>
             }
         >
-            <Head title="Productos"/>
+            <Head title="Empleados"/>
 
             <EmpleadosList
                 empleados={empleados}

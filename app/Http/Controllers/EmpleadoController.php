@@ -7,9 +7,7 @@ use App\Http\Resources\SucursalResource;
 use App\Models\Empleado;
 use App\Http\Requests\StoreEmpleadoRequest;
 use App\Http\Requests\UpdateEmpleadoRequest;
-use App\Models\Product;
 use App\Models\Sucursal;
-use Illuminate\Support\Str;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 

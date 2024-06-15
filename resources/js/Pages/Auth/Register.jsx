@@ -57,7 +57,7 @@ export default function Register({sucursales}) {
 
     return (
         <GuestLayout register>
-            <Head title="Register"/>
+            <Head title="Registrarse"/>
 
             <form onSubmit={onSubmit} className="lg:flex gap-8 justify-center p-4">
                 <div className="lg:min-w-96 lg:max-w-96">
