@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
@@ -77,8 +78,38 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $comments)
+    public function destroy(Comment $comment)
     {
-        //
+        $response = Gate::inspect('delete', $comment);
+
+        if ($response->denied()) {
+            return back()->with('error', [
+                'message' => $response->message(),
+                'key' => rand()
+            ]);
+        }
+
+        // Si es un comentario normal
+        if($comment->product_id !== null){
+            if($comment->response) {
+                $comment->response->delete();
+            }
+            $product_id = $comment->product_id;
+            $comment->delete();
+        }
+        // Si es una respuesta
+        else{
+            $originalComment = $comment->originalComment;
+            $product_id = $originalComment->product_id;
+
+            $originalComment->update(['response_id' => null]);
+            $comment->delete();
+        }
+
+        return to_route('product.show', $product_id)
+            ->with('success', [
+                'message' => 'Comentario eliminado correctamente',
+                'key' => rand(),
+            ]);
     }
 }

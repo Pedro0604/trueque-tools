@@ -2,6 +2,8 @@ import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import {useState} from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import ResponseForm from "@/Pages/Comment/Partials/ResponseForm.jsx";
+import DangerButton from "@/Components/Buttons/DangerButton.jsx";
+import {router} from "@inertiajs/react";
 
 export default function Comment({
                                     comment,
@@ -14,6 +16,10 @@ export default function Comment({
 
     const handleClick = () => {
         setIsResponseFormOpen(prevValue => !prevValue)
+    }
+
+    const handleDelete = () => {
+        router.delete(route('comment.destroy', comment.id, {preserveScroll: true}));
     }
 
     return (
@@ -35,14 +41,24 @@ export default function Comment({
             </div>
             <div className="flex justify-between">
                 <div className="mt-2">{comment.text}</div>
-                {comment.canBeResponded &&
+                {comment.can.respond &&
                     <div className={"mt-4"}>
                         <PrimaryButton
                             onClick={handleClick}
                         >
                             {isResponseFormOpen ? <CloseIcon/> : "Responder"}
                         </PrimaryButton>
-                    </div>}
+                    </div>
+                }
+                {comment.can.delete &&
+                    <div className={"mt-4"}>
+                        <DangerButton
+                            onClick={handleDelete}
+                        >
+                            {"Eliminar"}
+                        </DangerButton>
+                    </div>
+                }
             </div>
             {isResponseFormOpen &&
                 <ResponseForm

@@ -33,6 +33,7 @@ Route::middleware('auth:web')->group(function () {
     // Comment routes
     Route::post('/product/{product}/comment', [CommentController::class, 'store'])->name('comment.store');
     Route::post('/comment/{comment}', [CommentController::class, 'respond'])->name('comment.respond');
+    Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
 
     // Solicitud routes
     Route::get('product/{product}/solicitud/create', [SolicitudController::class, 'create'])->name('solicitud.create');

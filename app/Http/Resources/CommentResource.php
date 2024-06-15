@@ -22,7 +22,10 @@ class CommentResource extends JsonResource
             'created_at' => (new Carbon($this->created_at))->format('d/m/Y H:i'),
             'user' => new UserResource($this->user),
             'response' => $this->response ? new CommentResource($this->response) : null,
-            'canBeResponded' => Gate::allows('respond', $this->resource),
+            'can' => [
+                'respond' => Gate::allows('respond', $this->resource),
+                'delete' => Gate::allows('delete', $this->resource),
+            ],
         ];
     }
 }

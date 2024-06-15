@@ -81,8 +81,24 @@ class CommentPolicy
     /**
      * Determine whether the user can delete the model.
      */
-//    public function delete(Authenticatable $user, Comment $comment): bool
-//    {
-//        //
-//    }
+    public function delete(Authenticatable $user, Comment $comment): Response
+    {
+        if($user->isAdmin()){
+            return Response::deny('El administrador no puede eliminar comentarios');
+        }
+        else if($user->isEmpleado()){
+            return Response::deny('Un empleado no puede eliminar comentarios');
+        }
+
+        $commentIsNotFromUser = $comment->user_id !== $user->id;
+        $productHasATrueque = $comment->product && $comment->product->hasTrueque;
+
+        if($commentIsNotFromUser){
+            return Response::deny('No podés eliminar un comentario que no es tuyo');
+        }
+        if($productHasATrueque){
+            return Response::deny('No podés eliminar comentarios en un producto con un trueque pactado');
+        }
+        return Response::allow();
+    }
 }

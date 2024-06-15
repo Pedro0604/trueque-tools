@@ -34,4 +34,9 @@ class Comment extends Model
     {
         return $this->belongsTo(Comment::class, 'response_id');
     }
+
+    public function originalComment(): HasOne
+    {
+        return $this->hasOne(Comment::class, 'response_id');
+    }
 }
