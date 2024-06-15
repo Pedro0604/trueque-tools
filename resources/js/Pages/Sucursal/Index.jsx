@@ -2,7 +2,7 @@ import {Head, usePage} from "@inertiajs/react";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
 import SucursalsList from "@/Pages/Sucursal/Partials/SucursalsList.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
-import AddIcon from "@mui/icons-material/Add.js";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function Index() {
     const {auth} = usePage().props;

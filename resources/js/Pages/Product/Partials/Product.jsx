@@ -6,6 +6,7 @@ import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import PersonIcon from '@mui/icons-material/Person';
 import Blur from "@/Components/Blur.jsx";
 import SpeedIcon from '@mui/icons-material/Speed';
+import StarIcon from "@mui/icons-material/Star";
 
 export default function Product({
                                     product,
@@ -65,8 +66,7 @@ export default function Product({
                         <p className="text-gray-600 dark:text-custom-beige-600 text-sm ml-0.5">{product.user.reputation}</p>
                     </div>
                 }
-                {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
-                {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
+                {product.promoted_at && <StarIcon className="text-yellow-500"/>}
             </div>
             <div className="flex gap-2 sm:gap-4 sm:flex-col overflow-hidden">
                 <Blur

@@ -20,15 +20,17 @@ Route::middleware('auth:web')->group(function () {
 //        return Inertia::render('Dashboard');
 //    })->name('dashboard');
 
-    // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN USUARIO
-//    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Product routes
     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product', [ProductController::class, 'store'])->name('product.store')->middleware(HandlePrecognitiveRequests::class);
     Route::get('/product/my-products', [ProductController::class, 'myProducts'])->name('product.myProducts');
+    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
+    Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
 
     // Comment routes
     Route::post('/product/{product}/comment', [CommentController::class, 'store'])->name('comment.store');
@@ -46,13 +48,6 @@ Route::middleware('auth:web')->group(function () {
     // Trueque routes
     Route::get('/trueque/my-trueques', [TruequeController::class, 'myTrueques'])->name('trueque.myTrueques');
     Route::post('/trueque/{trueque}/cancel', [TruequeController::class, 'cancel'])->name('trueque.cancel');
-
-
-
-    // TODO - DESCOMENTAR CUANDO SE PUEDA EDITAR / ELIMINAR UN PRODUCTO
-//    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
-//    Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
-//    Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
 });
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');

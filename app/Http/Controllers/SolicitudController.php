@@ -60,8 +60,7 @@ class SolicitudController extends Controller
 
         $created_solicitud = Solicitud::create($data);
 
-        // TODO - DESPUÉS REDIRIGIR A MIS SOLICITUDES (?
-        return to_route('product.show', $product->id)
+        return to_route('solicitud.mySolicitudsSent')
             ->with('success', [
                 'message' => 'Solicitud creada correctamente',
                 'key' => $created_solicitud->id

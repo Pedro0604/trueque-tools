@@ -52,8 +52,7 @@ export default function Show({
                                 <SpeedIcon/>
                                 <p className="text-gray-600 dark:text-custom-beige-600 text-sm ml-0.5">{product.user.reputation}</p>
                             </div>
-                            {/*TODO - DESCOMENTAR CUANDO ESTE HABILITADA LA FUNCION DE PROMOCIONAR */}
-                            {/*{product.promoted_at && <StarIcon className="text-yellow-500"/>}*/}
+                            {product.promoted_at && <StarIcon className="text-yellow-500"/>}
                         </div>
 
                         <div className="md:flex">

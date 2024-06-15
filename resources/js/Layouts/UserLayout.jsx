@@ -59,8 +59,7 @@ export default function UserLayout({header, children}) {
                     </Dropdown.Trigger>
 
                     <Dropdown.Content>
-                        {/*TODO – DESCOMENTAR CUANDO HAYA QUE MOSTRAR LA EDICION DE USUARIO*/}
-                        {/*<Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>*/}
+                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
                         <Dropdown.Link href={route('product.myProducts')} method="get" as="button">
                             Mis productos
                         </Dropdown.Link>
@@ -87,8 +86,7 @@ export default function UserLayout({header, children}) {
                     </div>
 
                     <div className="mt-3 space-y-1">
-                        {/*TODO – DESCOMENTAR CUANDO HAYA QUE MOSTRAR LA EDICION DE USUARIO*/}
-                        {/*<ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>*/}
+                        <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
                         <ResponsiveNavLink method="get" href={route('product.myProducts')} as="button">
                             Mis productos
                         </ResponsiveNavLink>

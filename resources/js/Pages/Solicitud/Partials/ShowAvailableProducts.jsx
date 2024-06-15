@@ -1,7 +1,6 @@
 import Product from "@/Pages/Product/Partials/Product.jsx";
 import { useState } from "react";
 import CreateForm from "@/Pages/Product/Partials/CreateForm";
-import {usePage} from "@inertiajs/react";
 
 export default function ShowAvailableProducts({
     availableProducts,
@@ -27,7 +26,6 @@ export default function ShowAvailableProducts({
         );
     }
     return (
-        // TODO - PONER QUE EL AGREGAR PRODUCTO SEA DEL TAMAÑO CORRECTO SI ESTA EN UNA NUEVA FILA
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {availableProducts.map((product) => (
                 <Product
