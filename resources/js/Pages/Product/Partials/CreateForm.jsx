@@ -5,13 +5,13 @@ import InputError from "@/Components/Inputs/InputError.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
 import TextAreaInput from "@/Components/Inputs/TextAreaInput.jsx";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
-import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import {router} from "@inertiajs/react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
+import SucursalOptions from "@/Pages/Sucursal/Partials/SucursalOptions.jsx";
+import CategoryOptions from "@/Components/CategoryOptions.jsx";
 
 export default function CreateForm({
-                                       sucursals,
                                        selectedSucursal = null,
                                        selectedCategory = null,
                                        onVolver = () => window.history.back(),
@@ -153,9 +153,7 @@ export default function CreateForm({
                         value={selectedCategory ?? data.category}
                     >
                         <option value="">Elija una categoría</option>
-                        <option value="1">{CATEGORIES_TEXT_MAP[1]}</option>
-                        <option value="2">{CATEGORIES_TEXT_MAP[2]}</option>
-                        <option value="3">{CATEGORIES_TEXT_MAP[3]}</option>
+                        <CategoryOptions/>
                     </SelectInput>
                     <InputError message={errors.category} className="mt-2"/>
                 </div>
@@ -186,11 +184,7 @@ export default function CreateForm({
                         }
                     >
                         <option value="">Elija una sucursal</option>
-                        {sucursals.map((sucursal) => (
-                            <option key={sucursal.id} value={sucursal.id}>
-                                {sucursal.name}
-                            </option>
-                        ))}
+                        <SucursalOptions/>
                     </SelectInput>
                     <InputError message={errors.sucursal_id} className="mt-2"/>
                 </div>

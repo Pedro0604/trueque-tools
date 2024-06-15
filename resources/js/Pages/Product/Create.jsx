@@ -2,7 +2,7 @@ import UserLayout from "@/Layouts/UserLayout.jsx";
 import {Head} from "@inertiajs/react";
 import CreateForm from "./Partials/CreateForm";
 
-export default function Create({sucursals}) {
+export default function Create() {
 
     return (
         <UserLayout
@@ -15,7 +15,7 @@ export default function Create({sucursals}) {
             }
         >
             <Head title="Agregar Producto"/>
-            <CreateForm sucursals={sucursals}/>
+            <CreateForm/>
         </UserLayout>
     )
 }

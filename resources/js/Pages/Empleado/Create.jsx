@@ -3,15 +3,13 @@ import AdminLayout from "@/Layouts/AdminLayout.jsx";
 import InputLabel from "@/Components/Inputs/InputLabel.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
 import InputError from "@/Components/Inputs/InputError.jsx";
-import TextAreaInput from "@/Components/Inputs/TextAreaInput.jsx";
 import SelectInput from "@/Components/Inputs/SelectInput.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import {useState} from "react";
 import {useForm} from "laravel-precognition-react";
+import SucursalOptions from "@/Pages/Sucursal/Partials/SucursalOptions.jsx";
 
-export default function Create({
-                                   sucursals
-                               }) {
+export default function Create() {
     const [disableSubmit, setDisableSubmit] = useState(false);
 
     const {
@@ -136,11 +134,7 @@ export default function Create({
                             value={data.sucursal_id}
                         >
                             <option value="">Elija una sucursal</option>
-                            {sucursals.map((sucursal) => (
-                                <option key={sucursal.id} value={sucursal.id}>
-                                    {sucursal.name}
-                                </option>
-                            ))}
+                            <SucursalOptions/>
                         </SelectInput>
                         <InputError message={errors.sucursal_id} className="mt-2"/>
                     </div>

@@ -1,8 +1,9 @@
 import Sucursal from "@/Pages/Sucursal/Partials/Sucursal.jsx";
+import {usePage} from "@inertiajs/react";
 
-export default function SucursalsList({ sucursals,
-                                         emptyListMessage = "No hay sucursales cargadas",
-                                     }) {
+export default function SucursalsList({emptyListMessage = "No hay sucursales cargadas"}) {
+    const {sucursals} = usePage().props;
+
     return (
         <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg">
             {sucursals.length > 0 ?

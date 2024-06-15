@@ -1,4 +1,4 @@
-import {Head, useForm} from "@inertiajs/react";
+import {Head, useForm, usePage} from "@inertiajs/react";
 import UserLayout from "@/Layouts/UserLayout.jsx";
 import Product from "@/Pages/Product/Partials/Product.jsx";
 import MultipleStopIcon from "@mui/icons-material/MultipleStop";
@@ -19,10 +19,8 @@ import Divisor from "@/Components/Divisor.jsx";
 export default function Create({
                                    publishedProduct,
                                    availableProducts,
-                                   sucursals,
                                    productCreated,
                                }) {
-
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -210,7 +208,6 @@ export default function Create({
                         <ShowAvailableProducts
                             availableProducts={availableProducts}
                             onSelectProduct={handleSelectProduct}
-                            sucursals={sucursals}
                             publishedProduct={publishedProduct}
                             onCloseModal={handleClose}
                         />

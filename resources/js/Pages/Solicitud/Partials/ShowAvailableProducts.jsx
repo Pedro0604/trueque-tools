@@ -1,20 +1,20 @@
 import Product from "@/Pages/Product/Partials/Product.jsx";
 import { useState } from "react";
 import CreateForm from "@/Pages/Product/Partials/CreateForm";
+import {usePage} from "@inertiajs/react";
 
 export default function ShowAvailableProducts({
     availableProducts,
     onSelectProduct,
-    sucursals,
     publishedProduct,
     onCloseModal,
 }) {
+
     const [showCreateProductForm, setShowCreateForm] = useState(false);
 
     if (showCreateProductForm) {
         return (
             <CreateForm
-                sucursals={sucursals}
                 selectedSucursal={publishedProduct.sucursal}
                 selectedCategory={publishedProduct.category}
                 onVolver={() => setShowCreateForm(false)}

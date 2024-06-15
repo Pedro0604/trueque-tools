@@ -4,8 +4,8 @@ import SucursalsList from "@/Pages/Sucursal/Partials/SucursalsList.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import AddIcon from "@mui/icons-material/Add.js";
 
-export default function Index({sucursals}) {
-    const auth = usePage().props.auth;
+export default function Index() {
+    const {auth} = usePage().props;
     return (
         <AuthenticatedOrNormalLayout
             header={
@@ -14,21 +14,20 @@ export default function Index({sucursals}) {
                         Listado de Sucursales
                     </h2>
                     {auth.admin &&
-                    <CyanButton
-                        isLink
-                        href={route('admin.sucursal.create')}
-                    >
-                        <span className="hidden sm:block">Agregar nueva sucursal</span>
-                        <span className="sm:hidden"><AddIcon/></span>
-                    </CyanButton>
-                }
+                        <CyanButton
+                            isLink
+                            href={route('admin.sucursal.create')}
+                        >
+                            <span className="hidden sm:block">Agregar nueva sucursal</span>
+                            <span className="sm:hidden"><AddIcon/></span>
+                        </CyanButton>
+                    }
                 </div>
             }
         >
 
             <Head title="Sucursales"/>
             <SucursalsList
-                sucursals={sucursals}
                 emptyListMessage="No hay sucursales cargadas en el sistema"
             />
         </AuthenticatedOrNormalLayout>
