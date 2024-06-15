@@ -24,7 +24,7 @@ export default function MySolicituds({solicituds, isPublishedProductOwner}) {
                 >
                     {solicituds.map((solicitud) => (
                         <div key={solicitud.id}>{
-                            solicitud.canBeViewed &&
+                            solicitud.can.view &&
                             <Solicitud
                                 solicitud={solicitud}
                                 showBothProducts

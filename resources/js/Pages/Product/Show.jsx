@@ -108,7 +108,7 @@ export default function Show({
                                 <p className="text-gray-600 dark:text-custom-beige-600">
                                     Dirección: {product.sucursal.address}
                                 </p>
-                                {product.canCreateSolicitud && (
+                                {product.can.createSolicitud && (
                                     <PrimaryButton
                                         isLink
                                         href={route(
@@ -126,7 +126,7 @@ export default function Show({
                         </div>
                     </div>
                     <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
-                        {product.canCreateComment &&
+                        {product.can.createComment &&
                             <>
                                 <Create productId={product.id}/>
                                 <Divisor
@@ -142,16 +142,16 @@ export default function Show({
                 </div>
                 <div
                     className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg h-fit
-                    ${(product.canViewTrueque && trueque) || product.canListSolicituds ? 'block' : 'hidden'}`}
+                    ${(product.can.viewTrueque && trueque) || product.can.listSolicituds ? 'block' : 'hidden'}`}
                 >
-                    {product.canViewTrueque && trueque &&
+                    {product.can.viewTrueque && trueque &&
                         <div className="max-w-lg">
                             <Trueque
                                 trueque={trueque}
                             />
                         </div>
                     }
-                    {product.canListSolicituds &&
+                    {product.can.listSolicituds &&
                         <SolicitudsList
                             isAuthor={product.user.id === auth.user.id}
                             solicituds={solicituds}

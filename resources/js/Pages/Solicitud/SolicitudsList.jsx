@@ -14,7 +14,7 @@ export default function SolicitudsList({solicituds, className, isAuthor = true, 
                     <div className="flex flex-col gap-4">
                         {solicituds.map((solicitud) => (
                             <>{
-                                solicitud.canBeViewed &&
+                                solicitud.can.view &&
                                 < div
                                     key={solicitud.id}
                                 >

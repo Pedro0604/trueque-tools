@@ -31,10 +31,12 @@ class ProductResource extends JsonResource
             'sucursal' => new SucursalResource($this->sucursal),
             'hasTrueque' => $this->hasTrueque,
             'isPaused' => $this->hasPendingTrueque,
-            'canCreateComment' => Gate::allows('create', [Comment::class, $product]),
-            'canCreateSolicitud' => Gate::allows('create', [Solicitud::class, $product]),
-            'canListSolicituds' => Gate::allows('list', [Solicitud::class, $product]),
-            'canViewTrueque' => $this->hasTrueque ? Gate::allows('view', $this->trueque) : false,
+            'can' => [
+                'createComment' => Gate::allows('create', [Comment::class, $product]),
+                'createSolicitud' => Gate::allows('create', [Solicitud::class, $product]),
+                'listSolicituds' => Gate::allows('list', [Solicitud::class, $product]),
+                'viewTrueque' => $this->hasTrueque ? Gate::allows('view', $this->trueque) : false,
+            ],
         ];
     }
 }

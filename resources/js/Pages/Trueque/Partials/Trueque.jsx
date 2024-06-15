@@ -120,7 +120,7 @@ export default function Trueque({
                 <div
                     className="flex flex-col gap-4 mt-6"
                 >
-                    {trueque.canBeCanceled &&
+                    {trueque.can.cancel &&
                         <DangerButton
                             className="w-full justify-center"
                             onClick={() => cancelTrueque(trueque.id)}
@@ -128,7 +128,7 @@ export default function Trueque({
                             Cancelar
                         </DangerButton>
                     }
-                    {(auth.admin || auth.empleado) && trueque.canBeFailed &&
+                    {(auth.admin || auth.empleado) && trueque.can.fail &&
                         <DangerButton
                             className="w-full justify-center"
                             isLink
@@ -137,7 +137,7 @@ export default function Trueque({
                             Informar fallo en un trueque
                         </DangerButton>
                     }
-                    {(auth.admin || auth.empleado) && trueque.canBeEnded &&
+                    {(auth.admin || auth.empleado) && trueque.can.end &&
                         <CyanButton
                             className="w-full justify-center"
                             onClick={() => endTrueque(trueque.id)}
