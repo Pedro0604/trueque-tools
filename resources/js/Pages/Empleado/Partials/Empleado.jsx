@@ -1,24 +1,17 @@
-import {router} from "@inertiajs/react";
 import PersonIcon from "@mui/icons-material/Person";
 import BusinessIcon from "@mui/icons-material/Business";
 
 export default function Empleado({
                                      empleado,
-                                     onClick = null,
                                      className = "",
                                      ...props
                                  }) {
-    const showEmpleado = (empleadoId) => {
-        router.get(route('admin.empleado.show', empleadoId));
-    }
 
     return (
         <div
             {...props}
-            className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800 cursor-pointer
-                transition-all rounded-lg p-4 border border-custom-beige-900 dark:border-custom-beige-500
-                lg:hover:bg-gray-200 lg:hover:dark:bg-custom-gray-700 lg:hover:shadow-2xl ${className}`}
-            onClick={onClick ? onClick : () => showEmpleado(empleado.id)}
+            className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800 transition-all
+            rounded-lg p-4 border border-custom-beige-900 dark:border-custom-beige-500 ${className}`}
         >
             <div className="flex justify-between items-center mb-1">
                 <div className="flex items-center">
