@@ -99,14 +99,6 @@ class VentaController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Venta $venta)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Venta $venta)

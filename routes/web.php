@@ -68,7 +68,7 @@ Route::middleware('auth:admin,empleado')->group(function (){
     // Venta routes
     Route::get('/trueque/{trueque}/venta/create', [VentaController::class, 'create'])->name('venta.create');
     Route::post('/trueque/{trueque}/venta', [VentaController::class, 'store'])->name('venta.store');
-    Route::post('/venta/{venta}', [VentaController::class, 'show'])->name('venta.show');
+    Route::get('/trueque/{trueque}/venta', [TruequeController::class, 'showVentas'])->name('trueque.showVentas');
     Route::get('/venta', [VentaController::class, 'index'])->name('venta.index');
 });
 

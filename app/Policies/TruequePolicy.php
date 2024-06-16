@@ -86,6 +86,17 @@ class TruequePolicy
         return false;
     }
 
+    /**
+     * Determine whether the user can end a trueque.
+     */
+    public function showVentas(Authenticatable $user, Trueque $trueque): bool
+    {
+        if($user->isEmpleado() || $user->isAdmin()){
+            return $trueque->ventas()->count()>0;
+        }
+        return false;
+    }
+
 
     /**
      * Determine whether the user can delete the model.

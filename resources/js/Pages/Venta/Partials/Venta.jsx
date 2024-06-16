@@ -7,6 +7,7 @@ import Divisor from "@/Components/Divisor.jsx";
 
 export default function Venta({
                                   venta,
+                                  showReduced = false,
                                   className = "",
                                   ...props
                               }) {
@@ -41,7 +42,7 @@ export default function Venta({
                 <Divisor
                     className="my-3"
                 />
-                <div className="flex flex-col gap-4 mb-6 max-h-72 overflow-auto px-4">
+                <div className={`flex flex-col gap-4 mb-6 px-4 ${showReduced ? "" : "max-h-72 overflow-auto"}`}>
                     {venta.products.map((productoVenta) => {
                         return (
                             <ProductoVenta

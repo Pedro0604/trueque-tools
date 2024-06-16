@@ -150,6 +150,15 @@ export default function Trueque({
                             Agregar venta
                         </PrimaryButton>
                     }
+                    {trueque.can.viewVentas &&
+                        <PrimaryButton
+                            className="w-full justify-center"
+                            isLink
+                            href={route('trueque.showVentas', trueque.id)}
+                        >
+                            Ver ventas
+                        </PrimaryButton>
+                    }
                 </div>
             }
         </div>

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FailTruequeRequest;
 use App\Http\Resources\TruequeErrorResource;
 use App\Http\Resources\TruequeResource;
+use App\Http\Resources\VentaResource;
 use App\Models\Solicitud;
 use App\Models\Trueque;
 use App\Http\Requests\StoreTruequeRequest;
 use App\Http\Requests\UpdateTruequeRequest;
 use App\Models\TruequeError;
+use App\Models\Venta;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -242,5 +244,19 @@ class TruequeController extends Controller
                 'message' => 'Fallo en trueque informado correctamente.',
                 'key' => rand()
             ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showVentas(Trueque $trueque): Response|ResponseFactory
+    {
+        Gate::authorize('showVentas', $trueque);
+
+        $ventas = $trueque->ventas()->orderBy('created_at', 'desc')->get();
+
+        return inertia('Trueque/ShowVentas', [
+            'ventas' => VentaResource::collection($ventas),
+        ]);
     }
 }
