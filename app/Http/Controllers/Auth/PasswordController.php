@@ -17,8 +17,11 @@ class PasswordController extends Controller
     {
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
+            'password' => ['required', Password::min(6), 'confirmed'],
+            'password_confirmation' => ['required', Password::min(6) , 'same:password'],
         ]);
+
+        unset($validated['password_confirmation']);
 
         $request->user()->update([
             'password' => Hash::make($validated['password']),

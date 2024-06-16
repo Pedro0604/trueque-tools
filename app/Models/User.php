@@ -71,4 +71,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Sucursal::class);
     }
+
+    public function comments():HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function ventas():HasMany
+    {
+        return $this->hasMany(Venta::class);
+    }
 }

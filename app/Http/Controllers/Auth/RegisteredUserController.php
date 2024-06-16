@@ -21,10 +21,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        $sucursales = Sucursal::all();
-        return Inertia::render('Auth/Register', [
-            'sucursales' => SucursalResource::collection($sucursales)
-        ]);
+        return Inertia::render('Auth/Register');
     }
 
     /**

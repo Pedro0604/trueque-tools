@@ -10,8 +10,9 @@ import Divisor from "@/Components/Divisor.jsx";
 import {IconButton, Tooltip} from "@mui/material";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import {useForm} from "laravel-precognition-react";
+import SucursalOptions from "@/Pages/Sucursal/Partials/SucursalOptions.jsx";
 
-export default function Register({sucursales}) {
+export default function Register() {
     const [disableSubmit, setDisableSubmit] = useState(false);
 
     const {
@@ -192,11 +193,7 @@ export default function Register({sucursales}) {
                             }}
                         >
                             <option value="">Selecciona una sucursal</option>
-                            {sucursales.map((sucursal) => (
-                                <option key={sucursal.id} value={sucursal.id}>
-                                    {sucursal.name}
-                                </option>
-                            ))}
+                            <SucursalOptions/>
                         </SelectInput>
 
                         <InputError message={errors.sucursal_id} className="mt-2"/>

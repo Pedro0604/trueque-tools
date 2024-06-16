@@ -59,7 +59,7 @@ export default function UserLayout({header, children}) {
                     </Dropdown.Trigger>
 
                     <Dropdown.Content>
-                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
+                        <Dropdown.Link href={route('profile.edit')}>Perfil</Dropdown.Link>
                         <Dropdown.Link href={route('product.myProducts')} method="get" as="button">
                             Mis productos
                         </Dropdown.Link>
