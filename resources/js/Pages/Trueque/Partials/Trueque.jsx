@@ -21,9 +21,6 @@ export default function Trueque({
                                     showActionButtons = false,
                                     ...props
                                 }) {
-
-    const auth = usePage().props.auth;
-
     const showTrueque = (truequeId) => {
         router.get(route('trueque.show', truequeId));
     }
