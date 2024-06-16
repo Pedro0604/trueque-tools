@@ -7,6 +7,7 @@ import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import IconWithText from "@/Components/IconWithText.jsx";
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 
 export default function Trueque({
                                     trueque,
@@ -24,8 +25,6 @@ export default function Trueque({
     const auth = usePage().props.auth;
 
     const showTrueque = (truequeId) => {
-        //console.log("Mostrar trueque con id: " + truequeId);
-        //console.error("DESCOMENTARRRRRR")
         router.get(route('trueque.show', truequeId));
     }
 
@@ -128,7 +127,7 @@ export default function Trueque({
                             Cancelar
                         </DangerButton>
                     }
-                    {(auth.admin || auth.empleado) && trueque.can.fail &&
+                    {trueque.can.fail &&
                         <DangerButton
                             className="w-full justify-center"
                             isLink
@@ -137,13 +136,22 @@ export default function Trueque({
                             Informar fallo en un trueque
                         </DangerButton>
                     }
-                    {(auth.admin || auth.empleado) && trueque.can.end &&
+                    {trueque.can.end &&
                         <CyanButton
                             className="w-full justify-center"
                             onClick={() => endTrueque(trueque.id)}
                         >
                             Finalizar Trueque
                         </CyanButton>
+                    }
+                    {trueque.can.createVenta &&
+                        <PrimaryButton
+                            className="w-full justify-center"
+                            isLink
+                            href={route('venta.create', trueque.id)}
+                        >
+                            Agregar venta
+                        </PrimaryButton>
                     }
                 </div>
             }

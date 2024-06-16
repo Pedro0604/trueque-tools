@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Venta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,6 +31,7 @@ class TruequeResource extends JsonResource
                 'cancel' => Gate::allows('cancel', $this->resource),
                 'end' => Gate::allows('end', $this->resource),
                 'fail' => Gate::allows('fail', $this->resource),
+                'createVenta' => Gate::allows('create', [Venta::class, $this->resource]),
             ],
         ];
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\TruequeController;
+use App\Http\Controllers\VentaController;
 use App\Models\Comment;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
@@ -52,16 +53,22 @@ Route::get('/product/{product}', [ProductController::class, 'show'])->name('prod
 Route::middleware('auth:web,admin,empleado')->group(function (){
     Route::get('/trueque/{trueque}', [TruequeController::class, 'show'])->name('trueque.show');
 
-    //Sucursal routes
+    // Sucursal routes
     Route::get('/sucursal', [SucursalController::class, 'index'])->name('sucursal.index');
 });
 
 // Rutas accesibles por administrador y empleado
 Route::middleware('auth:admin,empleado')->group(function (){
+    // Trueque routes
     Route::get('/trueque', [TruequeController::class, 'index'])->name('trueque.index');
     Route::post('/trueque/{trueque}/end', [TruequeController::class, 'end'])->name('trueque.end');
     Route::get('/trueque/{trueque}/fail', [TruequeController::class, 'failForm'])->name('trueque.failForm');
     Route::post('/trueque/{trueque}/fail', [TruequeController::class, 'fail'])->name('trueque.fail');
+
+    // Venta routes
+    Route::get('/trueque/{trueque}/venta/create', [VentaController::class, 'create'])->name('venta.create');
+    Route::post('/trueque/{trueque}/venta', [VentaController::class, 'store'])->name('venta.store');
+    Route::post('/venta/{venta}', [VentaController::class, 'show'])->name('venta.show');
 });
 
 require __DIR__.'/auth.php';

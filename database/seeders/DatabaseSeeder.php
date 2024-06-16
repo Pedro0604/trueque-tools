@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Admin;
-use App\Models\TruequeError;
-use App\Models\User;
+use App\Models\ProductoVenta;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +20,7 @@ class DatabaseSeeder extends Seeder
         // Solo está truequeSeeder porque crea solicitudes que crean productos
             TruequeSeeder::class,
             VentaSeeder::class,
+            ProductoVentaSeeder::class,
             CommentSeeder::class,
             AdminSeeder::class,
             EmpleadoSeeder::class,

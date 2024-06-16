@@ -2,16 +2,16 @@
 
 namespace App\Policies;
 
-use App\Models\User;
+use App\Models\Trueque;
 use App\Models\Venta;
-use Illuminate\Auth\Access\Response;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class VentaPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(Authenticatable $user): bool
     {
         //
     }
@@ -19,23 +19,30 @@ class VentaPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Venta $venta): bool
+    public function view(Authenticatable $user): bool
     {
-        //
+        if($user->isEmpleado() || $user->isAdmin()){
+            return true;
+        }
+        return false;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(Authenticatable $user, Trueque $trueque): bool
     {
-        //
+        if($user->isEmpleado() || $user->isAdmin()){
+            $hasEnded = $trueque->ended_at;
+            return $hasEnded && !$trueque->is_failed;
+        }
+        return false;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Venta $venta): bool
+    public function update(Authenticatable $user, Venta $venta): bool
     {
         //
     }
@@ -43,7 +50,7 @@ class VentaPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Venta $venta): bool
+    public function delete(Authenticatable $user, Venta $venta): bool
     {
         //
     }
@@ -51,7 +58,7 @@ class VentaPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Venta $venta): bool
+    public function restore(Authenticatable $user, Venta $venta): bool
     {
         //
     }
@@ -59,7 +66,7 @@ class VentaPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Venta $venta): bool
+    public function forceDelete(Authenticatable $user, Venta $venta): bool
     {
         //
     }

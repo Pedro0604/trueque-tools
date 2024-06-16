@@ -174,7 +174,7 @@ class TruequeController extends Controller
             $trueque->update(['ended_at' => now()]);
         });
 
-        return to_route('trueque.show', $trueque->id)
+        return to_route('venta.create', $trueque->id)
             ->with('success', [
                 'message' => 'Trueque finalizado correctamente',
                 'key' => rand()
