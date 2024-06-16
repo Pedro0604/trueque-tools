@@ -2,7 +2,7 @@ import Product from "@/Pages/Product/Partials/Product.jsx";
 import BusinessIcon from "@mui/icons-material/Business";
 import MultipleStopIcon from "@mui/icons-material/MultipleStop";
 import {Chip} from "@mui/material";
-import {router, usePage} from "@inertiajs/react";
+import {router} from "@inertiajs/react";
 import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import IconWithText from "@/Components/IconWithText.jsx";
