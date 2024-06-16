@@ -13,7 +13,10 @@ class VentaPolicy
      */
     public function viewAny(Authenticatable $user): bool
     {
-        //
+        if ($user->isEmpleado() || $user->isAdmin()) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -21,10 +24,7 @@ class VentaPolicy
      */
     public function view(Authenticatable $user): bool
     {
-        if($user->isEmpleado() || $user->isAdmin()){
-            return true;
-        }
-        return false;
+        //
     }
 
     /**
@@ -32,9 +32,11 @@ class VentaPolicy
      */
     public function create(Authenticatable $user, Trueque $trueque): bool
     {
-        if($user->isEmpleado() || $user->isAdmin()){
+        if ($user->isEmpleado() || $user->isAdmin()) {
             $hasEnded = $trueque->ended_at;
-            return $hasEnded && !$trueque->is_failed;
+            $wasSuccessful = !$trueque->is_failed;
+            $doesntHaveVenta = $trueque->ventas()->count() === 0;
+            return $hasEnded && $wasSuccessful && $doesntHaveVenta;
         }
         return false;
     }

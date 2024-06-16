@@ -22,6 +22,9 @@ export default function AdminLayout({header, children}) {
                     <NavLink href={route('trueque.index')} active={route().current('trueque.index')}>
                         Trueques
                     </NavLink>
+                    <NavLink href={route('venta.index')} active={route().current('venta.index')}>
+                        Ventas
+                    </NavLink>
                     <NavLink href={route('sucursal.index')} active={route().current('sucursal.index')}>
                         Sucursales
                     </NavLink>
@@ -43,6 +46,9 @@ export default function AdminLayout({header, children}) {
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('trueque.index')} active={route().current('trueque.index')}>
                         Trueques
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink href={route('venta.index')} active={route().current('venta.index')}>
+                        Ventas
                     </ResponsiveNavLink>
                     <ResponsiveNavLink href={route('sucursal.index')} active={route().current('sucursal.index')}>
                         Sucursales

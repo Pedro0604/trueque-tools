@@ -32,6 +32,7 @@ class TruequeResource extends JsonResource
                 'end' => Gate::allows('end', $this->resource),
                 'fail' => Gate::allows('fail', $this->resource),
                 'createVenta' => Gate::allows('create', [Venta::class, $this->resource]),
+                'viewVenta' => Gate::allows('viewAny', Venta::class),
             ],
         ];
     }

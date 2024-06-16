@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TruequeResource;
+use App\Http\Resources\VentaResource;
 use App\Models\ProductoVenta;
 use App\Models\Trueque;
 use App\Models\Venta;
@@ -19,9 +20,13 @@ class VentaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response|ResponseFactory
     {
-        //
+        $ventas = Venta::orderBy('created_at', 'desc')->get();
+
+        return inertia('Venta/Index', [
+            'ventas' => VentaResource::collection($ventas)
+        ]);
     }
 
     /**
