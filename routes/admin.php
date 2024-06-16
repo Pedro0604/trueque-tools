@@ -25,6 +25,8 @@ Route::as('admin.')->group(function () {
                 ->name('mostTrueques');
             Route::get('trueques-between-dates', [AdminController::class, 'showTruequesBetweenDates'])
                 ->name('truequesBetweenDates');
+            Route::get('ventas-between-dates', [AdminController::class, 'showVentasBetweenDates'])
+                ->name('ventasBetweenDates');
         });
 
         // Rutas usuarios

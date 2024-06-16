@@ -28,8 +28,8 @@ export default function StatisticsLayout({header, children}) {
                                     Trueques entre fechas
                                 </NavLink>
                                 <NavLink
-                                    href={route('admin.statistics.mostTrueques')}
-                                    active={route().current('admin.statistics.mostTrueques')}
+                                    href={route('admin.statistics.ventasBetweenDates')}
+                                    active={route().current('admin.statistics.ventasBetweenDates')}
                                     className="px-3 pt-2 pb-2"
                                 >
                                     Ventas entre fechas

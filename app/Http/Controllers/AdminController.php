@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\TruequeResource;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\VentaResource;
 use App\Models\Admin;
 use App\Models\Trueque;
 use App\Models\User;
+use App\Models\Venta;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Inertia\Response;
@@ -49,6 +51,7 @@ class AdminController extends Controller
             'users' => UserResource::collection($users),
         ]);
     }
+
     public function showTruequesBetweenDates(): Response|ResponseFactory|RedirectResponse
     {
         if(request('start_date') && request('end_date')) {
@@ -72,6 +75,31 @@ class AdminController extends Controller
 
         return inertia('Admin/Statistics/TruequesBetweenDates', [
             'trueques' => TruequeResource::collection($trueques->get()),
+        ]);
+    }
+    public function showVentasBetweenDates(): Response|ResponseFactory|RedirectResponse
+    {
+        if(request('start_date') && request('end_date')) {
+            if(request('start_date') > request('end_date')){
+                return redirect()->back()
+                    ->with('error', [
+                        'message' => 'La fecha de inicio no puede ser mayor a la fecha de fin.',
+                        'key' => rand()
+                    ]);
+            }
+        }
+
+        $ventas = Venta::query();
+
+        if(request('start_date')){
+            $ventas->where('ventas.created_at', '>=', request('start_date'));
+        }
+        if (request('end_date')) {
+            $ventas->where('ventas.created_at', '<=', request('end_date'));
+        }
+
+        return inertia('Admin/Statistics/VentasBetweenDates', [
+            'ventas' => VentaResource::collection($ventas->get()),
         ]);
     }
 
