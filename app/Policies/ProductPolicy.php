@@ -15,7 +15,8 @@ class ProductPolicy
 
         $productIsFromUser = $product->user_id === $user->id;
         $productIsCurrentlyPromoted = $product->promoted_at && (new Carbon($product->promoted_at))->gt(Carbon::now()->subWeek());
+        $productHasTrueque = $product->hasTrueque;
 
-        return $productIsFromUser && !$productIsCurrentlyPromoted;
+        return $productIsFromUser && !$productIsCurrentlyPromoted && !$productHasTrueque;
     }
 }
