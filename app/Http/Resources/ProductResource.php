@@ -26,7 +26,8 @@ class ProductResource extends JsonResource
             'category' => $this->category,
             'image_path' => $this->image_path,
             'description' => $this->description,
-            'promoted_at' => $this->promoted_at ? (new Carbon($this->promoted_at))->format('d/m/Y') : null,
+            'isCurrentlyPromoted' => $this->promoted_at && (new Carbon($this->promoted_at))->gt(Carbon::now()->subWeek()),
+            'promoted_until' => $this->promoted_at ? (new Carbon($this->promoted_at))->addWeek()->format('d/m/y H:i') : null,
             'user' => new UserResource($this->user),
             'sucursal' => new SucursalResource($this->sucursal),
             'hasTrueque' => $this->hasTrueque,
@@ -35,7 +36,8 @@ class ProductResource extends JsonResource
                 'createComment' => Gate::allows('create', [Comment::class, $product]),
                 'createSolicitud' => Gate::allows('create', [Solicitud::class, $product]),
                 'listSolicituds' => Gate::allows('list', [Solicitud::class, $product]),
-                'viewTrueque' => $this->hasTrueque ? Gate::allows('view', $this->trueque) : false,
+                'viewTrueque' => $this->hasTrueque && Gate::allows('view', $this->trueque),
+                'promote' => Gate::allows('promote', $product),
             ],
         ];
     }

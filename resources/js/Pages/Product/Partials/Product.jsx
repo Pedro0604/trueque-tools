@@ -73,7 +73,7 @@ export default function Product({
                         />
                     </div>
                 }
-                {product.promoted_at && <StarIcon className="text-yellow-500"/>}
+                {product.isCurrentlyPromoted && <StarIcon className="text-yellow-500"/>}
             </div>
             <div className="flex gap-2 sm:gap-4 sm:flex-col overflow-hidden">
                 <Blur

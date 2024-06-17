@@ -3,17 +3,17 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\TruequeController;
 use App\Http\Controllers\VentaController;
-use App\Models\Comment;
-use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::redirect('/', '/product');
+
+Route::post('/promotion/webhook', [PromotionController::class, 'webhook'])->name('promotion.webhook');
 
 Route::middleware('auth:web')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -44,6 +44,11 @@ Route::middleware('auth:web')->group(function () {
     // Trueque routes
     Route::get('/trueque/my-trueques', [TruequeController::class, 'myTrueques'])->name('trueque.myTrueques');
     Route::post('/trueque/{trueque}/cancel', [TruequeController::class, 'cancel'])->name('trueque.cancel');
+
+    // Promotion routes
+    Route::post('/product/{product}/promote', [PromotionController::class, 'promote'])->name('product.promote');
+    Route::get('/product/{product}/successful-promotion', [PromotionController::class, 'success'])->name('promotion.success');
+    Route::get('/product/{product}/canceled-promotion', [PromotionController::class, 'cancel'])->name('promotion.cancel');
 });
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');

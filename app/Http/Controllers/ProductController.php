@@ -28,7 +28,9 @@ class ProductController extends Controller
         $products = Product::query()
             ->doesntHave('publishedSuccessfulTrueque')
             ->doesntHave('offeredSuccessfulTrueque')
-            ->orderByDesc('created_at');
+            ->orderByRaw(
+                "CASE WHEN promoted_at > datetime('now', '-7 days') THEN 1 ELSE 2 END, created_at DESC"
+            );
 
 
         if (request('sucursal')) {

@@ -15,6 +15,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Blur from "@/Components/Blur.jsx";
 import SpeedIcon from "@mui/icons-material/Speed";
 import IconWithText from "@/Components/IconWithText.jsx";
+import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 
 export default function Show({
                                  product,
@@ -22,7 +23,7 @@ export default function Show({
                                  solicituds,
                                  trueque = null
                              }) {
-    const {auth} = usePage().props;
+    const {auth, csrf_token} = usePage().props;
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -55,7 +56,30 @@ export default function Show({
                                     text={product.user.reputation}
                                 />
                             </div>
-                            {product.promoted_at && <StarIcon className="text-yellow-500"/>}
+                            {product.isCurrentlyPromoted &&
+                                <>
+                                    {product.user.id === auth.user.id &&
+                                        <p>
+                                            Promocionado hasta el {product.promoted_until}
+                                        </p>
+                                    }
+                                    <StarIcon className="text-yellow-500"/>
+                                </>
+                            }
+                            {product.can.promote &&
+                                <form
+                                    action={route('product.promote', product.id)}
+                                    method="POST"
+                                >
+                                    <input
+                                        type="hidden"
+                                        name="_token"
+                                        value={csrf_token}
+                                        autoComplete="off"
+                                    />
+                                    <CyanButton>Promocionar producto por 1000Ar$</CyanButton>
+                                </form>
+                            }
                         </div>
 
                         <div className="md:flex">

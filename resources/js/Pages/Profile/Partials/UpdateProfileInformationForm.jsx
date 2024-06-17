@@ -2,10 +2,10 @@ import InputError from '@/Components/Inputs/InputError.jsx';
 import InputLabel from '@/Components/Inputs/InputLabel.jsx';
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.jsx';
 import TextInput from '@/Components/Inputs/TextInput.jsx';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import {IconButton, Tooltip} from "@mui/material";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline.js";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import SelectInput from "@/Components/Inputs/SelectInput.jsx";
 import SucursalOptions from "@/Pages/Sucursal/Partials/SucursalOptions.jsx";
 

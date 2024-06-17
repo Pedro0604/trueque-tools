@@ -37,6 +37,7 @@ class HandleInertiaRequests extends Middleware
                 'empleado' => Auth::guard('empleado')->user(),
                 'admin' => Auth::guard('admin')->user(),
             ],
+            'csrf_token' => csrf_token(),
             'queryParams' => $request->query(),
             'sucursals' => Sucursal::all(),
             'flash' => [

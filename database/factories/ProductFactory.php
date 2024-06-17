@@ -23,7 +23,7 @@ class ProductFactory extends Factory
             'category' => fake()->numberBetween(1, 3),
             'image_path' => fake()->imageUrl(),
             'description' => fake()->sentence(),
-            'promoted_at' => fake()->dateTime(),
+            'promoted_at' => fake()->optional(0.33)->dateTimeBetween('-2 weeks', 'now'),
             'user_id' => fake()->numberBetween(1, User::count()),
             'sucursal_id' => fake()->numberBetween(1, Sucursal::count()),
         ];
