@@ -1,6 +1,6 @@
 import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import BusinessIcon from '@mui/icons-material/Business';
-import {router} from "@inertiajs/react";
+import {Link, router} from "@inertiajs/react";
 import {useEffect, useState} from "react";
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import PersonIcon from '@mui/icons-material/Person';
@@ -8,8 +8,6 @@ import Blur from "@/Components/Blur.jsx";
 import SpeedIcon from '@mui/icons-material/Speed';
 import StarIcon from "@mui/icons-material/Star";
 import IconWithText from "@/Components/IconWithText.jsx";
-import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
-import {Button} from "@mui/material";
 
 export default function Product({
                                     product,
@@ -35,10 +33,6 @@ export default function Product({
         router.get(route('product.show', productId));
     }
 
-    const showUser = (userId) => {
-        router.get(route('user.show', userId))
-    }
-
     useEffect(() => {
         if (created) {
             const timeoutId = setTimeout(() => {
@@ -55,7 +49,6 @@ export default function Product({
             className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800 cursor-pointer
                 transition-all rounded-lg p-4 border border-custom-beige-900 dark:border-custom-beige-500
                 ${isPulsing ? 'animate-pulse' : ''} ${className}`}
-            onClick={onClick ? onClick : () => showProduct(product.id)}
         >
             {error &&
                 <div
@@ -67,16 +60,16 @@ export default function Product({
             <div className="flex justify-between items-center mb-1">
                 {withUserName &&
                     <div className="flex gap-3 items-center">
-                        <Button
-                            className=""
-                            onClick={() => showUser(product.user.id)}
+                        <Link
+                            href={route('user.show', product.user.id)}
+                            className="hover:underline"
                         >
                             <IconWithText
                                 icon={<PersonIcon/>}
                                 text={product.user.name}
                                 textSize={"text-sm"}
                             />
-                        </Button>
+                        </Link>
                         <IconWithText
                             icon={<SpeedIcon/>}
                             text={product.user.reputation}
@@ -86,7 +79,10 @@ export default function Product({
                 }
                 {product.isCurrentlyPromoted && <StarIcon className="text-yellow-500"/>}
             </div>
-            <div className="flex gap-2 sm:gap-4 sm:flex-col overflow-hidden">
+            <div
+                className="flex gap-2 sm:gap-4 sm:flex-col overflow-hidden"
+                onClick={onClick ? onClick : () => showProduct(product.id)}
+            >
                 <Blur
                     blur={blurIfPaused && product.isPaused}
                     message={"El producto esta pausado"}
