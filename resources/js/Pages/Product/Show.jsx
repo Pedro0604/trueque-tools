@@ -2,7 +2,7 @@ import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import StarIcon from "@mui/icons-material/Star";
 import BusinessIcon from "@mui/icons-material/Business";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
-import {Head, usePage} from "@inertiajs/react";
+import {Head, router, usePage} from "@inertiajs/react";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import Modal from "@mui/material/Modal";
 import {useState} from "react";
@@ -17,6 +17,7 @@ import SpeedIcon from "@mui/icons-material/Speed";
 import IconWithText from "@/Components/IconWithText.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import PromotionModal from "@/Components/PromotionModal.jsx";
+import {Button} from "@mui/material";
 
 export default function Show({
                                  product,
@@ -32,6 +33,10 @@ export default function Show({
 
     const [openPromotionModal, setOpenPromotionModal] = useState(preferenceId !== null);
     const handleClosePromotionModal = () => setOpenPromotionModal(false);
+
+    const showUser = (userId) => {
+        router.get(route('user.show', userId))
+    }
 
     return (
         <AuthenticatedOrNormalLayout
@@ -52,10 +57,15 @@ export default function Show({
                     >
                         <div className="flex justify-between items-center mb-1 h-6">
                             <div className="flex gap-3 items-center">
-                                <IconWithText
-                                    icon={<PersonIcon/>}
-                                    text={product.user.name}
-                                />
+                                <Button
+                                    className=""
+                                    onClick={() => showUser(product.user.id)}
+                                >
+                                    <IconWithText
+                                        icon={<PersonIcon/>}
+                                        text={product.user.name}
+                                    />
+                                </Button>
                                 <IconWithText
                                     icon={<SpeedIcon/>}
                                     text={product.user.reputation}

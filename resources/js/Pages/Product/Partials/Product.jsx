@@ -8,6 +8,8 @@ import Blur from "@/Components/Blur.jsx";
 import SpeedIcon from '@mui/icons-material/Speed';
 import StarIcon from "@mui/icons-material/Star";
 import IconWithText from "@/Components/IconWithText.jsx";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
+import {Button} from "@mui/material";
 
 export default function Product({
                                     product,
@@ -31,6 +33,10 @@ export default function Product({
 
     const showProduct = (productId) => {
         router.get(route('product.show', productId));
+    }
+
+    const showUser = (userId) => {
+        router.get(route('user.show', userId))
     }
 
     useEffect(() => {
@@ -61,11 +67,16 @@ export default function Product({
             <div className="flex justify-between items-center mb-1">
                 {withUserName &&
                     <div className="flex gap-3 items-center">
-                        <IconWithText
-                            icon={<PersonIcon/>}
-                            text={product.user.name}
-                            textSize={"text-sm"}
-                        />
+                        <Button
+                            className=""
+                            onClick={() => showUser(product.user.id)}
+                        >
+                            <IconWithText
+                                icon={<PersonIcon/>}
+                                text={product.user.name}
+                                textSize={"text-sm"}
+                            />
+                        </Button>
                         <IconWithText
                             icon={<SpeedIcon/>}
                             text={product.user.reputation}

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\ResponseFactory;
+use Inertia\Response;
 
 class UserController extends Controller
 {
@@ -39,9 +41,11 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user): Response|ResponseFactory
     {
-        //
+        return inertia('User/Show', [
+            'user' => new UserResource($user),
+        ]);
     }
 
     /**
