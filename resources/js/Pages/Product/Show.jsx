@@ -16,17 +16,22 @@ import Blur from "@/Components/Blur.jsx";
 import SpeedIcon from "@mui/icons-material/Speed";
 import IconWithText from "@/Components/IconWithText.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
+import PromotionModal from "@/Components/PromotionModal.jsx";
 
 export default function Show({
                                  product,
                                  comments,
                                  solicituds,
+                                 preferenceId = null,
                                  trueque = null
                              }) {
-    const {auth, csrf_token} = usePage().props;
+    const {auth} = usePage().props;
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [openPromotionModal, setOpenPromotionModal] = useState(preferenceId !== null);
+    const handleClosePromotionModal = () => setOpenPromotionModal(false);
 
     return (
         <AuthenticatedOrNormalLayout
@@ -67,18 +72,20 @@ export default function Show({
                                 </>
                             }
                             {product.can.promote &&
-                                <form
-                                    action={route('product.promote', product.id)}
-                                    method="POST"
-                                >
-                                    <input
-                                        type="hidden"
-                                        name="_token"
-                                        value={csrf_token}
-                                        autoComplete="off"
+                                <>
+                                    <PromotionModal
+                                        open={openPromotionModal}
+                                        handleClose={handleClosePromotionModal}
+                                        productId={product.id}
+                                        preferenceId={preferenceId}
                                     />
-                                    <CyanButton>Promocionar producto por 1000Ar$</CyanButton>
-                                </form>
+                                    <CyanButton
+                                        isLink
+                                        href={route('promotion.mercadopago.createPreference', product.id)}
+                                    >
+                                        Promocionar
+                                    </CyanButton>
+                                </>
                             }
                         </div>
 

@@ -24,7 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens([
-            '/promotion/webhook',
+            '/promotion/stripe/webhook',
+            '/promotion/mercadopago/webhook',
         ]);
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,

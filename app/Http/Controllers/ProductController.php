@@ -95,14 +95,6 @@ class ProductController extends Controller
                 ->get()
             : [];
 
-//        User::find(auth()->id())
-//            ->products()
-//            ->whereHas('solicituds', function ($query) use ($product) {
-//                $query->where('published_product_id', $product->id)
-//                    ->whereNotIn('state', ['accepted', 'rejected']);
-//            })->orderByDesc('created_at')
-//            ->get();
-
         $trueque = $product->hasTrueque ? new TruequeResource($product->trueque): null;
 
         return inertia('Product/Show', [
@@ -110,6 +102,7 @@ class ProductController extends Controller
             'comments' => CommentResource::collection($product->comments->sortByDesc('created_at')),
             'solicituds' => SolicitudResource::collection($solicituds),
             'trueque' => $trueque,
+            'preferenceId' => session('preference_id'),
         ]);
     }
 

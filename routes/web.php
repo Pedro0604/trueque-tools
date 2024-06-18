@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\TruequeController;
@@ -13,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/product');
 
-Route::post('/promotion/webhook', [PromotionController::class, 'webhook'])->name('promotion.webhook');
+Route::post('/promotion/stripe/webhook', [StripeController::class, 'webhook'])->name('promotion.stripe.webhook');
+Route::post('/promotion/mercadopago/webhook', [MercadoPagoController::class, 'webhook'])->name('promotion.mercadopago.webhook');
 
 Route::middleware('auth:web')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -46,7 +49,8 @@ Route::middleware('auth:web')->group(function () {
     Route::post('/trueque/{trueque}/cancel', [TruequeController::class, 'cancel'])->name('trueque.cancel');
 
     // Promotion routes
-    Route::post('/product/{product}/promote', [PromotionController::class, 'promote'])->name('product.promote');
+    Route::post('/product/{product}/stripe/promote', [StripeController::class, 'promote'])->name('promotion.stripe.promote');
+    Route::get('/product/{product}/mercadopago/create-preference', [MercadoPagoController::class, 'createPreference'])->name('promotion.mercadopago.createPreference');
     Route::get('/product/{product}/successful-promotion', [PromotionController::class, 'success'])->name('promotion.success');
     Route::get('/product/{product}/canceled-promotion', [PromotionController::class, 'cancel'])->name('promotion.cancel');
 });

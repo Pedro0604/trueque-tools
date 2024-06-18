@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('status');
             $table->decimal('price', 10);
             $table->string('session_id');
+            $table->string('source');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->timestamps();
