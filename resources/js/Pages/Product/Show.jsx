@@ -99,7 +99,7 @@ export default function Show({
                             }
                         </div>
 
-                        <div className="md:flex">
+                        <div className="md:flex mt-3">
                             <Blur
                                 blur={product.isPaused}
                                 message={"El producto esta pausado"}
