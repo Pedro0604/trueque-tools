@@ -17,7 +17,7 @@ export default function User({
             className={`bg-gray-200 dark:bg-gray-700 lg:bg-gray-100 lg:dark:bg-gray-800 transition-all
             rounded-lg p-4 border border-custom-beige-900 dark:border-custom-beige-500 ${className}`}
         >
-            <div className="flex gap-3 flex-col overflow-hidden">
+            <div className="flex gap-3 flex-col overflow-hidden text-white">
                 <span className="text-xl">{user.name} {user.surname}</span>
                 <IconWithText
                     icon={<SpeedIcon/>}
