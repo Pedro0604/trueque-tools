@@ -24,9 +24,6 @@ Route::middleware('auth:web')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // User routes
-    Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');
-
     // Product routes
     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product', [ProductController::class, 'store'])->name('product.store')->middleware(HandlePrecognitiveRequests::class);
@@ -63,15 +60,19 @@ Route::get('/product', [ProductController::class, 'index'])->name('product.index
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
 
 // Rutas accesibles por todos los usuarios
-Route::middleware('auth:web,admin,empleado')->group(function (){
+Route::middleware('auth:web,admin,empleado')->group(function () {
+    // Trueque routes
     Route::get('/trueque/{trueque}', [TruequeController::class, 'show'])->name('trueque.show');
+
+    // User routes
+    Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');
 
     // Sucursal routes
     Route::get('/sucursal', [SucursalController::class, 'index'])->name('sucursal.index');
 });
 
 // Rutas accesibles por administrador y empleado
-Route::middleware('auth:admin,empleado')->group(function (){
+Route::middleware('auth:admin,empleado')->group(function () {
     // Trueque routes
     Route::get('/trueque', [TruequeController::class, 'index'])->name('trueque.index');
     Route::post('/trueque/{trueque}/end', [TruequeController::class, 'end'])->name('trueque.end');
@@ -85,4 +86,4 @@ Route::middleware('auth:admin,empleado')->group(function (){
     Route::get('/venta', [VentaController::class, 'index'])->name('venta.index');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
