@@ -70,9 +70,28 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCommentRequest $request, Comment $comments)
+    public function update(UpdateCommentRequest $request, Comment $comment)
     {
-        //
+        $response = Gate::inspect('update', [Comment::class, $comment]);
+
+        if ($response->denied()) {
+            return back()->with('error', [
+                'message' => $response->message(),
+                'key' => rand()
+            ]);
+        }
+
+        $data = $request->validated();
+
+        $comment->update($data);
+
+        $product = $comment->product ? $comment->product : $comment->originalComment->product;
+
+        return to_route('product.show', $product)
+            ->with('success', [
+                'message' => 'Comentario creado correctamente',
+                'key' => rand()
+            ]);
     }
 
     /**
@@ -90,15 +109,15 @@ class CommentController extends Controller
         }
 
         // Si es un comentario normal
-        if($comment->product_id !== null){
-            if($comment->response) {
+        if ($comment->product_id !== null) {
+            if ($comment->response) {
                 $comment->response->delete();
             }
             $product_id = $comment->product_id;
             $comment->delete();
         }
         // Si es una respuesta
-        else{
+        else {
             $originalComment = $comment->originalComment;
             $product_id = $originalComment->product_id;
 

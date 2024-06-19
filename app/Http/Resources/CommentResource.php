@@ -24,6 +24,7 @@ class CommentResource extends JsonResource
             'response' => $this->response ? new CommentResource($this->response) : null,
             'can' => [
                 'respond' => Gate::allows('respond', $this->resource),
+                'update' => Gate::allows('update', $this->resource),
                 'delete' => Gate::allows('delete', $this->resource),
             ],
         ];

@@ -29,12 +29,13 @@ Route::middleware('auth:web')->group(function () {
     Route::post('/product', [ProductController::class, 'store'])->name('product.store')->middleware(HandlePrecognitiveRequests::class);
     Route::get('/product/my-products', [ProductController::class, 'myProducts'])->name('product.myProducts');
     Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
-    Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
+    Route::patch('/product/{product}', [ProductController::class, 'update'])->name('product.update');
     Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
 
     // Comment routes
     Route::post('/product/{product}/comment', [CommentController::class, 'store'])->name('comment.store');
     Route::post('/comment/{comment}', [CommentController::class, 'respond'])->name('comment.respond');
+    Route::patch('/comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
     Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
 
     // Solicitud routes

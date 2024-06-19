@@ -14,21 +14,20 @@ class CommentPolicy
      */
     public function create(Authenticatable $user, Product $product): Response
     {
-        if($user->isAdmin()){
+        if ($user->isAdmin()) {
             return Response::deny('El administrador no puede realizar comentarios');
-        }
-        else if($user->isEmpleado()){
+        } else if ($user->isEmpleado()) {
             return Response::deny('Un empleado no puede realizar comentarios');
         }
 
         $productIsFromUser = $product->user_id === $user->id;
         $productHasATrueque = $product->hasTrueque;
 
-        if($productIsFromUser){
+        if ($productIsFromUser) {
             return Response::deny('No podés comentar en tu propio producto');
         }
 
-        if($productHasATrueque){
+        if ($productHasATrueque) {
             return Response::deny('No podés comentar en un producto con un trueque pactado');
         }
         return Response::allow();
@@ -39,10 +38,9 @@ class CommentPolicy
      */
     public function respond(Authenticatable $user, Comment $comment): Response
     {
-        if($user->isAdmin()){
+        if ($user->isAdmin()) {
             return Response::deny('El administrador no puede responder comentarios');
-        }
-        else if($user->isEmpleado()){
+        } else if ($user->isEmpleado()) {
             return Response::deny('Un empleado no puede responder comentarios');
         }
 
@@ -52,19 +50,19 @@ class CommentPolicy
         $productIsNotFromUser = $comment->product && $comment->product->user_id !== $user->id;
         $productHasATrueque = $comment->product && $comment->product->hasTrueque;
 
-        if($commentHasAnAnswer){
+        if ($commentHasAnAnswer) {
             return Response::deny('Este comentario ya tiene una respuesta');
         }
-        if($commentIsAnAnswer){
+        if ($commentIsAnAnswer) {
             return Response::deny('No podés responder una respuesta');
         }
-        if($commentIsFromUser){
+        if ($commentIsFromUser) {
             return Response::deny('No podés responder tu propio comentario');
         }
-        if($productIsNotFromUser){
+        if ($productIsNotFromUser) {
             return Response::deny('Solo podés responder a comentarios en tus productos');
         }
-        if($productHasATrueque){
+        if ($productHasATrueque) {
             return Response::deny('No podés responder comentarios en un producto con un trueque pactado');
         }
         return Response::allow();
@@ -73,30 +71,45 @@ class CommentPolicy
     /**
      * Determine whether the user can update the model.
      */
-//    public function update(Authenticatable $user, Comment $comment): bool
-//    {
-//        //
-//    }
+    public function update(Authenticatable $user, Comment $comment): Response
+    {
+        if ($user->isAdmin()) {
+            return Response::deny('El administrador no puede modificar comentarios');
+        } else if ($user->isEmpleado()) {
+            return Response::deny('Un empleado no puede modificar comentarios');
+        }
+
+        $commentIsNotFromUser = $comment->user_id !== $user->id;
+        $productHasATrueque = $comment->product ? $comment->product->hasTrueque : $comment->originalComment->product->hasTrueque;
+
+        if ($commentIsNotFromUser) {
+            return Response::deny('No podés modificar un comentario que no es tuyo');
+        }
+
+        if ($productHasATrueque) {
+            return Response::deny('No podés modificar un comentario de un producto con un trueque pactado');
+        }
+        return Response::allow();
+    }
 
     /**
      * Determine whether the user can delete the model.
      */
     public function delete(Authenticatable $user, Comment $comment): Response
     {
-        if($user->isAdmin()){
+        if ($user->isAdmin()) {
             return Response::deny('El administrador no puede eliminar comentarios');
-        }
-        else if($user->isEmpleado()){
+        } else if ($user->isEmpleado()) {
             return Response::deny('Un empleado no puede eliminar comentarios');
         }
 
         $commentIsNotFromUser = $comment->user_id !== $user->id;
-        $productHasATrueque = $comment->product && $comment->product->hasTrueque;
+        $productHasATrueque = $comment->product ? $comment->product->hasTrueque : $comment->originalComment->product->hasTrueque;
 
-        if($commentIsNotFromUser){
+        if ($commentIsNotFromUser) {
             return Response::deny('No podés eliminar un comentario que no es tuyo');
         }
-        if($productHasATrueque){
+        if ($productHasATrueque) {
             return Response::deny('No podés eliminar comentarios en un producto con un trueque pactado');
         }
         return Response::allow();
