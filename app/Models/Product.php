@@ -87,43 +87,57 @@ class Product extends Model
             ->where('is_failed', false);
     }
 
+    public function publishedFailedTrueques(): HasManyThrough
+    {
+        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'published_product_id')
+            ->whereNotNull('ended_at')
+            ->where('is_failed', true);
+    }
+
+    public function offeredFailedTrueques(): HasManyThrough
+    {
+        return $this->hasManyThrough(Trueque::class, Solicitud::class, 'offered_product_id')
+            ->whereNotNull('ended_at')
+            ->where('is_failed', true);
+    }
+
     public function hasPendingTrueque(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->publishedTrueques()
-                    ->whereNull('ended_at')
-                    ->exists() ||
+            get: fn () => $this->publishedTrueques()
+                ->whereNull('ended_at')
+                ->exists() ||
                 $this->offeredTrueques()
-                    ->whereNull('ended_at')
-                    ->exists(),
+                ->whereNull('ended_at')
+                ->exists(),
         );
     }
 
     public function hasSuccessfulTrueque(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->publishedTrueques()
-                    ->whereNotNull('ended_at')
-                    ->where('is_failed', false)
-                    ->exists() ||
+            get: fn () => $this->publishedTrueques()
+                ->whereNotNull('ended_at')
+                ->where('is_failed', false)
+                ->exists() ||
                 $this->offeredTrueques()
-                    ->whereNotNull('ended_at')
-                    ->where('is_failed', false)
-                    ->exists(),
+                ->whereNotNull('ended_at')
+                ->where('is_failed', false)
+                ->exists(),
         );
     }
 
     public function hasTrueque(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->hasPendingTrueque || $this->hasSuccessfulTrueque,
+            get: fn () => $this->hasPendingTrueque || $this->hasSuccessfulTrueque,
         );
     }
 
     public function trueque(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->publishedSuccessfulTrueque ?? $this->offeredSuccessfulTrueque ?? $this->publishedPendingTrueque ?? $this->offeredPendingTrueque,
+            get: fn () => $this->publishedSuccessfulTrueque ?? $this->offeredSuccessfulTrueque ?? $this->publishedPendingTrueque ?? $this->offeredPendingTrueque,
         );
     }
 }

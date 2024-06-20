@@ -1,36 +1,39 @@
-import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
+import { CATEGORIES_TEXT_MAP } from "@/Categories.jsx";
 import StarIcon from "@mui/icons-material/Star";
 import BusinessIcon from "@mui/icons-material/Business";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
-import {Head, Link, usePage} from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import Modal from "@mui/material/Modal";
-import {useState} from "react";
+import { useState } from "react";
 import CommentsList from "../Comment/CommentsList";
 import Create from "@/Pages/Comment/Create.jsx";
 import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
 import Trueque from "@/Pages/Trueque/Partials/Trueque.jsx";
 import Divisor from "@/Components/Divisor.jsx";
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from "@mui/icons-material/Person";
 import Blur from "@/Components/Blur.jsx";
 import SpeedIcon from "@mui/icons-material/Speed";
 import IconWithText from "@/Components/IconWithText.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import PromotionModal from "@/Components/PromotionModal.jsx";
+import DangerButton from "@/Components/Buttons/DangerButton";
 
 export default function Show({
-                                 product,
-                                 comments,
-                                 solicituds,
-                                 preferenceId = null,
-                                 trueque = null
-                             }) {
-    const {auth} = usePage().props;
+    product,
+    comments,
+    solicituds,
+    preferenceId = null,
+    trueque = null,
+}) {
+    const { auth } = usePage().props;
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [openPromotionModal, setOpenPromotionModal] = useState(preferenceId !== null);
+    const [openPromotionModal, setOpenPromotionModal] = useState(
+        preferenceId !== null
+    );
     const handleClosePromotionModal = () => setOpenPromotionModal(false);
 
     return (
@@ -43,7 +46,7 @@ export default function Show({
                 </div>
             }
         >
-            <Head title={`Producto "${product.name}"`}/>
+            <Head title={`Producto "${product.name}"`} />
 
             <div className="flex gap-4 justify-center">
                 <div className="max-w-sm sm:max-w-lg lg:max-w-4xl lg:min-w-[600px]">
@@ -53,45 +56,73 @@ export default function Show({
                         <div className="flex justify-between items-center mb-1 h-6">
                             <div className="flex gap-3 items-center">
                                 <Link
-                                    href={route('user.show', product.user.id)}
+                                    href={route("user.show", product.user.id)}
                                     className="hover:underline"
                                 >
                                     <IconWithText
-                                        icon={<PersonIcon/>}
+                                        icon={<PersonIcon />}
                                         text={product.user.name}
                                     />
                                 </Link>
                                 <IconWithText
-                                    icon={<SpeedIcon/>}
+                                    icon={<SpeedIcon />}
                                     text={product.user.reputation}
                                 />
                             </div>
-                            {product.isCurrentlyPromoted &&
+                            {product.isCurrentlyPromoted && (
                                 <>
-                                    {auth.user && product.user.id === auth.user.id &&
-                                        <p>
-                                            Promocionado hasta el {product.promoted_until}
-                                        </p>
-                                    }
-                                    <StarIcon className="text-yellow-500"/>
+                                    {auth.user &&
+                                        product.user.id === auth.user.id && (
+                                            <p>
+                                                Promocionado hasta el{" "}
+                                                {product.promoted_until}
+                                            </p>
+                                        )}
                                 </>
-                            }
-                            {product.can.promote &&
-                                <>
-                                    <PromotionModal
-                                        open={openPromotionModal}
-                                        handleClose={handleClosePromotionModal}
-                                        productId={product.id}
-                                        preferenceId={preferenceId}
-                                    />
-                                    <CyanButton
-                                        isLink
-                                        href={route('promotion.mercadopago.createPreference', product.id)}
-                                    >
-                                        Promocionar
-                                    </CyanButton>
-                                </>
-                            }
+                            )}
+                            <div className="flex gap-3">
+                                {product.can.promote && (
+                                    <>
+                                        <PromotionModal
+                                            open={openPromotionModal}
+                                            handleClose={
+                                                handleClosePromotionModal
+                                            }
+                                            productId={product.id}
+                                            preferenceId={preferenceId}
+                                        />
+                                        <CyanButton
+                                            isLink
+                                            href={route(
+                                                "promotion.mercadopago.createPreference",
+                                                product.id
+                                            )}
+                                        >
+                                            Promocionar
+                                        </CyanButton>
+                                    </>
+                                )}
+                                {product.can.delete && (
+                                    <>
+                                        <DangerButton
+                                            onClick={() =>
+                                                router.delete(
+                                                    route(
+                                                        "product.destroy",
+                                                        product.id
+                                                    )
+                                                )
+                                            }
+                                        >
+                                            Eliminar
+                                        </DangerButton>
+                                    </>
+                                )}
+
+                                {product.isCurrentlyPromoted && (
+                                    <StarIcon className="text-yellow-500" />
+                                )}
+                            </div>
                         </div>
 
                         <div className="md:flex mt-3">
@@ -123,8 +154,7 @@ export default function Show({
                                             />
                                         </>
                                     ) : (
-                                        <div
-                                            className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                        <div className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                                             <p>IMAGEN NO ENCONTRADA</p>
                                         </div>
                                     )}
@@ -138,7 +168,7 @@ export default function Show({
                                     {product.description}
                                 </p>
                                 <IconWithText
-                                    icon={<BusinessIcon/>}
+                                    icon={<BusinessIcon />}
                                     text={product.sucursal.name}
                                 />
                                 <p className="text-gray-600 dark:text-custom-beige-600">
@@ -162,14 +192,12 @@ export default function Show({
                         </div>
                     </div>
                     <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
-                        {product.can.createComment &&
+                        {product.can.createComment && (
                             <>
-                                <Create productId={product.id}/>
-                                <Divisor
-                                    className="my-4 "
-                                />
+                                <Create productId={product.id} />
+                                <Divisor className="my-4 " />
                             </>
-                        }
+                        )}
                         <CommentsList
                             comments={comments}
                             productUserId={product.user.id}
@@ -178,25 +206,27 @@ export default function Show({
                 </div>
                 <div
                     className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg h-fit
-                    ${(product.can.viewTrueque && trueque) || product.can.listSolicituds ? 'block' : 'hidden'}`}
+                    ${
+                        (product.can.viewTrueque && trueque) ||
+                        product.can.listSolicituds
+                            ? "block"
+                            : "hidden"
+                    }`}
                 >
-                    {product.can.viewTrueque && trueque &&
+                    {product.can.viewTrueque && trueque && (
                         <div className="max-w-lg">
-                            <Trueque
-                                trueque={trueque}
-                            />
+                            <Trueque trueque={trueque} />
                         </div>
-                    }
-                    {product.can.listSolicituds &&
+                    )}
+                    {product.can.listSolicituds && (
                         <SolicitudsList
                             isAuthor={product.user.id === auth.user.id}
                             solicituds={solicituds}
                             className={"w-80"}
                         />
-                    }
+                    )}
                 </div>
             </div>
         </AuthenticatedOrNormalLayout>
-    )
-        ;
+    );
 }

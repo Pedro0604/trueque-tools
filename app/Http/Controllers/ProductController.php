@@ -12,6 +12,8 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Sucursal;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -89,13 +91,13 @@ class ProductController extends Controller
     {
         $solicituds = $product->user->id === auth()->id() ?
             $product->solicituds()
-                ->whereNotIn('state', ['accepted', 'rejected'])
-                ->whereDoesntHave('trueque')
-                ->orderByDesc('created_at')
-                ->get()
+            ->whereNotIn('state', ['accepted', 'rejected'])
+            ->whereDoesntHave('trueque')
+            ->orderByDesc('created_at')
+            ->get()
             : [];
 
-        $trueque = $product->hasTrueque ? new TruequeResource($product->trueque): null;
+        $trueque = $product->hasTrueque ? new TruequeResource($product->trueque) : null;
 
         return inertia('Product/Show', [
             'product' => new ProductResource($product),
@@ -141,6 +143,40 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $response = Gate::inspect('delete', $product);
+
+        if ($response->denied()) {
+            return back()->with('error', [
+                'message' => $response->message(),
+                'key' => rand()
+            ]);
+        }
+
+        DB::transaction(
+            function () use ($product) {
+                $product->solicituds()->delete();
+
+                $product->offeredSolicituds()->delete();
+
+                $comments = $product->comments()->get();
+
+                foreach ($comments as $comment) {
+                    if ($comment->response_id !== null) {
+                        $comment->response()->delete();
+                    }
+                    $comment->delete();
+                }
+
+                $product->publishedFailedTrueques()->delete();
+                $product->offeredFailedTrueques()->delete();
+                $product->delete();
+            }
+        );
+
+        return to_route('product.myProducts')
+            ->with('success', [
+                'message' => 'Producto eliminado correctamente',
+                'key' => rand(),
+            ]);
     }
 }
