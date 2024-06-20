@@ -102,6 +102,22 @@ export default function Show({
                                         </CyanButton>
                                     </>
                                 )}
+                                {product.can.update && (
+                                    <>
+                                        <PrimaryButton
+                                            onClick={() =>
+                                                router.get(
+                                                    route(
+                                                        "product.edit",
+                                                        product.id
+                                                    )
+                                                )
+                                            }
+                                        >
+                                            Modificar
+                                        </PrimaryButton>
+                                    </>
+                                )}
                                 {product.can.delete && (
                                     <>
                                         <DangerButton

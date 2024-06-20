@@ -14,6 +14,7 @@ use App\Models\Sucursal;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -127,7 +128,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return inertia('Product/Edit', [
+            'product' => new ProductResource($product),
+        ]);
     }
 
     /**
@@ -135,7 +138,33 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $response = Gate::inspect('update', $product);
+
+        if ($response->denied()) {
+            return back()->with('error', [
+                'message' => $response->message(),
+                'key' => rand()
+            ]);
+        }
+
+        $data = $request->validated();
+
+        /** @var $image \Illuminate\Http\UploadedFile */
+        $image = $data['image'] ?? null;
+        if ($image) {
+            $data['image_path'] = asset($image->store('project/' . Str::random(), 'public'));
+        }
+        Storage::delete($product->image_path);
+
+        unset($data['image']); // Unset the image value
+
+        $product->update($data);
+
+        return to_route('product.show', $product)
+            ->with('success', [
+                'message' => 'Producto actualizado correctamente',
+                'key' => rand()
+            ]);
     }
 
     /**

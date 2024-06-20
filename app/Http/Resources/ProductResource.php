@@ -38,6 +38,7 @@ class ProductResource extends JsonResource
                 'listSolicituds' => Gate::allows('list', [Solicitud::class, $product]),
                 'viewTrueque' => $this->hasTrueque && Gate::allows('view', $this->trueque),
                 'promote' => Gate::allows('promote', $product),
+                'update' => Gate::allows('update', $product),
                 'delete' => Gate::allows('delete', $product),
             ],
         ];

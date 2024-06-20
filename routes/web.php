@@ -29,7 +29,7 @@ Route::middleware('auth:web')->group(function () {
     Route::post('/product', [ProductController::class, 'store'])->name('product.store')->middleware(HandlePrecognitiveRequests::class);
     Route::get('/product/my-products', [ProductController::class, 'myProducts'])->name('product.myProducts');
     Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
-    Route::patch('/product/{product}', [ProductController::class, 'update'])->name('product.update');
+    Route::patch('/product/{product}', [ProductController::class, 'update'])->name('product.update')->middleware(HandlePrecognitiveRequests::class);
     Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
 
     // Comment routes
