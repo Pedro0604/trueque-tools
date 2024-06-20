@@ -202,7 +202,7 @@ class ProductController extends Controller
             }
         );
 
-        return to_route('product.myProducts')
+        return to_route('product.index')
             ->with('success', [
                 'message' => 'Producto eliminado correctamente',
                 'key' => rand(),

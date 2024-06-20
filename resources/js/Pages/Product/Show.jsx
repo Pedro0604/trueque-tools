@@ -18,6 +18,8 @@ import IconWithText from "@/Components/IconWithText.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import PromotionModal from "@/Components/PromotionModal.jsx";
 import DangerButton from "@/Components/Buttons/DangerButton";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function Show({
     product,
@@ -114,7 +116,7 @@ export default function Show({
                                                 )
                                             }
                                         >
-                                            Modificar
+                                            <EditIcon />
                                         </PrimaryButton>
                                     </>
                                 )}
@@ -130,7 +132,7 @@ export default function Show({
                                                 )
                                             }
                                         >
-                                            Eliminar
+                                            <DeleteIcon/>
                                         </DangerButton>
                                     </>
                                 )}

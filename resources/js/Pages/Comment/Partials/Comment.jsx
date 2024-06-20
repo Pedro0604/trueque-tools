@@ -6,6 +6,8 @@ import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 import { Link, router } from "@inertiajs/react";
 import CyanButton from "@/Components/Buttons/CyanButton";
 import UpdateForm from "./UpdateForm";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function Comment({
     comment,
@@ -73,14 +75,18 @@ export default function Comment({
                     {comment.can.update && (
                         <div className={"mt-4"}>
                             <CyanButton onClick={handleUpdate}>
-                                {isUpdateFormOpen ? <CloseIcon /> : "Modificar"}
+                                {isUpdateFormOpen ? (
+                                    <CloseIcon />
+                                ) : (
+                                    <EditIcon />
+                                )}
                             </CyanButton>
                         </div>
                     )}
                     {comment.can.delete && (
                         <div className={"mt-4"}>
                             <DangerButton onClick={handleDelete}>
-                                {"Eliminar"}
+                                <DeleteIcon />
                             </DangerButton>
                         </div>
                     )}
