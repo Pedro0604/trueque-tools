@@ -36,6 +36,7 @@ Route::as('admin.')->group(function () {
         Route::get('empleado', [EmpleadoController::class, 'index'])->name('empleado.index');
         Route::get('empleado/create', [EmpleadoController::class, 'create'])->name('empleado.create');
         Route::post('empleado', [EmpleadoController::class, 'store'])->name('empleado.store')->middleware(HandlePrecognitiveRequests::class);
+        Route::delete('empleado/{empleado}', [EmpleadoController::class, 'destroy'])->name('empleado.destroy');
 
         // Rutas sucursales
         Route::get('sucursal/create', [SucursalController::class, 'create'])->name('sucursal.create');
