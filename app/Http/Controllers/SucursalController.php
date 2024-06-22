@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Http\Resources\SucursalResource;
+use App\Models\Comment;
 use App\Models\Sucursal;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use App\Http\Requests\StoreSucursalRequest;
 use App\Http\Requests\UpdateSucursalRequest;
@@ -59,15 +62,34 @@ class SucursalController extends Controller
      */
     public function edit(Sucursal $sucursal)
     {
-        //
+        return inertia('Sucursal/Edit', [
+            'sucursal' => new SucursalResource($sucursal),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSucursalRequest $request, Sucursal $sucursal)
+    public function update(UpdateSucursalRequest $request, Sucursal $sucursal): RedirectResponse
     {
-        //
+        $response = Gate::inspect('update', [Sucursal::class, $sucursal]);
+
+        if ($response->denied()) {
+            return back()->with('error', [
+                'message' => $response->message(),
+                'key' => rand()
+            ]);
+        }
+
+        $data = $request->validated();
+
+        $sucursal->update($data);
+
+        return to_route('sucursal.index')
+            ->with('success', [
+                'message' => 'Sucursal modificada correctamente',
+                'key' => rand()
+        ]);
     }
 
     /**

@@ -72,6 +72,13 @@ Route::middleware('auth:web,admin,empleado')->group(function () {
     Route::get('/sucursal', [SucursalController::class, 'index'])->name('sucursal.index');
 });
 
+// Rutas accesibles por administrador
+Route::middleware('auth:admin')->group(function () {
+    // Sucursal routes
+    Route::get('/sucursal/{sucursal}/edit', [SucursalController::class, 'edit'])->name('sucursal.edit');
+    Route::patch('/sucursal/{sucursal}', [SucursalController::class, 'update'])->name('sucursal.update')->middleware(HandlePrecognitiveRequests::class);
+});
+
 // Rutas accesibles por administrador y empleado
 Route::middleware('auth:admin,empleado')->group(function () {
     // Trueque routes
