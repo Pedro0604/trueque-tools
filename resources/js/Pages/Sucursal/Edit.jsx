@@ -1,39 +1,72 @@
 import InputLabel from "@/Components/Inputs/InputLabel.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
 import InputError from "@/Components/Inputs/InputError.jsx";
-import { useForm, usePage } from '@inertiajs/react';
-import { Transition } from '@headlessui/react';
-import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
+import {Head, router} from '@inertiajs/react';
+import AdminLayout from "@/Layouts/AdminLayout.jsx";
+import {useEffect, useState} from "react";
+import {useForm} from "laravel-precognition-react";
+import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 
-export default function Edit({className = '', sucursal, onSuccess }) {
+export default function Edit({sucursal}) {
+    const [disableSubmit, setDisableSubmit] = useState(false);
 
-    const { data, setData, patch, errors, processing, recentlySuccessful, reset } = useForm({
+    const {
+        data,
+        errors,
+        setValidationTimeout,
+        validate,
+        setData,
+        processing,
+        touch,
+        invalid,
+        valid,
+        hasErrors,
+        submit,
+    } = useForm("patch", route("admin.sucursal.update", sucursal.id), {
         name: sucursal.name,
         code: sucursal.code,
         address: sucursal.address,
     });
+    setValidationTimeout(500);
 
-    const submit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        patch(route('sucursal.update', sucursal.id), {
-            onSuccess: () => {
-                onSuccess();
-                reset();
-            },
-            preserveScroll: true,
-        });
+        if (hasErrors) {
+            submit().catch();
+        } else {
+            router.patch(route("admin.sucursal.update", sucursal.id), data, {
+                onBefore: () => setDisableSubmit(true),
+                onFinish: () => setDisableSubmit(false),
+            });
+        }
     };
 
-    return (
-        <section className={className}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100 text-center">Información de la sucursal</h2>
-            </header>
+    useEffect(() => {
+        touch("name");
+        touch("code");
+        touch("address");
+        validate();
+    }, []);
 
-            <form onSubmit={submit} className="mt-6 space-y-6">
-                <div>
-                    <div className="mt-4">
+    return (
+        <AdminLayout
+            header={
+                <div className="flex gap-3 justify-between items-center">
+                    <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                        {`Modificar la sucursal '${sucursal.name}'`}
+                    </h2>
+                </div>
+            }
+        >
+            <Head title={`Modificar la sucursal '${sucursal.name}'`}/>
+            <div className="flex justify-center">
+                <form
+                    className="p-4 sm:p-8 bg-white dark:bg-gray-800 border border-gray-700 rounded-md sm:rounded-lg md:min-w-[550px] md:max-w-[700px]"
+                    onSubmit={handleSubmit}
+                    method="post"
+                    autoComplete="off"
+                >
+                    <div>
                         <InputLabel htmlFor="sucursal_name" value="Nombre *"/>
                         <TextInput
                             id="sucursal_name"
@@ -102,28 +135,17 @@ export default function Edit({className = '', sucursal, onSuccess }) {
                         />
                         <InputError message={errors.address} className="mt-2"/>
                     </div>
-
-                    <div className="flex items-center gap-4">
-                        <PrimaryButton
-                            disabled={processing}
+                    <div className="mt-4">
+                        <CyanButton
                             className="w-full justify-center"
+                            disabled={disableSubmit || processing}
                         >
-                            Guardar
-                        </PrimaryButton>
-
-                        <Transition
-                            show={recentlySuccessful}
-                            enter="transition ease-in-out"
-                            enterFrom="opacity-0"
-                            leave="transition ease-in-out"
-                            leaveTo="opacity-0"
-                        >
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Guardado.</p>
-                        </Transition>
+                            {disableSubmit || processing ? "Modificando Sucursal..." : "Modificar Sucursal"}
+                        </CyanButton>
                     </div>
-                </div>
-            </form>
-        </section>
+                </form>
+            </div>
+        </AdminLayout>
     )
 
 }

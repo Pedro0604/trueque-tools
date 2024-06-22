@@ -3,6 +3,7 @@ import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import IconWithText from "@/Components/IconWithText.jsx";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {router, usePage} from "@inertiajs/react";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 
 export default function Sucursal({
                                      sucursal
@@ -35,11 +36,11 @@ export default function Sucursal({
                 Ver productos
             </CyanButton>
             {auth.admin &&
-                <CyanButton
+                <PrimaryButton
                     onClick={() =>
                         router.get(
                             route(
-                                "sucursal.edit",
+                                "admin.sucursal.edit",
                                 sucursal.id
                             )
                         )
@@ -47,7 +48,7 @@ export default function Sucursal({
                     className="w-full justify-center mt-4"
                 >
                     Modificar
-                </CyanButton>
+                </PrimaryButton>
             }
         </div>
     )

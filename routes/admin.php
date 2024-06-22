@@ -41,5 +41,7 @@ Route::as('admin.')->group(function () {
         // Rutas sucursales
         Route::get('sucursal/create', [SucursalController::class, 'create'])->name('sucursal.create');
         Route::post('sucursal', [SucursalController::class, 'store'])->name('sucursal.store')->middleware(HandlePrecognitiveRequests::class);
+        Route::get('/sucursal/{sucursal}/edit', [SucursalController::class, 'edit'])->name('sucursal.edit');
+        Route::patch('/sucursal/{sucursal}', [SucursalController::class, 'update'])->name('sucursal.update')->middleware(HandlePrecognitiveRequests::class);
     });
 });

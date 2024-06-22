@@ -60,7 +60,7 @@ class SucursalController extends Controller
     /**
      * Index the form for editing the specified resource.
      */
-    public function edit(Sucursal $sucursal)
+    public function edit(Sucursal $sucursal): Response|ResponseFactory
     {
         return inertia('Sucursal/Edit', [
             'sucursal' => new SucursalResource($sucursal),
@@ -72,15 +72,6 @@ class SucursalController extends Controller
      */
     public function update(UpdateSucursalRequest $request, Sucursal $sucursal): RedirectResponse
     {
-        $response = Gate::inspect('update', [Sucursal::class, $sucursal]);
-
-        if ($response->denied()) {
-            return back()->with('error', [
-                'message' => $response->message(),
-                'key' => rand()
-            ]);
-        }
-
         $data = $request->validated();
 
         $sucursal->update($data);

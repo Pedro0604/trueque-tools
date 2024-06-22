@@ -4,12 +4,9 @@ import InputError from "@/Components/Inputs/InputError.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
 import CyanButton from "@/Components/Buttons/CyanButton.jsx";
 import {router} from "@inertiajs/react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
-export default function CreateForm({
-                                       onSuccess = () => {
-                                       },
-                                   }) {
+export default function CreateForm() {
     const [disableSubmit, setDisableSubmit] = useState(false);
 
     const {
@@ -38,7 +35,6 @@ export default function CreateForm({
         } else {
             router.post(route("admin.sucursal.store"), data, {
                 onBefore: () => setDisableSubmit(true),
-                onSuccess: onSuccess,
                 onFinish: () => setDisableSubmit(false),
             });
         }
@@ -52,7 +48,7 @@ export default function CreateForm({
                 method="post"
                 autoComplete="off"
             >
-                <div className="mt-4">
+                <div>
                     <InputLabel htmlFor="sucursal_name" value="Nombre *"/>
                     <TextInput
                         id="sucursal_name"
