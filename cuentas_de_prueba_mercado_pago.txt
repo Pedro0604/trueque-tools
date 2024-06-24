@@ -1,9 +1,0 @@
-Vendedor:
-    Usuario:TESTUSER1384527183
-    Contraseña:X2ON03Zj02
-    Access_token:APP_USR-1741673146651981-061717-32a50e7c3395aec4e1e231d414b2e7fb-1863407036
-    Webhook_secret:ceae29e0f2b041e4f12833479c28a3c93d0344bdf794ad3619a0f11f88e6d2b1
-
-Comprador:
-    Usuario:TESTUSER617629558
-    Contraseña:wcN0uHDe6d
