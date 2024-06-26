@@ -41,7 +41,7 @@ export default function Index({products, productCreatedId = null}) {
                             }}
                             defaultValue={queryParams.sucursal}
                         >
-                            <option value="">Sucursal</option>
+                            <option value="">Todas - Sucursales</option>
                             <SucursalOptions/>
                         </SelectInput>
                         <SelectInput
@@ -52,7 +52,7 @@ export default function Index({products, productCreatedId = null}) {
                             }}
                             defaultValue={queryParams.category}
                         >
-                            <option value="">Categoría</option>
+                            <option value="">Todas - Categorías</option>
                             <CategoryOptions/>
                         </SelectInput>
                         {auth.user &&
