@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 use App\Http\Resources\SucursalResource;
 use App\Models\Comment;
+use App\Models\Product;
 use App\Models\Sucursal;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use App\Http\Requests\StoreSucursalRequest;
@@ -86,8 +89,44 @@ class SucursalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sucursal $sucursal)
+    public function destroy(Sucursal $sucursal, Sucursal $transferSucursal): RedirectResponse
     {
-        //
+        $response = Gate::inspect('delete', $sucursal);
+
+        if ($response->denied()) {
+            return back()->with('error', [
+                'message' => $response->message(),
+                'key' => rand()
+            ]);
+        }
+
+        DB::transaction(
+            function () use ($sucursal, $transferSucursal) {
+                //Transfiere clientes a 'sucursal de traspaso'
+                $clientes = User::all()
+                    ->where('sucursal_id', '$sucursal->id');
+
+                foreach ($clientes as $cliente) {
+                    $cliente->update(['sucursal_id', '$transferSucursal->id']);
+                }
+
+                //Transfiere productos de clientes a 'sucursal de traspaso'
+                $products = Product::all()
+                    ->where('sucursal_id', '$sucursal->id');
+
+                foreach ($products as $product) {
+                    $product->update(['sucursal_id', '$transferSucursal->id']);
+                }
+
+                //Elimina sucursal
+                $sucursal->delete();
+            }
+        );
+
+        return to_route('sucursal.index')
+            ->with('success', [
+                'message' => 'Sucursal eliminada correctamente',
+                'key' => rand(),
+            ]);
     }
 }

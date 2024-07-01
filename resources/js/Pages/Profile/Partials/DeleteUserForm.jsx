@@ -64,7 +64,7 @@ export default function DeleteUserForm({ className = '' }) {
 
                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                         Una vez que se elimine tu cuenta, toda tu información y datos se eliminarán permanentemente.
-                        Ingrese su contraseña para confirmar que deseas eliminar permanentemente ttu cuenta.
+                        Ingrese su contraseña para confirmar que deseas eliminar permanentemente tu cuenta.
                     </p>
 
                     <div className="mt-6">

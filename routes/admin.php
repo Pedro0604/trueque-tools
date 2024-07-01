@@ -43,5 +43,6 @@ Route::as('admin.')->group(function () {
         Route::post('sucursal', [SucursalController::class, 'store'])->name('sucursal.store')->middleware(HandlePrecognitiveRequests::class);
         Route::get('/sucursal/{sucursal}/edit', [SucursalController::class, 'edit'])->name('sucursal.edit');
         Route::patch('/sucursal/{sucursal}', [SucursalController::class, 'update'])->name('sucursal.update')->middleware(HandlePrecognitiveRequests::class);
+        Route::delete('/sucursal/{sucursal}', [SucursalController::class, 'destroy'])->name('sucursal.destroy');
     });
 });

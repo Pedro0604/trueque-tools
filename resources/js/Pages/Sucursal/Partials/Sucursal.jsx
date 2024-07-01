@@ -4,6 +4,9 @@ import IconWithText from "@/Components/IconWithText.jsx";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {router, usePage} from "@inertiajs/react";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
+import DeleteIcon from "@mui/icons-material/Delete.js";
+import DangerButton from "@/Components/Buttons/DangerButton.jsx";
+import DeleteSucursalForm from "@/Pages/Sucursal/Partials/DeleteSucursalForm.jsx";
 
 export default function Sucursal({
                                      sucursal
@@ -35,6 +38,7 @@ export default function Sucursal({
             >
                 Ver productos
             </CyanButton>
+
             {auth.admin &&
                 <PrimaryButton
                     onClick={() =>
@@ -49,6 +53,10 @@ export default function Sucursal({
                 >
                     Modificar
                 </PrimaryButton>
+            }
+
+            {auth.admin &&
+                <DeleteSucursalForm/>
             }
         </div>
     )
