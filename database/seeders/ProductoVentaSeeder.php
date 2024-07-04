@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ProductoVenta;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Venta;
 use Illuminate\Database\Seeder;
 
 class ProductoVentaSeeder extends Seeder
@@ -13,6 +13,6 @@ class ProductoVentaSeeder extends Seeder
      */
     public function run(): void
     {
-        ProductoVenta::factory()->count(20)->create();
+        ProductoVenta::factory()->count(Venta::count())->create();
     }
 }
