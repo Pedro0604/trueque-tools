@@ -1,5 +1,4 @@
 import {useRef, useState} from "react";
-import {useForm} from "@inertiajs/react";
 import DangerButton from "@/Components/Buttons/DangerButton.jsx";
 import Modal from "@/Components/Modal.jsx";
 import InputLabel from "@/Components/Inputs/InputLabel.jsx";
@@ -8,23 +7,18 @@ import InputError from "@/Components/Inputs/InputError.jsx";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.jsx";
 import SelectInput from "@/Components/Inputs/SelectInput.jsx";
 import SucursalOptions from "@/Pages/Sucursal/Partials/SucursalOptions.jsx";
+import {useForm} from "@inertiajs/react";
 
-export default function DeleteSucursalForm({ className = '',
-                                               selectedSucursal = null,
-                                           }) {
+export default function DeleteSucursalForm({ className = '', sucursal}) {
     const [confirmingSucursalDeletion, setConfirmingSucursalDeletion] = useState(false);
     const passwordInput = useRef();
 
     const {
         data,
         setData,
-        delete: destroy,
         processing,
+        delete: destroy,
         reset,
-        validate,
-        touch,
-        invalid,
-        valid,
         errors,
     } = useForm({
         password: '',
@@ -37,7 +31,7 @@ export default function DeleteSucursalForm({ className = '',
     const deleteSucursal = (e) => {
         e.preventDefault();
 
-        destroy(route('sucursal.destroy', sucursal.id), {
+        destroy(route('admin.sucursal.destroy', sucursal.id), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordInput.current.focus(),
@@ -47,7 +41,6 @@ export default function DeleteSucursalForm({ className = '',
 
     const closeModal = () => {
         setConfirmingSucursalDeletion(false);
-
         reset();
     };
 
@@ -64,13 +57,13 @@ export default function DeleteSucursalForm({ className = '',
             <Modal show={confirmingSucursalDeletion} onClose={closeModal}>
                 <form onSubmit={deleteSucursal} className="p-6">
                     <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        ¿Estás seguro/a de que querés eliminar esta sucursal?
+                        ¿Estás seguro/a de que querés eliminar la sucursal {sucursal.name}?
                     </h2>
 
                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                         Una vez que se elimine la sucursal, toda su información y datos se eliminarán permanentemente.
-                        Antes de eliminar tu cuenta, selecciona la 'sucursal de traspaso', que sera quien reciba todos los clientes,
-                        productos, solicitudes y trueques que posee actualmente esta sucursal.
+                        Antes de eliminar la sucursal, seleccione la 'sucursal de traspaso', que será la sucursal que reciba todos los clientes,
+                        productos, solicitudes y trueques (no exitosos) que posee actualmente esta sucursal.
                     </p>
 
                     <div className="mt-6">
@@ -85,6 +78,7 @@ export default function DeleteSucursalForm({ className = '',
                             onChange={(e) => setData('password', e.target.value)}
                             className="mt-1 block w-3/4"
                             isFocused
+                            invalid={errors.password}
                             placeholder="Contraseña"
                         />
 
@@ -101,21 +95,9 @@ export default function DeleteSucursalForm({ className = '',
                             name="sucursal_id"
                             onChange={(e) => {
                                 setData("sucursal_id", e.target.value);
-                                validate("sucursal_id");
-                            }}
-                            onBlur={() => {
-                                touch("sucursal_id");
-                                validate("sucursal_id");
                             }}
                             className="mt-1 block w-full"
-                            invalid={invalid("sucursal_id")}
-                            valid={selectedSucursal ?? valid("sucursal_id")}
-                            disabled={selectedSucursal}
-                            value={
-                                selectedSucursal
-                                    ? selectedSucursal.id
-                                    : data.sucursal_id
-                            }
+                            invalid={errors.sucursal_id}
                         >
                             <option value="">Elija una sucursal de transferencia</option>
                             <SucursalOptions/>
@@ -124,7 +106,12 @@ export default function DeleteSucursalForm({ className = '',
                     </div>
 
                     <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>Cancelar</SecondaryButton>
+                        <SecondaryButton
+                            onClick={closeModal}
+                            type="button"
+                        >
+                            Cancelar
+                        </SecondaryButton>
 
                         <DangerButton className="ms-3" disabled={processing}>
                             Eliminar sucursal
