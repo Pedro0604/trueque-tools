@@ -22,7 +22,7 @@ class TruequeFactory extends Factory
 
         return [
             'ended_at' => $hasEnded ? fake()->dateTime() : null,
-            'is_failed' => fake()->boolean(80),
+            'is_failed' => fake()->boolean(30),
             'solicitud_id' => Solicitud::factory(),
             'code' => fake()->unique()->text(10),
         ];
