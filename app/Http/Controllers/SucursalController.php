@@ -9,6 +9,7 @@ use App\Models\Sucursal;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use App\Http\Requests\StoreSucursalRequest;
 use App\Http\Requests\UpdateSucursalRequest;
@@ -91,6 +92,8 @@ class SucursalController extends Controller
      */
     public function destroy(DeleteSucursalRequest $request, Sucursal $sucursal): RedirectResponse
     {
+        Gate::authorize('delete', $sucursal);
+
         $data = $request->validated();
         $request->authenticate();
 

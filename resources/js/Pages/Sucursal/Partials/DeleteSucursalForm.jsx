@@ -9,7 +9,7 @@ import SelectInput from "@/Components/Inputs/SelectInput.jsx";
 import SucursalOptions from "@/Pages/Sucursal/Partials/SucursalOptions.jsx";
 import {useForm} from "@inertiajs/react";
 
-export default function DeleteSucursalForm({ className = '', sucursal}) {
+export default function DeleteSucursalForm({className = '', sucursal}) {
     const [confirmingSucursalDeletion, setConfirmingSucursalDeletion] = useState(false);
     const passwordInput = useRef();
 
@@ -59,72 +59,90 @@ export default function DeleteSucursalForm({ className = '', sucursal}) {
             </DangerButton>
 
             <Modal show={confirmingSucursalDeletion} onClose={closeModal}>
-                <form onSubmit={deleteSucursal} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        ¿Estás seguro/a de que querés eliminar la sucursal {sucursal.name}?
-                    </h2>
+                {sucursal.can.delete
+                    ?
+                    <form onSubmit={deleteSucursal} className="p-6">
+                        <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                            ¿Estás seguro/a de que querés eliminar la sucursal {sucursal.name}?
+                        </h2>
 
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Una vez que se elimine la sucursal, toda su información y datos se eliminarán permanentemente.
-                        Antes de eliminar la sucursal, seleccione la 'sucursal de traspaso', que será la sucursal que reciba todos los clientes,
-                        productos, solicitudes y trueques (no exitosos) que posee actualmente esta sucursal.
-                    </p>
+                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                            Una vez que se elimine la sucursal, toda su información y datos se eliminarán
+                            permanentemente.
+                            Antes de eliminar la sucursal, seleccione la 'sucursal de traspaso', que será la sucursal
+                            que reciba todos los clientes,
+                            productos, solicitudes y trueques (no exitosos) que posee actualmente esta sucursal.
+                        </p>
 
-                    <div className="mt-6">
-                        <InputLabel htmlFor="password" value="Contraseña" className="sr-only" />
+                        <div className="mt-6">
+                            <InputLabel htmlFor="password" value="Contraseña" className="sr-only"/>
 
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            className="mt-1 block w-full"
-                            isFocused
-                            invalid={errors.password}
-                            placeholder="Contraseña"
-                        />
-
-                        <InputError message={errors.password} className="mt-2" />
-                    </div>
-
-                    <div className="mt-6">
-                        <InputLabel
-                            htmlFor="transfer_sucursal_id"
-                            value="Sucursal donde se transferira informacion *"
-                        />
-                        <SelectInput
-                            id="transfer_sucursal_id"
-                            name="transfer_sucursal_id"
-                            onChange={(e) => {
-                                setData("transfer_sucursal_id", e.target.value);
-                            }}
-                            className="mt-1 block w-full"
-                            invalid={errors.transfer_sucursal_id}
-                        >
-                            <option value="">Elija una sucursal de transferencia</option>
-                            <SucursalOptions
-                                except={sucursal.id}
+                            <TextInput
+                                id="password"
+                                type="password"
+                                name="password"
+                                ref={passwordInput}
+                                value={data.password}
+                                onChange={(e) => setData('password', e.target.value)}
+                                className="mt-1 block w-full"
+                                isFocused
+                                invalid={errors.password}
+                                placeholder="Contraseña"
                             />
-                        </SelectInput>
-                        <InputError message={errors.transfer_sucursal_id} className="mt-2"/>
-                    </div>
 
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton
-                            onClick={closeModal}
-                            type="button"
-                        >
-                            Cancelar
-                        </SecondaryButton>
+                            <InputError message={errors.password} className="mt-2"/>
+                        </div>
 
-                        <DangerButton className="ms-3" disabled={processing}>
-                            Eliminar sucursal
-                        </DangerButton>
+                        <div className="mt-6">
+                            <InputLabel
+                                htmlFor="transfer_sucursal_id"
+                                value="Sucursal donde se transferira informacion *"
+                            />
+                            <SelectInput
+                                id="transfer_sucursal_id"
+                                name="transfer_sucursal_id"
+                                onChange={(e) => {
+                                    setData("transfer_sucursal_id", e.target.value);
+                                }}
+                                className="mt-1 block w-full"
+                                invalid={errors.transfer_sucursal_id}
+                            >
+                                <option value="">Elija una sucursal de transferencia</option>
+                                <SucursalOptions
+                                    except={sucursal.id}
+                                />
+                            </SelectInput>
+                            <InputError message={errors.transfer_sucursal_id} className="mt-2"/>
+                        </div>
+
+                        <div className="mt-6 flex justify-end">
+                            <SecondaryButton
+                                onClick={closeModal}
+                                type="button"
+                            >
+                                Cancelar
+                            </SecondaryButton>
+
+                            <DangerButton className="ms-3" disabled={processing}>
+                                Eliminar sucursal
+                            </DangerButton>
+                        </div>
+                    </form>
+                    :
+                    <div
+                        className="px-6 py-4"
+                    >
+                        <h2 className="text-2xl font-medium text-gray-900 dark:text-gray-100">
+                            No podés eliminar la sucursal porque tiene empleados asignados
+                        </h2>
+
+                        <p className="mt-1 text-lg text-gray-600 dark:text-gray-400">
+                            Para poder eliminar la sucursal deberás reasignar los empleados a otra sucursal o eliminarlos.
+                        </p>
                     </div>
-                </form>
+                }
             </Modal>
         </section>
-    );
+    )
+        ;
 }

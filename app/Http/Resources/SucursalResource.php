@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Gate;
 
 class SucursalResource extends JsonResource
 {
@@ -20,6 +21,9 @@ class SucursalResource extends JsonResource
             'code' => $this->code,
             'name' => $this->name,
             'address' => $this->address,
+            'can' => [
+                'delete' => Gate::allows('delete', $this->resource),
+            ]
         ];
     }
 }
