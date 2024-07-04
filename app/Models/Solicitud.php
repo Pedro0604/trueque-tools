@@ -23,12 +23,12 @@ class Solicitud extends Model
 
     public function publishedProduct(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'published_product_id');
+        return $this->belongsTo(Product::class, 'published_product_id')->withTrashed();
     }
 
     public function offeredProduct(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'offered_product_id');
+        return $this->belongsTo(Product::class, 'offered_product_id')->withTrashed();
     }
 
     public function trueque(): HasOne

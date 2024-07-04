@@ -18,6 +18,8 @@ class CommentPolicy
             return Response::deny('El administrador no puede realizar comentarios');
         } else if ($user->isEmpleado()) {
             return Response::deny('Un empleado no puede realizar comentarios');
+        } else if ($product->trashed()) {
+            return Response::deny('No podés comentar un producto eliminado');
         }
 
         $productIsFromUser = $product->user_id === $user->id;

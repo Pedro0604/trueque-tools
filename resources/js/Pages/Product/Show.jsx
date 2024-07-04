@@ -1,11 +1,11 @@
-import { CATEGORIES_TEXT_MAP } from "@/Categories.jsx";
+import {CATEGORIES_TEXT_MAP} from "@/Categories.jsx";
 import StarIcon from "@mui/icons-material/Star";
 import BusinessIcon from "@mui/icons-material/Business";
 import AuthenticatedOrNormalLayout from "@/Layouts/AuthenticatedOrNormalLayout.jsx";
-import { Head, Link, router, usePage } from "@inertiajs/react";
+import {Head, Link, router, usePage} from "@inertiajs/react";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import Modal from "@mui/material/Modal";
-import { useState } from "react";
+import {useState} from "react";
 import CommentsList from "../Comment/CommentsList";
 import Create from "@/Pages/Comment/Create.jsx";
 import SolicitudsList from "@/Pages/Solicitud/SolicitudsList.jsx";
@@ -22,13 +22,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function Show({
-    product,
-    comments,
-    solicituds,
-    preferenceId = null,
-    trueque = null,
-}) {
-    const { auth } = usePage().props;
+                                 product,
+                                 comments,
+                                 solicituds,
+                                 preferenceId = null,
+                                 trueque = null,
+                             }) {
+    const {auth} = usePage().props;
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -48,10 +48,17 @@ export default function Show({
                 </div>
             }
         >
-            <Head title={`Producto "${product.name}"`} />
+            <Head title={`Producto "${product.name}"`}/>
 
             <div className="flex gap-4 justify-center">
                 <div className="max-w-sm sm:max-w-lg lg:max-w-4xl lg:min-w-[600px]">
+                    {product.was_deleted &&
+                        <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-lg mb-2">
+                            <h2 className="text-3xl font-bold text-center uppercase text-red-600 dark:text-red-600">
+                                El producto está eliminado
+                            </h2>
+                        </div>
+                    }
                     <div
                         className={`mb-1 text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-t-lg rounded-b-sm`}
                     >
@@ -62,12 +69,12 @@ export default function Show({
                                     className="hover:underline"
                                 >
                                     <IconWithText
-                                        icon={<PersonIcon />}
+                                        icon={<PersonIcon/>}
                                         text={product.user.name}
                                     />
                                 </Link>
                                 <IconWithText
-                                    icon={<SpeedIcon />}
+                                    icon={<SpeedIcon/>}
                                     text={product.user.reputation}
                                 />
                             </div>
@@ -116,7 +123,7 @@ export default function Show({
                                                 )
                                             }
                                         >
-                                            <EditIcon />
+                                            <EditIcon/>
                                         </PrimaryButton>
                                     </>
                                 )}
@@ -138,7 +145,7 @@ export default function Show({
                                 )}
 
                                 {product.isCurrentlyPromoted && (
-                                    <StarIcon className="text-yellow-500" />
+                                    <StarIcon className="text-yellow-500"/>
                                 )}
                             </div>
                         </div>
@@ -172,7 +179,8 @@ export default function Show({
                                             />
                                         </>
                                     ) : (
-                                        <div className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                        <div
+                                            className="flex flex-col text-center justify-center w-full aspect-video md:aspect-square rounded-md bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                                             <p>IMAGEN NO ENCONTRADA</p>
                                         </div>
                                     )}
@@ -186,7 +194,7 @@ export default function Show({
                                     {product.description}
                                 </p>
                                 <IconWithText
-                                    icon={<BusinessIcon />}
+                                    icon={<BusinessIcon/>}
                                     text={product.sucursal.name}
                                 />
                                 <p className="text-gray-600 dark:text-custom-beige-600">
@@ -209,18 +217,20 @@ export default function Show({
                             </div>
                         </div>
                     </div>
-                    <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
-                        {product.can.createComment && (
-                            <>
-                                <Create productId={product.id} />
-                                <Divisor className="my-4 " />
-                            </>
-                        )}
-                        <CommentsList
-                            comments={comments}
-                            productUserId={product.user.id}
-                        />
-                    </div>
+                    {!product.was_deleted &&
+                        <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-b-lg rounded-t-sm">
+                            {product.can.createComment && (
+                                <>
+                                    <Create productId={product.id}/>
+                                    <Divisor className="my-4 "/>
+                                </>
+                            )}
+                            <CommentsList
+                                comments={comments}
+                                productUserId={product.user.id}
+                            />
+                        </div>
+                    }
                 </div>
                 <div
                     className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg h-fit
@@ -233,7 +243,7 @@ export default function Show({
                 >
                     {product.can.viewTrueque && trueque && (
                         <div className="max-w-lg">
-                            <Trueque trueque={trueque} />
+                            <Trueque trueque={trueque}/>
                         </div>
                     )}
                     {product.can.listSolicituds && (

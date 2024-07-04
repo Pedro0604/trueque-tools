@@ -31,6 +31,9 @@ class SolicitudPolicy
         if($user->isEmpleado() || $user->isAdmin()){
             return true;
         }
+        if($product->trashed()){
+            return false;
+        }
 
         $productIsFromUser = $product->user_id === $user->id;
 //        $offeredProductIsFromUser = $product->offeredSolicituds->contains('offered_product_id', $product->id);
@@ -49,6 +52,9 @@ class SolicitudPolicy
         }
         else if($user->isEmpleado()){
             return Response::deny('Un empleado no puede realizar solicitudes de trueque');
+        }
+        else if($product->trashed()){
+            return Response::deny('No podés solicitar un trueque de un producto eliminado');
         }
 
         $productIsFromUser = $user->id === $product->user_id;
@@ -73,6 +79,9 @@ class SolicitudPolicy
         }
         else if($user->isEmpleado()){
             return Response::deny('Un empleado no puede aceptar solicitudes de trueque');
+        }
+        else if($product->trashed()){
+            return Response::deny('No podés aceptar un trueque de un producto eliminado');
         }
 
         $productIsNotFromUser = $user->id !== $product->user_id;
@@ -109,6 +118,9 @@ class SolicitudPolicy
         }
         else if($user->isEmpleado()){
             return Response::deny('Un empleado no puede rechazar solicitudes de trueque');
+        }
+        else if($product->trashed()){
+            return Response::deny('No podés rechazar un trueque de un producto eliminado');
         }
 
         $productIsNotFromUser = $user->id !== $product->user_id;

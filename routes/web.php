@@ -58,7 +58,7 @@ Route::middleware('auth:web')->group(function () {
 });
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
-Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show')->withTrashed();
 
 // Rutas accesibles por todos los usuarios
 Route::middleware('auth:web,admin,empleado')->group(function () {

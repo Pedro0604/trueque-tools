@@ -14,6 +14,9 @@ class ProductPolicy
         if ($user->isAdmin() || $user->isEmpleado()) {
             return false;
         }
+        else if ($product->trashed()){
+            return false;
+        }
 
         $productIsFromUser = $product->user_id === $user->id;
         $productIsCurrentlyPromoted = $product->promoted_at && (new Carbon($product->promoted_at))->gt(Carbon::now()->subWeek());
@@ -31,6 +34,9 @@ class ProductPolicy
             return Response::deny('El administrador no puede modificar productos');
         } else if ($user->isEmpleado()) {
             return Response::deny('Un empleado no puede modificar productos');
+        }
+        else if ($product->trashed()){
+            return Response::deny('No se puede modificar un producto eliminado');
         }
 
         $productIsNotFromUser = $product->user_id !== $user->id;
@@ -60,16 +66,19 @@ class ProductPolicy
         } else if ($user->isEmpleado()) {
             return Response::deny('Un empleado no puede eliminar productos');
         }
+        else if ($product->trashed()){
+            return Response::deny('No se puede eliminar un producto eliminado');
+        }
 
         $productIsNotFromUser = $product->user_id !== $user->id;
-        $productHasATrueque = $product->hasTrueque || $product->publishedFailedTrueques()->count() > 0 || $product->offeredFailedTrueques()->count() > 0;
+        $productHasATrueque = $product->hasTrueque;
 
 
         if ($productIsNotFromUser) {
             return Response::deny('No podés eliminar un producto que no es tuyo');
         }
         if ($productHasATrueque) {
-            return Response::deny('No podés eliminar un producto con un trueque (pendiente, exitoso o fallido) asociado');
+            return Response::deny('No podés eliminar un producto con un trueque (pendiente o exitoso) asociado');
         }
         return Response::allow();
     }

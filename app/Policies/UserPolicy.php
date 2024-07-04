@@ -13,19 +13,13 @@ class UserPolicy
      */
     public function delete(User $user): Response
     {
-        $hasComments = $user->comments()->count() > 0;
-        $hasProducts = $user->products()->count() > 0;
-        $hasVentas = $user->ventas()->count() > 0;
+        $hasProductsWithTrueque = $user->products()
+            ->whereHas('publishedPendingTrueque')
+            ->orWhereHas('offeredPendingTrueque')
+            ->exists();
 
-
-        if($hasComments){
-            return Response::deny('No podés eliminar tu cuenta porque tenés comentarios asociados a la misma');
-        }
-        if($hasProducts){
-            return Response::deny('No podés eliminar tu cuenta porque tenés productos asociados a la misma');
-        }
-        if($hasVentas){
-            return Response::deny('No podés eliminar tu cuenta porque tenés ventas asociadas a la misma');
+        if($hasProductsWithTrueque){
+            return Response::deny('No podés eliminar tu cuenta porque tenés trueques pendientes asociados a la misma. Cancelalos antes de proceder con la eliminación');
         }
         return Response::allow();
     }

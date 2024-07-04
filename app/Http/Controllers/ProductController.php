@@ -183,9 +183,9 @@ class ProductController extends Controller
 
         DB::transaction(
             function () use ($product) {
-                $product->solicituds()->delete();
+                $product->solicituds()->where('state', '<>', 'accepted')->update(['state' => 'rejected']);
 
-                $product->offeredSolicituds()->delete();
+                $product->offeredSolicituds()->where('state', '<>', 'accepted')->update(['state' => 'rejected']);
 
                 $comments = $product->comments()->get();
 
@@ -196,8 +196,6 @@ class ProductController extends Controller
                     $comment->delete();
                 }
 
-                $product->publishedFailedTrueques()->delete();
-                $product->offeredFailedTrueques()->delete();
                 $product->delete();
             }
         );

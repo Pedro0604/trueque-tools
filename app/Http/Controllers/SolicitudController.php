@@ -181,9 +181,10 @@ class SolicitudController extends Controller
      */
     public function mySolicitudsReceived(): Response|ResponseFactory
     {
-        $solicituds = Solicitud::whereHas('publishedProduct', function ($query) {
-            $query->where('user_id', auth()->id());
-        })
+        $solicituds = Solicitud::withTrashed()
+            ->whereHas('publishedProduct', function ($query) {
+                $query->where('user_id', auth()->id());
+            })
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -198,7 +199,8 @@ class SolicitudController extends Controller
      */
     public function mySolicitudsSent(): Response|ResponseFactory
     {
-        $solicituds = Solicitud::whereHas('offeredProduct', function ($query) {
+        $solicituds = Solicitud::withTrashed()
+            ->whereHas('offeredProduct', function ($query) {
             $query->where('user_id', auth()->id());
         })
             ->orderBy('created_at', 'desc')
