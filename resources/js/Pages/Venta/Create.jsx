@@ -10,16 +10,13 @@ import CloseIcon from "@mui/icons-material/Close";
 
 export default function Create({trueque}) {
     const {data, setData, errors, post, processing} = useForm({
-        publishedUserProducts: [
-            {bar_code: '', sell_price: ''}
-        ],
-        offeredUserProducts: [
-            {bar_code: '', sell_price: ''}
+        products: [
+            {name: '', sell_price: ''}
         ]
     });
 
     const addProduct = (name, products) => {
-        setData(name, [...products, {bar_code: '', sell_price: ''}]);
+        setData(name, [...products, {name: '', sell_price: ''}]);
     };
 
     const removeProduct = (index, name, products) => {
@@ -69,13 +66,13 @@ export default function Create({trueque}) {
                             <div
                                 className="w-full flex flex-col gap-4"
                             >
-                                {data.publishedUserProducts.map((product, index) => (
+                                {data.products.map((product, index) => (
                                     <div
                                         key={index}
                                         className="flex flex-col gap-2 border rounded-md px-6 py-5 relative"
                                     >
                                         <button
-                                            onClick={() => removeProduct(index, 'publishedUserProducts', data.publishedUserProducts)}
+                                            onClick={() => removeProduct(index, 'products', data.products)}
                                             type="button"
                                             className="text-gray-800 dark:text-gray-200 hover:rounded-full hover:bg-gray-600 p-2 transition-all
                                             absolute top-2 right-2"
@@ -83,17 +80,17 @@ export default function Create({trueque}) {
                                             <CloseIcon/>
                                         </button>
                                         <div className="mt-4">
-                                            <InputLabel htmlFor={`bar_code_${index}`} value="Código de barras"/>
+                                            <InputLabel htmlFor={`name_${index}`} value="Nombre del producto"/>
                                             <TextInput
-                                                placeholder="Codigo de barras"
+                                                placeholder="Nombre del producto"
                                                 type="text"
-                                                name={`bar_code_${index}`}
-                                                value={product.bar_code}
+                                                name={`name_${index}`}
+                                                value={product.name}
                                                 className="mt-1 block w-full"
-                                                invalid={errors[`publishedUserProducts.${index}.bar_code`]}
-                                                onChange={e => updateProduct(index, 'bar_code', e.target.value, 'publishedUserProducts', data.publishedUserProducts)}
+                                                invalid={errors[`products.${index}.name`]}
+                                                onChange={e => updateProduct(index, 'name', e.target.value, 'products', data.products)}
                                             />
-                                            <InputError message={errors[`publishedUserProducts.${index}.bar_code`]}
+                                            <InputError message={errors[`products.${index}.name`]}
                                                         className="mt-2"/>
                                         </div>
                                         <div>
@@ -104,71 +101,18 @@ export default function Create({trueque}) {
                                                 name={`sell_price_${index}`}
                                                 value={product.sell_price}
                                                 className="mt-1 block w-full"
-                                                invalid={errors[`publishedUserProducts.${index}.sell_price`]}
-                                                onChange={e => updateProduct(index, 'sell_price', e.target.value, 'publishedUserProducts', data.publishedUserProducts)}
+                                                invalid={errors[`products.${index}.sell_price`]}
+                                                onChange={e => updateProduct(index, 'sell_price', e.target.value, 'products', data.products)}
                                             />
                                             <InputError
-                                                message={errors[`publishedUserProducts.${index}.sell_price`]}
+                                                message={errors[`products.${index}.sell_price`]}
                                                 className="mt-2"/>
                                         </div>
                                     </div>
                                 ))}
                                 <div
                                     className="text-center py-4 border rounded-md hover:bg-gray-700 cursor-pointer"
-                                    onClick={() => addProduct('publishedUserProducts', data.publishedUserProducts)}
-                                >
-                                    <AddIcon/>
-                                </div>
-                            </div>
-                            <div
-                                className="w-full flex flex-col gap-4"
-                            >
-                                {data.offeredUserProducts.map((product, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex flex-col gap-2 border rounded-md px-6 py-5 relative"
-                                    >
-                                        <button
-                                            onClick={() => removeProduct(index, 'offeredUserProducts', data.offeredUserProducts)}
-                                            type="button"
-                                            className="text-gray-800 dark:text-gray-200 hover:rounded-full hover:bg-gray-600 p-2 transition-all
-                                            absolute top-2 right-2"
-                                        >
-                                            <CloseIcon/>
-                                        </button>
-                                        <div className="mt-4">
-                                            <InputLabel htmlFor={`bar_code_${index}`} value="Código de barras"/>
-                                            <TextInput
-                                                placeholder="Codigo de barras"
-                                                type="text"
-                                                name={`bar_code_${index}`}
-                                                value={product.bar_code}
-                                                className="mt-1 block w-full"
-                                                invalid={errors[`offeredUserProducts.${index}.bar_code`]}
-                                                onChange={e => updateProduct(index, 'bar_code', e.target.value, 'offeredUserProducts', data.offeredUserProducts)}
-                                            />
-                                            <InputError message={errors[`offeredUserProducts.${index}.bar_code`]}
-                                                        className="mt-2"/>
-                                        </div>
-                                        <div>
-                                            <InputLabel htmlFor={`sell_price_${index}`} value="Precio de venta"/>
-                                            <TextInput
-                                                placeholder="Precio de venta"
-                                                type="text"
-                                                name={`sell_price_${index}`}
-                                                value={product.sell_price}
-                                                className="mt-1 block w-full"
-                                                invalid={errors[`offeredUserProducts.${index}.sell_price`]}
-                                                onChange={e => updateProduct(index, 'sell_price', e.target.value, 'offeredUserProducts', data.offeredUserProducts)}
-                                            />
-                                            <InputError message={errors[`offeredUserProducts.${index}.sell_price`]}
-                                                        className="mt-2"/>
-                                        </div>
-                                    </div>
-                                ))}
-                                <div
-                                    className="text-center py-4 border rounded-md hover:bg-gray-700 cursor-pointer"
-                                    onClick={() => addProduct('offeredUserProducts', data.offeredUserProducts)}
+                                    onClick={() => addProduct('products', data.products)}
                                 >
                                     <AddIcon/>
                                 </div>
@@ -176,7 +120,7 @@ export default function Create({trueque}) {
                         </div>
                         <div className="mt-12 ">
                             <InputError
-                                message={errors.publishedUserProducts}
+                                message={errors.products}
                                 className="w-full text-center !text-lg"/>
                             <PrimaryButton className="w-full justify-center h-10 mt-2" disabled={processing}>
                                 {processing ? 'Agregando venta...' : 'Agregar venta'}

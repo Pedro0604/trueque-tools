@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('producto_ventas', function (Blueprint $table) {
             $table->id();
-            $table->string('bar_code');
+            $table->string('name');
             $table->double('sell_price');
             $table->foreignId('venta_id')->constrained();
             $table->softDeletes();

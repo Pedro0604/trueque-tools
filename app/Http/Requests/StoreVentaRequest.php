@@ -22,28 +22,19 @@ class StoreVentaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'publishedUserProducts' => ['required_without:offeredUserProducts', 'array'],
-            'publishedUserProducts.*.bar_code' => ['required_with:publishedUserProducts', 'integer'],
-            'publishedUserProducts.*.sell_price' => ['required_with:publishedUserProducts', 'numeric'],
-            'offeredUserProducts' => ['required_without:publishedUserProducts', 'array'],
-            'offeredUserProducts.*.bar_code' => ['required_with:offeredUserProducts', 'integer'],
-            'offeredUserProducts.*.sell_price' => ['required_with:offeredUserProducts', 'numeric'],
+            'products' => ['required', 'array'],
+            'products.*.name' => ['required', 'string'],
+            'products.*.sell_price' => ['required', 'numeric'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'publishedUserProducts.required_without' => 'Se debe especificar al menos un producto para registrar una venta',
-            'offeredUserProducts.required_without' => 'Se debe especificar al menos un producto para registrar una venta',
-            'publishedUserProducts.*.bar_code.required_with' => 'El código de barras es obligatorio',
-            'publishedUserProducts.*.bar_code.integer' => 'El código de barras debe ser un número entero',
-            'publishedUserProducts.*.sell_price.required_with' => 'El precio de venta es obligatorio',
-            'publishedUserProducts.*.sell_price.numeric' => 'El precio de venta debe ser un valor numérico',
-            'offeredUserProducts.*.bar_code.required_with' => 'El código de barras es obligatorio',
-            'offeredUserProducts.*.bar_code.integer' => 'El código de barras debe ser un número entero',
-            'offeredUserProducts.*.sell_price.required_with' => 'El precio de venta es obligatorio',
-            'offeredUserProducts.*.sell_price.numeric' => 'El precio de venta debe ser un valor numérico',
+            'products.required' => 'Se debe especificar al menos un producto para registrar una venta',
+            'products.*.name.required' => 'El nombre del producto es obligatorio',
+            'products.*.sell_price.required' => 'El precio de venta es obligatorio',
+            'products.*.sell_price.numeric' => 'El precio de venta debe ser un valor numérico',
         ];
     }
 }

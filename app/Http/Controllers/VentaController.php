@@ -48,77 +48,30 @@ class VentaController extends Controller
     {
         Gate::authorize('create', [Venta::class, $trueque]);
         $data = $request->validated();
+        $products = $data['products'];
 
-        DB::transaction(function () use ($data, $trueque) {
-            if (count($data['publishedUserProducts'])) {
-                $total = 0;
-                foreach ($data['publishedUserProducts'] as $product) {
-                    $total += $product['sell_price'];
-                }
-                $publishedVenta = Venta::create([
-                    'total' => $total,
-                    'trueque_id' => $trueque->id,
-                    'user_id' => $trueque->solicitud->publishedProduct->user_id,
-                ]);
-                foreach ($data['publishedUserProducts'] as $product) {
-                    ProductoVenta::create([
-                        'bar_code' => $product['bar_code'],
-                        'sell_price' => $product['sell_price'],
-                        'venta_id' => $publishedVenta->id,
-                    ]);
-                }
+        DB::transaction(function () use ($data, $trueque, $products) {
+            $total = 0;
+            foreach ($products as $product) {
+                $total += $product['sell_price'];
             }
-
-            if (count($data['offeredUserProducts'])) {
-                $total = 0;
-                foreach ($data['offeredUserProducts'] as $product) {
-                    $total += $product['sell_price'];
-                }
-                $offeredVenta = Venta::create([
-                    'total' => $total,
-                    'trueque_id' => $trueque->id,
-                    'user_id' => $trueque->solicitud->offeredProduct->user_id,
+            $publishedVenta = Venta::create([
+                'total' => $total,
+                'trueque_id' => $trueque->id,
+            ]);
+            foreach ($products as $product) {
+                ProductoVenta::create([
+                    'name' => $product['name'],
+                    'sell_price' => $product['sell_price'],
+                    'venta_id' => $publishedVenta->id,
                 ]);
-                foreach ($data['offeredUserProducts'] as $product) {
-                    ProductoVenta::create([
-                        'bar_code' => $product['bar_code'],
-                        'sell_price' => $product['sell_price'],
-                        'venta_id' => $offeredVenta->id,
-                    ]);
-                }
             }
         });
 
-        $message = count($data['publishedUserProducts']) && count($data['offeredUserProducts']) ? 'Ventas creadas con éxito' : 'Venta creada con éxito';
-
         return to_route('venta.index')
             ->with('success', [
-                'message' => $message,
+                'message' => 'Venta creada con éxito',
                 'key' => rand()
             ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Venta $venta)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateVentaRequest $request, Venta $venta)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Venta $venta)
-    {
-        //
     }
 }

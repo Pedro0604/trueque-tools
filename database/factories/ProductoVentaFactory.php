@@ -18,7 +18,7 @@ class ProductoVentaFactory extends Factory
     public function definition(): array
     {
         return [
-            'bar_code' => fake()->ean13(),
+            'name' => fake()->sentence(2),
             'sell_price' => fake()->randomFloat(2, 50, 10000),
             'venta_id' => fake()->numberBetween(1, Venta::count()),
         ];

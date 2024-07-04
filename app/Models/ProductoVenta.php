@@ -12,7 +12,7 @@ class ProductoVenta extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'bar_code',
+        'name',
         'sell_price',
         'venta_id',
     ];
