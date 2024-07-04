@@ -2,9 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import {Head} from "@inertiajs/react";
 import User from "@/Pages/User/Partials/User.jsx";
 
-export default function Show({
-                                 user
-                             }) {
+export default function Show({user}) {
     return (
         <AuthenticatedLayout
             header={

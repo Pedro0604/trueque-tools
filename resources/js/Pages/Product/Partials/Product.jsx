@@ -57,6 +57,14 @@ export default function Product({
                     {error.message}
                 </div>
             }
+
+            {product.was_deleted &&
+                <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-lg mb-2">
+                    <h2 className="text-xl font-bold text-center uppercase text-red-600 dark:text-red-600">
+                        El producto está eliminado
+                    </h2>
+                </div>
+            }
             <div className="flex justify-between items-center mb-1">
                 {withUserName &&
                     <div className="flex gap-3 items-center">

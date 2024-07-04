@@ -66,7 +66,7 @@ Route::middleware('auth:web,admin,empleado')->group(function () {
     Route::get('/trueque/{trueque}', [TruequeController::class, 'show'])->name('trueque.show');
 
     // User routes
-    Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');
+    Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show')->withTrashed();
 
     // Sucursal routes
     Route::get('/sucursal', [SucursalController::class, 'index'])->name('sucursal.index');

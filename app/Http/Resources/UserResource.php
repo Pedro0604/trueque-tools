@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'reputation' => $this->reputation,
             'sucursal' => new SucursalResource($this->sucursal),
             'total_trueques' => $this->total_trueques ?? 0,
+            'was_deleted' => $this->trashed(),
             'can' => [
                 'delete' => Gate::allows('delete', $this->resource),
             ]
