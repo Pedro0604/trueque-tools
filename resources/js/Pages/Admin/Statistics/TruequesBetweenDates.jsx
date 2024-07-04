@@ -74,8 +74,8 @@ export default function TruequesBetweenDates({trueques}) {
                         <Table sx={{minWidth: 650}} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="center" style={{color: 'white'}}>Codigo Trueque</TableCell>
-                                    <TableCell align="center" style={{color: 'white'}}>Fecha</TableCell>
+                                    <TableCell style={{color: 'white'}}>Codigo Trueque</TableCell>
+                                    <TableCell style={{color: 'white'}}>Fecha</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -84,7 +84,7 @@ export default function TruequesBetweenDates({trueques}) {
                                         key={trueque.id}
                                         sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     >
-                                        <TableCell align="center" style={{color: 'white'}}>
+                                        <TableCell style={{color: 'white'}}>
                                             <Link
                                                 className='hover:underline'
                                                 href={route(
@@ -95,7 +95,7 @@ export default function TruequesBetweenDates({trueques}) {
                                                 {trueque.code}
                                             </Link>
                                         </TableCell>
-                                        <TableCell align="center" style={{color: 'white'}}>{trueque.solicitud.meeting_date_time}</TableCell>
+                                        <TableCell style={{color: 'white'}}>{trueque.solicitud.meeting_date_time}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
