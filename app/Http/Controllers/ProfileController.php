@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Resources\UserResource;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -23,6 +25,7 @@ class ProfileController extends Controller
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'user' => new UserResource($request->user()),
         ]);
     }
 
@@ -61,6 +64,11 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        $productController = new ProductController();
+        $user->products->each(function ($product) use ($productController) {
+            $productController->destroy(Product::find($product->id));
+        });
 
         Auth::logout();
 

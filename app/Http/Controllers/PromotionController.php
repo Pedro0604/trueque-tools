@@ -22,7 +22,7 @@ class PromotionController extends Controller
     {
         return to_route('product.show', $product->id)
             ->with('error', [
-                'message' => 'La promoción fue cancelada.',
+                'message' => 'La promoción no fue efectuada.',
                 'key' => $product->id,
             ]);
     }

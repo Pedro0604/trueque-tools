@@ -4,7 +4,7 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import {Head} from '@inertiajs/react';
 import UserLayout from "@/Layouts/UserLayout.jsx";
 
-export default function Edit({mustVerifyEmail, status}) {
+export default function Edit({mustVerifyEmail, status, user}) {
     return (
         <UserLayout
             header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Perfil</h2>}
@@ -28,7 +28,7 @@ export default function Edit({mustVerifyEmail, status}) {
                     </div>
 
                     <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                        <DeleteUserForm className="max-w-xl"/>
+                        <DeleteUserForm className="max-w-xl" user={user}/>
                     </div>
                 </div>
             </div>

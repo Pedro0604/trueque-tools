@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Gate;
 
 class UserResource extends JsonResource
 {
@@ -24,6 +25,9 @@ class UserResource extends JsonResource
             'reputation' => $this->reputation,
             'sucursal' => new SucursalResource($this->sucursal),
             'total_trueques' => $this->total_trueques ?? 0,
+            'can' => [
+                'delete' => Gate::allows('delete', $this->resource),
+            ]
         ];
     }
 }

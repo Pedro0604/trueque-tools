@@ -1,13 +1,13 @@
-import { useRef, useState } from 'react';
+import {useRef, useState} from 'react';
 import DangerButton from '@/Components/Buttons/DangerButton.jsx';
 import InputError from '@/Components/Inputs/InputError.jsx';
 import InputLabel from '@/Components/Inputs/InputLabel.jsx';
 import Modal from '@/Components/Modal';
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.jsx';
 import TextInput from '@/Components/Inputs/TextInput.jsx';
-import { useForm } from '@inertiajs/react';
+import {useForm} from '@inertiajs/react';
 
-export default function DeleteUserForm({ className = '' }) {
+export default function DeleteUserForm({className = '', user}) {
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
     const passwordInput = useRef();
 
@@ -57,42 +57,56 @@ export default function DeleteUserForm({ className = '' }) {
             <DangerButton onClick={confirmUserDeletion}>Eliminar cuenta</DangerButton>
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        ¿Estás seguro/a de que querés eliminar tu cuenta?
-                    </h2>
+                {user.can.delete ? <form onSubmit={deleteUser} className="p-6">
+                        <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                            ¿Estás seguro/a de que querés eliminar tu cuenta?
+                        </h2>
 
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Una vez que se elimine tu cuenta, toda tu información y datos se eliminarán permanentemente.
-                        Ingrese su contraseña para confirmar que deseas eliminar permanentemente tu cuenta.
-                    </p>
+                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                            Una vez que se elimine tu cuenta, toda tu información y datos se eliminarán permanentemente.
+                            Ingrese su contraseña para confirmar que deseas eliminar permanentemente tu cuenta.
+                        </p>
 
-                    <div className="mt-6">
-                        <InputLabel htmlFor="password" value="Contraseña" className="sr-only" />
+                        <div className="mt-6">
+                            <InputLabel htmlFor="password" value="Contraseña" className="sr-only"/>
 
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Contraseña"
-                        />
+                            <TextInput
+                                id="password"
+                                type="password"
+                                name="password"
+                                ref={passwordInput}
+                                value={data.password}
+                                onChange={(e) => setData('password', e.target.value)}
+                                className="mt-1 block w-3/4"
+                                isFocused
+                                placeholder="Contraseña"
+                            />
 
-                        <InputError message={errors.password} className="mt-2" />
+                            <InputError message={errors.password} className="mt-2"/>
+                        </div>
+
+                        <div className="mt-6 flex justify-end">
+                            <SecondaryButton onClick={closeModal}>Cancelar</SecondaryButton>
+
+                            <DangerButton className="ms-3" disabled={processing}>
+                                Eliminar cuenta
+                            </DangerButton>
+                        </div>
+                    </form>
+                    :
+                    <div
+                        className="px-6 py-4"
+                    >
+                        <h2 className="text-2xl font-medium text-gray-900 dark:text-gray-100">
+                            No puede eliminar su cuenta porque tiene trueques pendientes
+                        </h2>
+
+                        <p className="mt-1 text-lg text-gray-600 dark:text-gray-400">
+                            Para proceder con la eliminación primero concrete o cancele sus trueques pendientes.
+                        </p>
+                        <SecondaryButton onClick={closeModal} className="mt-4 mb-4 float-end">Cerrar</SecondaryButton>
                     </div>
-
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>Cancelar</SecondaryButton>
-
-                        <DangerButton className="ms-3" disabled={processing}>
-                            Eliminar cuenta
-                        </DangerButton>
-                    </div>
-                </form>
+                }
             </Modal>
         </section>
     );
