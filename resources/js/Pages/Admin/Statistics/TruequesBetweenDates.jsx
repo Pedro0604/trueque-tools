@@ -1,8 +1,15 @@
 import StatisticsLayout from "@/Pages/Admin/Statistics/StatisticsLayout.jsx";
 import TruequesList from "@/Pages/Trueque/Partials/TruequesList.jsx";
-import {router, usePage} from "@inertiajs/react";
+import {Link, router, usePage} from "@inertiajs/react";
 import InputLabel from "@/Components/Inputs/InputLabel.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
+import TableContainer from "@mui/material/TableContainer";
+import {Paper} from "@mui/material";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
 
 export default function TruequesBetweenDates({trueques}) {
     const queryParams = Object.assign({}, usePage().props.queryParams);
@@ -58,10 +65,48 @@ export default function TruequesBetweenDates({trueques}) {
                 </div>
             }
         >
-            <TruequesList
-                trueques={trueques}
-                emptyListMessage={emptyListMessage}
-            />
+
+            <div
+                className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg max-w-5xl mx-auto"
+            >
+                {trueques.length ?
+                    <TableContainer component={Paper} style={{backgroundColor: '#2D2D2D', color: 'white'}}>
+                        <Table sx={{minWidth: 650}} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="center" style={{color: 'white'}}>Codigo Trueque</TableCell>
+                                    <TableCell align="center" style={{color: 'white'}}>Fecha</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {trueques.map((trueque, index) => (
+                                    <TableRow
+                                        key={trueque.id}
+                                        sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                    >
+                                        <TableCell align="center" style={{color: 'white'}}>
+                                            <Link
+                                                className='hover:underline'
+                                                href={route(
+                                                    'trueque.show',
+                                                    trueque.id
+                                                )}
+                                            >
+                                                {trueque.code}
+                                            </Link>
+                                        </TableCell>
+                                        <TableCell align="center" style={{color: 'white'}}>{trueque.solicitud.meeting_date_time}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    :
+                    <h3 className="text-center text-3xl font-bold">
+                        No hay trueques entre estas fechas
+                    </h3>
+                }
+            </div>
         </StatisticsLayout>
     )
 }
