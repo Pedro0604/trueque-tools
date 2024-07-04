@@ -62,14 +62,14 @@ class ProductPolicy
         }
 
         $productIsNotFromUser = $product->user_id !== $user->id;
-        $productHasATrueque = $product->hasTrueque;
+        $productHasATrueque = $product->hasTrueque || $product->publishedFailedTrueques()->count() > 0 || $product->offeredFailedTrueques()->count() > 0;
 
 
         if ($productIsNotFromUser) {
             return Response::deny('No podés eliminar un producto que no es tuyo');
         }
         if ($productHasATrueque) {
-            return Response::deny('No podés eliminar un producto con un trueque pactado');
+            return Response::deny('No podés eliminar un producto con un trueque (pendiente, exitoso o fallido) asociado');
         }
         return Response::allow();
     }
