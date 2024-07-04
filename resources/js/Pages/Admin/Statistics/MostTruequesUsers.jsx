@@ -6,13 +6,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Paper} from "@mui/material";
+import {Link} from "@inertiajs/react";
 
 
 export default function MostTruequesUsers({users}) {
     return (
         <StatisticsLayout>
             <div
-                className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg max-w-5xl mx-auto"
+                className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg w-fit mx-auto"
             >
                 {users.length ?
                     <TableContainer component={Paper}  style={{backgroundColor: '#2D2D2D', color: 'white'}}>
@@ -20,8 +21,8 @@ export default function MostTruequesUsers({users}) {
                             <TableHead>
                                 <TableRow>
                                     <TableCell style={{color: 'white'}}>Posición</TableCell>
-                                    <TableCell align="right" style={{color: 'white'}}>Nombre</TableCell>
-                                    <TableCell align="right" style={{color: 'white'}}>Cantidad de trueques</TableCell>
+                                    <TableCell style={{color: 'white'}}>Nombre</TableCell>
+                                    <TableCell style={{color: 'white'}}>Cantidad de trueques</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -33,8 +34,15 @@ export default function MostTruequesUsers({users}) {
                                         <TableCell component="th" scope="row" style={{color: user.was_deleted ? `gray` : 'white'}}>
                                             {index + 1}
                                         </TableCell>
-                                        <TableCell align="right" style={{color: user.was_deleted ? `gray` : 'white'}}>{user.name} {user.surname} {user.was_deleted ? '(eliminado)': ''}</TableCell>
-                                        <TableCell align="right" style={{color: user.was_deleted ? `gray` : 'white'}}>{user.total_trueques}</TableCell>
+                                        <TableCell style={{color: user.was_deleted ? `gray` : 'white'}}>
+                                            <Link
+                                                href={route('user.show', user.id)}
+                                                className="hover:underline"
+                                            >
+                                                {user.name} {user.surname} {user.was_deleted ? '(eliminado)': ''}
+                                            </Link>
+                                        </TableCell>
+                                        <TableCell style={{color: user.was_deleted ? `gray` : 'white'}}>{user.total_trueques}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

@@ -85,6 +85,7 @@ Route::middleware('auth:admin,empleado')->group(function () {
     Route::post('/trueque/{trueque}/venta', [VentaController::class, 'store'])->name('venta.store');
     Route::get('/trueque/{trueque}/venta', [TruequeController::class, 'showVentas'])->name('trueque.showVentas');
     Route::get('/venta', [VentaController::class, 'index'])->name('venta.index');
+    Route::get('/venta/{venta}', [VentaController::class, 'show'])->name('venta.show');
 });
 
 require __DIR__ . '/auth.php';

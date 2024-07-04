@@ -20,6 +20,7 @@ class Trueque extends Model
         'solicitud_id',
         'published_error_id',
         'offered_error_id',
+        'venta_id'
     ];
 
     public function solicitud(): BelongsTo
@@ -37,8 +38,8 @@ class Trueque extends Model
         return $this->belongsTo(TruequeError::class, 'offered_error_id');
     }
 
-    public function ventas(): HasMany
+    public function venta(): BelongsTo
     {
-        return $this->hasMany(Venta::class);
+        return $this->belongsTo(Venta::class);
     }
 }

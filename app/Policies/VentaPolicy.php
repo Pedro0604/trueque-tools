@@ -35,7 +35,7 @@ class VentaPolicy
         if ($user->isEmpleado() || $user->isAdmin()) {
             $hasEnded = $trueque->ended_at;
             $wasSuccessful = !$trueque->is_failed;
-            $doesntHaveVenta = $trueque->ventas()->count() === 0;
+            $doesntHaveVenta = !$trueque->venta;
             return $hasEnded && $wasSuccessful && $doesntHaveVenta;
         }
         return false;

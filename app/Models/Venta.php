@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Venta extends Model
@@ -14,13 +15,12 @@ class Venta extends Model
 
     protected $fillable = [
         'total',
-        'trueque_id',
         'user_id'
     ];
 
-    public function trueque(): BelongsTo
+    public function trueque(): HasOne
     {
-        return $this->belongsTo(Trueque::class);
+        return $this->hasOne(Trueque::class);
     }
 
     public function user(): BelongsTo

@@ -20,7 +20,6 @@ class VentaFactory extends Factory
     {
         return [
             'total' => $this->faker->randomFloat(2, 0, 999999),
-            'trueque_id' => rand(1, Trueque::count()),
         ];
     }
 }

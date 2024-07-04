@@ -26,13 +26,13 @@ class TruequeResource extends JsonResource
             'offered_error' => $this->offered_error ? new TruequeErrorResource($this->offered_error): null,
             'successful' => $this->ended_at && !$this->is_failed,
             'solicitud' => new SolicitudResource($this->solicitud),
+            'venta_id' => $this->venta_id,
             'created_at' => (new Carbon($this->created_at))->format('d/m/Y H:i'),
             'can' => [
                 'cancel' => Gate::allows('cancel', $this->resource),
                 'end' => Gate::allows('end', $this->resource),
                 'fail' => Gate::allows('fail', $this->resource),
                 'createVenta' => Gate::allows('create', [Venta::class, $this->resource]),
-                'viewVentas' => Gate::allows('showVentas', $this->resource),
             ],
         ];
     }

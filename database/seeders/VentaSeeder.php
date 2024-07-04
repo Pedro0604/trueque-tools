@@ -13,6 +13,6 @@ class VentaSeeder extends Seeder
      */
     public function run(): void
     {
-        Venta::factory()->count(7)->create();
+//        Venta::factory()->count(7)->create();
     }
 }

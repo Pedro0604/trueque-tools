@@ -150,13 +150,13 @@ export default function Trueque({
                             Agregar venta
                         </PrimaryButton>
                     }
-                    {trueque.can.viewVentas &&
+                    {trueque.venta_id &&
                         <PrimaryButton
                             className="w-full justify-center"
                             isLink
-                            href={route('trueque.showVentas', trueque.id)}
+                            href={route('venta.show', trueque.venta_id)}
                         >
-                            Ver ventas
+                            Ver venta
                         </PrimaryButton>
                     }
                 </div>

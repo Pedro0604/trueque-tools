@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
             $table->double('total');
-            $table->foreignId('trueque_id')->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

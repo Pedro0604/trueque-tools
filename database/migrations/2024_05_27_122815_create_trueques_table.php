@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->foreignId("published_error_id")->nullable()->constrained('trueque_errors');
             $table->foreignId("offered_error_id")->nullable()->constrained('trueque_errors');
             $table->foreignId('solicitud_id')->unique()->constrained();
+            $table->foreignId('venta_id')->nullable()->constrained();
             $table->softDeletes();
             $table->timestamps();
         });
