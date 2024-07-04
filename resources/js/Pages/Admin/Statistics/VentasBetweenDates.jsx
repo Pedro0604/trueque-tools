@@ -58,10 +58,24 @@ export default function VentasBetweenDates({ventas}) {
                 </div>
             }
         >
-            <VentasList
-                ventas={ventas}
-                emptyListMessage={emptyListMessage}
-            />
+            <div
+                className="flex flex-col gap-1 w-fit mx-auto"
+            >
+                <div
+                    className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg rounded-b-sm text-center"
+                >
+                    <h2
+                        className="text-2xl font-bold"
+                    >Cantidad de ventas</h2>
+                    <h3
+                        className="border border-gray-200 w-fit mx-auto px-3 py-1 rounded-sm mt-2"
+                    >{ventas.length}</h3>
+                </div>
+                <VentasList
+                    ventas={ventas}
+                    emptyListMessage={emptyListMessage}
+                />
+            </div>
         </StatisticsLayout>
-    )
+)
 }

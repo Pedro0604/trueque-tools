@@ -17,14 +17,14 @@ export default function VentasList({
             className="flex justify-center"
         >
             <div
-                className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg`}>
+                className={`text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg rounded-t-sm`}>
                 {ventas.length ?
                     <TableContainer component={Paper} style={{backgroundColor: '#2D2D2D', color: 'white'}}>
                         <Table sx={{minWidth: 650}} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
                                     <TableCell style={{color: 'white'}}>Fecha</TableCell>
-                                    <TableCell style={{color: 'white'}}>Trueque</TableCell>
+                                    <TableCell style={{color: 'white'}}>Código trueque</TableCell>
                                     <TableCell style={{color: 'white'}}>Monto total</TableCell>
                                     <TableCell style={{color: 'white'}}>Ver detalle</TableCell>
                                 </TableRow>
