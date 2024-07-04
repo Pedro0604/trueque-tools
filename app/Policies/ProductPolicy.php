@@ -35,9 +35,13 @@ class ProductPolicy
 
         $productIsNotFromUser = $product->user_id !== $user->id;
         $productHasATrueque = $product->hasTrueque;
+        $productHasSolicituds = $product->solicituds()->where('state', '<>', 'rejected')->count() > 0 || $product->offeredSolicituds()->where('state', '<>', 'rejected')->count() > 0;
 
         if ($productIsNotFromUser) {
             return Response::deny('No podés modificar un producto que no es tuyo');
+        }
+        if ($productHasSolicituds) {
+            return Response::deny('No podés modificar un producto que tiene solicitudes pendientes');
         }
 
         if ($productHasATrueque) {
