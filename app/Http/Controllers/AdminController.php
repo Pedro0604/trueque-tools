@@ -41,6 +41,7 @@ class AdminController extends Controller
             ->orderBy('total', 'desc');
 
         $users = User::query()
+            ->withTrashed()
             ->joinSub($userCounts, 'union_subquery', function ($join) {
                 $join->on('users.id', '=', 'union_subquery.user_id');
             })

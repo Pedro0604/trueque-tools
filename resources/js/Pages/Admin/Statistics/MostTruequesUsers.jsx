@@ -30,11 +30,11 @@ export default function MostTruequesUsers({users}) {
                                         key={user.id}
                                         sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     >
-                                        <TableCell component="th" scope="row" style={{color: 'white'}}>
+                                        <TableCell component="th" scope="row" style={{color: user.was_deleted ? `gray` : 'white'}}>
                                             {index + 1}
                                         </TableCell>
-                                        <TableCell align="right" style={{color: 'white'}}>{user.name} {user.surname}</TableCell>
-                                        <TableCell align="right" style={{color: 'white'}}>{user.total_trueques}</TableCell>
+                                        <TableCell align="right" style={{color: user.was_deleted ? `gray` : 'white'}}>{user.name} {user.surname} {user.was_deleted ? '(eliminado)': ''}</TableCell>
+                                        <TableCell align="right" style={{color: user.was_deleted ? `gray` : 'white'}}>{user.total_trueques}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
