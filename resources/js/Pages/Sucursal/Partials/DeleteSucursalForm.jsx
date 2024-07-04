@@ -20,8 +20,10 @@ export default function DeleteSucursalForm({ className = '', sucursal}) {
         delete: destroy,
         reset,
         errors,
+        setError,
     } = useForm({
         password: '',
+        transfer_sucursal_id: '',
     });
 
     const confirmSucursalDeletion = () => {
@@ -35,12 +37,14 @@ export default function DeleteSucursalForm({ className = '', sucursal}) {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordInput.current.focus(),
-            onFinish: () => reset(),
+            onFinish: () => reset,
         });
     };
 
     const closeModal = () => {
         setConfirmingSucursalDeletion(false);
+        setError('password', null);
+        setError('transfer_sucursal_id', null);
         reset();
     };
 
@@ -76,7 +80,7 @@ export default function DeleteSucursalForm({ className = '', sucursal}) {
                             ref={passwordInput}
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
-                            className="mt-1 block w-3/4"
+                            className="mt-1 block w-full"
                             isFocused
                             invalid={errors.password}
                             placeholder="Contraseña"
@@ -92,17 +96,19 @@ export default function DeleteSucursalForm({ className = '', sucursal}) {
                         />
                         <SelectInput
                             id="transfer_sucursal_id"
-                            name="sucursal_id"
+                            name="transfer_sucursal_id"
                             onChange={(e) => {
-                                setData("sucursal_id", e.target.value);
+                                setData("transfer_sucursal_id", e.target.value);
                             }}
                             className="mt-1 block w-full"
-                            invalid={errors.sucursal_id}
+                            invalid={errors.transfer_sucursal_id}
                         >
                             <option value="">Elija una sucursal de transferencia</option>
-                            <SucursalOptions/>
+                            <SucursalOptions
+                                except={sucursal.id}
+                            />
                         </SelectInput>
-                        <InputError message={errors.sucursal_id} className="mt-2"/>
+                        <InputError message={errors.transfer_sucursal_id} className="mt-2"/>
                     </div>
 
                     <div className="mt-6 flex justify-end">

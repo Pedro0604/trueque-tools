@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\DeleteSucursalRequest;
 use App\Http\Resources\SucursalResource;
-use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Sucursal;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use App\Http\Requests\StoreSucursalRequest;
 use App\Http\Requests\UpdateSucursalRequest;
@@ -47,9 +47,9 @@ class SucursalController extends Controller
         $data = $request->validated();
         Sucursal::create($data);
         return redirect(route('sucursal.index'))->with('success', [
-        'message' => 'Sucursal creada correctamente',
-        'key' => rand()
-    ]);
+            'message' => 'Sucursal creada correctamente',
+            'key' => rand()
+        ]);
     }
 
     /**
@@ -83,49 +83,31 @@ class SucursalController extends Controller
             ->with('success', [
                 'message' => 'Sucursal modificada correctamente',
                 'key' => rand()
-        ]);
+            ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sucursal $sucursal, Sucursal $transferSucursal): RedirectResponse
+    public function destroy(DeleteSucursalRequest $request, Sucursal $sucursal): RedirectResponse
     {
-        $response = Gate::inspect('delete', $sucursal);
+        $data = $request->validated();
+        $request->authenticate();
 
-        if ($response->denied()) {
-            return back()->with('error', [
-                'message' => $response->message(),
-                'key' => rand()
-            ]);
-        }
-
+        $transfer_sucursal_id = $data['transfer_sucursal_id'];
         DB::transaction(
-            function () use ($sucursal, $transferSucursal) {
-                //Transfiere clientes a 'sucursal de traspaso'
-                $clientes = User::all()
-                    ->where('sucursal_id', '$sucursal->id');
+            function () use ($sucursal, $transfer_sucursal_id) {
+                $sucursal->users()->update(['sucursal_id' => $transfer_sucursal_id]);
 
-                foreach ($clientes as $cliente) {
-                    $cliente->update(['sucursal_id', '$transferSucursal->id']);
-                }
+                $sucursal->products()->update(['sucursal_id' => $transfer_sucursal_id]);
 
-                //Transfiere productos de clientes a 'sucursal de traspaso'
-                $products = Product::all()
-                    ->where('sucursal_id', '$sucursal->id');
-
-                foreach ($products as $product) {
-                    $product->update(['sucursal_id', '$transferSucursal->id']);
-                }
-
-                //Elimina sucursal
                 $sucursal->delete();
             }
         );
 
         return to_route('sucursal.index')
             ->with('success', [
-                'message' => 'Sucursal eliminada correctamente',
+                'message' => "Sucursal '$sucursal->name' eliminada correctamente",
                 'key' => rand(),
             ]);
     }
