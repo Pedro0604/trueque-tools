@@ -5,7 +5,7 @@ import TextInput from "@/Components/Inputs/TextInput.jsx";
 import VentasList from "@/Pages/Venta/Partials/VentasList.jsx";
 import {LineChart} from "@mui/x-charts";
 
-export default function VentasBetweenDates({ventas, chartVentas}) {
+export default function VentasBetweenDates({ventas, chartVentas, totalPriceSum}) {
     const queryParams = Object.assign({}, usePage().props.queryParams);
 
     const searchFieldChanged = (field, value) => {
@@ -20,9 +20,7 @@ export default function VentasBetweenDates({ventas, chartVentas}) {
 
     const emptyListMessage = `No hay ventas cargadas en el sistema ${queryParams.start_date && queryParams.end_date ? 'para las fechas seleccionadas' : ''}`;
 
-    console.log(chartVentas)
-
-    const xLabels = chartVentas.map((venta) => venta.created_at);
+    const xLabels = chartVentas.map((venta) => venta.created_at.split('T')[0]);
     const seriesData = chartVentas.map((venta) => venta.total);
 
     return (
@@ -68,14 +66,26 @@ export default function VentasBetweenDates({ventas, chartVentas}) {
                 className="flex flex-col gap-1 w-fit mx-auto"
             >
                 <div
-                    className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg rounded-b-sm text-center"
+                    className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg rounded-b-sm text-center flex justify-evenly"
                 >
-                    <h2
-                        className="text-2xl font-bold"
-                    >Cantidad de ventas</h2>
-                    <h3
-                        className="border border-gray-200 w-fit mx-auto px-3 py-1 rounded-sm mt-2"
-                    >{ventas.length}</h3>
+                    <div>
+                        <h2
+                            className="text-2xl font-bold"
+                        >Cantidad de ventas</h2>
+                        <h3
+                            className="border border-gray-200 w-fit mx-auto px-3 py-1 rounded-sm mt-2"
+                        >{ventas.length}</h3>
+                    </div>
+                    <div>
+                        <h2
+                            className="text-2xl font-bold"
+                        >
+                            Dinero total recaudado
+                        </h2>
+                        <h3
+                            className="border border-gray-200 w-fit mx-auto px-3 py-1 rounded-sm mt-2"
+                        >${totalPriceSum}</h3>
+                    </div>
                 </div>
                 {ventas.length > 0 &&
                     <div

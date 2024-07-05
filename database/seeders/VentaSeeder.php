@@ -15,7 +15,8 @@ class VentaSeeder extends Seeder
     public function run(): void
     {
         Venta::factory()->count(100)->create()->each(function ($venta) {
-            $venta->created_at = $venta->created_at->subDays(rand(1, 30));
+            $venta->created_at = now()->subDays(rand(0, 30));
+            $venta->save();
             Trueque::factory()->create(['venta_id' => $venta->id]);
 
             // Assuming you have a method to associate ProductoVenta with Trueque

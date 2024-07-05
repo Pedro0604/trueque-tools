@@ -42,7 +42,7 @@ export default function Venta({
                 <Divisor
                     className="my-3"
                 />
-                <div className={`flex flex-col gap-4 mb-6 px-4 ${showReduced ? "" : "max-h-72 overflow-auto"}`}>
+                <div className={`flex flex-col gap-4 mb-6 px-4`}>
                     {venta.products.map((productoVenta) => {
                         return (
                             <ProductoVenta

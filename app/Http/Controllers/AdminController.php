@@ -106,6 +106,9 @@ class AdminController extends Controller
             $ventas->where('ventas.created_at', '<=', request('end_date'));
         }
 
+        $totalPriceSum = $ventas->sum('total');
+
+
         $chart_ventas = clone $ventas;
 
         $chart_ventas = $chart_ventas->select(DB::raw('DATE(created_at) as created_at'), DB::raw('count(*) as total'))
@@ -113,6 +116,7 @@ class AdminController extends Controller
 
         return inertia('Admin/Statistics/VentasBetweenDates', [
             'ventas' => VentaResource::collection($ventas->get()),
+            'totalPriceSum' => $totalPriceSum,
             'chartVentas' => $chart_ventas->get(),
         ]);
     }
