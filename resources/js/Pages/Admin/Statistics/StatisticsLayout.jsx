@@ -25,7 +25,7 @@ export default function StatisticsLayout({header, children}) {
                                     active={route().current('admin.statistics.truequesBetweenDates')}
                                     className="px-3 pt-2 pb-2"
                                 >
-                                    Trueques entre fechas
+                                    Trueques exitosos entre fechas
                                 </NavLink>
                                 <NavLink
                                     href={route('admin.statistics.ventasBetweenDates')}

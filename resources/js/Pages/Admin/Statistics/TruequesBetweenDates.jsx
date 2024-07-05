@@ -9,8 +9,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
+import {LineChart} from "@mui/x-charts";
 
-export default function TruequesBetweenDates({trueques}) {
+export default function TruequesBetweenDates({trueques, chartTrueques}) {
     const queryParams = Object.assign({}, usePage().props.queryParams);
 
     const searchFieldChanged = (field, value) => {
@@ -23,7 +24,11 @@ export default function TruequesBetweenDates({trueques}) {
         router.get(route('admin.statistics.truequesBetweenDates', queryParams));
     }
 
-    const emptyListMessage = `No hay trueques cargados en el sistema ${queryParams.start_date && queryParams.end_date ? 'para las fechas seleccionadas' : ''}`;
+    const emptyListMessage = `No hay trueques exitosos cargados en el sistema ${queryParams.start_date && queryParams.end_date ? 'para las fechas seleccionadas' : ''}`;
+
+    const xLabels = chartTrueques.map((trueque) => trueque.ended_at);
+    const seriesData = chartTrueques.map((trueque) => trueque.total);
+
 
     return (
         <StatisticsLayout
@@ -72,11 +77,28 @@ export default function TruequesBetweenDates({trueques}) {
                 >
                     <h2
                         className="text-2xl font-bold"
-                    >Cantidad de trueques</h2>
+                    >Cantidad de trueques exitosos</h2>
                     <h3
                         className="border border-gray-200 w-fit mx-auto px-3 py-1 rounded-sm mt-2"
                     >{trueques.length}</h3>
                 </div>
+                {trueques.length > 0 &&
+                    <div
+                        className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg rounded-b-sm text-center"
+                    >
+                        <LineChart
+                            width={1000}
+                            height={500}
+                            series={[
+                                {
+                                    data: seriesData,
+                                    label: 'Cantidad de trueques exitosos'
+                                },
+                            ]}
+                            xAxis={[{scaleType: 'point', data: xLabels}]}
+                        />
+                    </div>
+                }
                 <div
                     className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg rounded-t-sm"
                 >
@@ -85,7 +107,7 @@ export default function TruequesBetweenDates({trueques}) {
                             <Table sx={{minWidth: 650}} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell style={{color: 'white'}}>Fecha</TableCell>
+                                        <TableCell style={{color: 'white'}}>Fecha de fin</TableCell>
                                         <TableCell style={{color: 'white'}}>Codigo Trueque</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -96,7 +118,7 @@ export default function TruequesBetweenDates({trueques}) {
                                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                         >
                                             <TableCell
-                                                style={{color: 'white'}}>{trueque.solicitud.meeting_date_time}</TableCell>
+                                                style={{color: 'white'}}>{trueque.ended_at}</TableCell>
                                             <TableCell style={{color: 'white'}}>
                                                 <Link
                                                     className='hover:underline'

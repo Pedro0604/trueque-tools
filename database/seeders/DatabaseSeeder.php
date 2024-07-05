@@ -17,10 +17,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
 //            ProductSeeder::class,
 //            SolicitudSeeder::class,
-        // Solo está truequeSeeder porque crea solicitudes que crean productos
-            TruequeSeeder::class,
+//            TruequeSeeder::class,
+            // Solo está ventaSeeder porque crea productosVenta y trueques que crean solicitudes que crean productos
             VentaSeeder::class,
-            ProductoVentaSeeder::class,
             CommentSeeder::class,
             AdminSeeder::class,
             EmpleadoSeeder::class,

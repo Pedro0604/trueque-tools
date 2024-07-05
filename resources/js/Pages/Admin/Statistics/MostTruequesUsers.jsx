@@ -20,9 +20,9 @@ export default function MostTruequesUsers({users}) {
                         <Table sx={{minWidth: 650}} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell style={{color: 'white'}}>Posición</TableCell>
-                                    <TableCell style={{color: 'white'}}>Nombre</TableCell>
-                                    <TableCell style={{color: 'white'}}>Cantidad de trueques</TableCell>
+                                    <TableCell>Posición</TableCell>
+                                    <TableCell>Nombre</TableCell>
+                                    <TableCell>Cantidad de trueques</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -31,10 +31,10 @@ export default function MostTruequesUsers({users}) {
                                         key={user.id}
                                         sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     >
-                                        <TableCell component="th" scope="row" style={{color: user.was_deleted ? `gray` : 'white'}}>
+                                        <TableCell component="th" scope="row" style={{color: user.was_deleted ? `gray` : ''}}>
                                             {index + 1}
                                         </TableCell>
-                                        <TableCell style={{color: user.was_deleted ? `gray` : 'white'}}>
+                                        <TableCell style={{color: user.was_deleted ? `gray` : ''}}>
                                             <Link
                                                 href={route('user.show', user.id)}
                                                 className="hover:underline"
@@ -42,7 +42,7 @@ export default function MostTruequesUsers({users}) {
                                                 {user.name} {user.surname} {user.was_deleted ? '(eliminado)': ''}
                                             </Link>
                                         </TableCell>
-                                        <TableCell style={{color: user.was_deleted ? `gray` : 'white'}}>{user.total_trueques}</TableCell>
+                                        <TableCell style={{color: user.was_deleted ? `gray` : ''}}>{user.total_trueques}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

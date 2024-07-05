@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Solicitud;
-use App\Models\Sucursal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,11 +17,11 @@ class TruequeFactory extends Factory
      */
     public function definition(): array
     {
-        $hasEnded = fake()->boolean(30);
+        $hasEnded = fake()->boolean(80);
 
         return [
-            'ended_at' => $hasEnded ? fake()->dateTime() : null,
-            'is_failed' => fake()->boolean(30),
+            'ended_at' => $hasEnded ? fake()->dateTimeBetween('-2 weeks', 'now') : null,
+            'is_failed' => fake()->boolean(10),
             'solicitud_id' => Solicitud::factory(),
             'code' => fake()->unique()->text(10),
         ];

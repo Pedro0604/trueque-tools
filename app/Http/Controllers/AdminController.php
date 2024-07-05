@@ -65,7 +65,8 @@ class AdminController extends Controller
             }
         }
 
-        $trueques = Trueque::query();
+        $trueques = Trueque::whereNotNull('ended_at')
+            ->where('is_failed', '=', false);
 
         if(request('start_date')){
             $trueques->where('trueques.ended_at', '>=', request('start_date'));
@@ -74,8 +75,14 @@ class AdminController extends Controller
             $trueques->where('trueques.ended_at', '<=', request('end_date'));
         }
 
+        $chart_trueques = clone $trueques;
+
+        $chart_trueques = $chart_trueques->select(DB::raw('DATE(ended_at) as ended_at'), DB::raw('count(*) as total'))
+            ->groupBy(DB::raw('DATE(ended_at)'));
+
         return inertia('Admin/Statistics/TruequesBetweenDates', [
             'trueques' => TruequeResource::collection($trueques->get()),
+            'chartTrueques' => $chart_trueques->get(),
         ]);
     }
     public function showVentasBetweenDates(): Response|ResponseFactory|RedirectResponse
@@ -99,8 +106,14 @@ class AdminController extends Controller
             $ventas->where('ventas.created_at', '<=', request('end_date'));
         }
 
+        $chart_ventas = clone $ventas;
+
+        $chart_ventas = $chart_ventas->select(DB::raw('DATE(created_at) as created_at'), DB::raw('count(*) as total'))
+            ->groupBy(DB::raw('DATE(created_at)'));
+
         return inertia('Admin/Statistics/VentasBetweenDates', [
             'ventas' => VentaResource::collection($ventas->get()),
+            'chartVentas' => $chart_ventas->get(),
         ]);
     }
 

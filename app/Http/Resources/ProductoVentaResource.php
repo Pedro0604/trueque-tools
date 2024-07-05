@@ -16,7 +16,7 @@ class ProductoVentaResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'bar_code' => $this->bar_code,
+            'name' => $this->name,
             'sell_price' => $this->sell_price,
         ];
     }

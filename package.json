@@ -25,6 +25,7 @@
         "@mercadopago/sdk-react": "^0.0.19",
         "@mui/icons-material": "^5.15.17",
         "@mui/material": "^5.15.17",
+        "@mui/x-charts": "^7.8.0",
         "laravel-precognition-react": "^0.5.4"
     }
 }

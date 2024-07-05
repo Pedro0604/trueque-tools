@@ -3,8 +3,9 @@ import {router, usePage} from "@inertiajs/react";
 import InputLabel from "@/Components/Inputs/InputLabel.jsx";
 import TextInput from "@/Components/Inputs/TextInput.jsx";
 import VentasList from "@/Pages/Venta/Partials/VentasList.jsx";
+import {LineChart} from "@mui/x-charts";
 
-export default function VentasBetweenDates({ventas}) {
+export default function VentasBetweenDates({ventas, chartVentas}) {
     const queryParams = Object.assign({}, usePage().props.queryParams);
 
     const searchFieldChanged = (field, value) => {
@@ -18,6 +19,11 @@ export default function VentasBetweenDates({ventas}) {
     }
 
     const emptyListMessage = `No hay ventas cargadas en el sistema ${queryParams.start_date && queryParams.end_date ? 'para las fechas seleccionadas' : ''}`;
+
+    console.log(chartVentas)
+
+    const xLabels = chartVentas.map((venta) => venta.created_at);
+    const seriesData = chartVentas.map((venta) => venta.total);
 
     return (
         <StatisticsLayout
@@ -71,11 +77,28 @@ export default function VentasBetweenDates({ventas}) {
                         className="border border-gray-200 w-fit mx-auto px-3 py-1 rounded-sm mt-2"
                     >{ventas.length}</h3>
                 </div>
+                {ventas.length > 0 &&
+                    <div
+                        className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 sm:p-4 md:p-6 rounded-lg rounded-b-sm text-center"
+                    >
+                        <LineChart
+                            width={1000}
+                            height={500}
+                            series={[
+                                {
+                                    data: seriesData,
+                                    label: 'Cantidad de ventas',
+                                },
+                            ]}
+                            xAxis={[{scaleType: 'point', data: xLabels}]}
+                        />
+                    </div>
+                }
                 <VentasList
                     ventas={ventas}
                     emptyListMessage={emptyListMessage}
                 />
             </div>
         </StatisticsLayout>
-)
+    )
 }
