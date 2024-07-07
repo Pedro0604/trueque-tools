@@ -4,7 +4,7 @@ import {initMercadoPago, Wallet} from "@mercadopago/sdk-react";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.jsx";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 
-initMercadoPago("APP_USR-66c048b3-9b12-4fb2-8961-7cea14c5a0a4");
+initMercadoPago("APP_USR-bc7aac37-2243-4319-8d6e-2d9b4bbd9837");
 
 export default function PromotionModal({
                                            open,
