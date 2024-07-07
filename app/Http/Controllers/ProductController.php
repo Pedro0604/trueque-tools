@@ -92,10 +92,10 @@ class ProductController extends Controller
     {
         $solicituds = $product->user->id === auth()->id() ?
             $product->solicituds()
-            ->whereNotIn('state', ['accepted', 'rejected'])
-            ->whereDoesntHave('trueque')
-            ->orderByDesc('created_at')
-            ->get()
+                ->whereNotIn('state', ['accepted', 'rejected'])
+                ->whereDoesntHave('trueque')
+                ->orderByDesc('created_at')
+                ->get()
             : [];
 
         $trueque = $product->hasTrueque ? new TruequeResource($product->trueque) : null;
@@ -154,7 +154,9 @@ class ProductController extends Controller
         if ($image) {
             $data['image_path'] = asset($image->store('project/' . Str::random(), 'public'));
         }
-        Storage::delete($product->image_path);
+        if ($image && $product->image_path) {
+            Storage::delete($product->image_path);
+        }
 
         unset($data['image']); // Unset the image value
 
