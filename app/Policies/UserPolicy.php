@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -21,9 +20,10 @@ class UserPolicy
         }
 
         $hasProductsWithTrueque = $user->products()
-            ->whereHas('publishedPendingTrueque')
-            ->orWhereHas('offeredPendingTrueque')
-            ->exists();
+            ->where(function ($query) {
+                $query->whereHas('publishedPendingTrueque')
+                    ->orWhereHas('offeredPendingTrueque');
+            })->exists();
 
         if ($hasProductsWithTrueque) {
             return Response::deny('No podés eliminar tu cuenta porque tenés trueques pendientes asociados a la misma. Cancelalos antes de proceder con la eliminación');
