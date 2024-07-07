@@ -51,7 +51,7 @@ export default function Show({
             <Head title={`Producto "${product.name}"`}/>
 
             <div className="flex gap-4 justify-center">
-                <div className="max-w-sm sm:max-w-lg lg:max-w-4xl lg:min-w-[600px]">
+                <div className="max-w-sm sm:max-w-lg lg:max-w-4xl lg:min-w-[800px]">
                     {product.was_deleted &&
                         <div className="p-6 bg-gray-300 dark:bg-gray-800 rounded-lg mb-2">
                             <h2 className="text-3xl font-bold text-center uppercase text-red-600 dark:text-red-600">
