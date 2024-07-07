@@ -8,7 +8,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use MercadoPago\MercadoPagoConfig;
 use Stripe\Exception\SignatureVerificationException;
@@ -38,7 +37,7 @@ class StripeController extends Controller
                             'name' => 'Promoción del producto: "' . $product->name . '"',
                             'description' => $product->description,
                         ],
-                        'unit_amount' => 1000 * 100,
+                        'unit_amount' => 4999.99 * 100,
                     ],
                     'quantity' => 1,
                 ],
@@ -50,7 +49,7 @@ class StripeController extends Controller
 
         Transaction::create([
             'status' => 'pending',
-            'price' => 1000,
+            'price' => 4999.99,
             'session_id' => $checkout_session->id,
             'user_id' => auth()->id(),
             'product_id' => $product->id,

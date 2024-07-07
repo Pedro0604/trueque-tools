@@ -39,7 +39,7 @@ class MercadoPagoController extends Controller
                     "category_id" => "others",
                     "quantity" => 1,
                     "currency_id" => "ARS",
-                    "unit_price" => 1000
+                    "unit_price" => 4999.99
                 )
             ),
             "payment_methods" => array(
@@ -54,7 +54,7 @@ class MercadoPagoController extends Controller
 
         Transaction::create([
             'status' => 'pending',
-            'price' => 1000,
+            'price' => 4999.99,
             'session_id' => $external_reference,
             'user_id' => auth()->id(),
             'product_id' => $product->id,
