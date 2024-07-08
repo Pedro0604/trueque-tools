@@ -277,7 +277,8 @@ class DatabaseSeeder extends Seeder
 
         // Crear una Venta para cada Trueque
         Trueque::all()->each(function ($trueque) use ($productosFerreteria, $trueques_previos) {
-            if ($trueque->id > $trueques_previos) {
+            $tiene_venta = fake()->boolean(90); // 90% de probabilidad de que haya una venta
+            if ($trueque->id > $trueques_previos && $tiene_venta) {
                 $venta = new Venta();
                 $venta->total = 0; // Inicializar el total en 0
                 $venta->created_at = (new Carbon($trueque->ended_at))->addDays(rand(0, 5));
