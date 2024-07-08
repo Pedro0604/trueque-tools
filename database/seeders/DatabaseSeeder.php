@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Admin;
 use App\Models\Comment;
-use App\Models\Empleado;
 use App\Models\Product;
 use App\Models\ProductoVenta;
 use App\Models\Solicitud;
@@ -14,8 +12,6 @@ use App\Models\User;
 use App\Models\Venta;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,7 +22,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Admin::factory()->create();
 
         Sucursal::factory()->create([
             'name' => 'Sucursal 1',
@@ -39,40 +34,11 @@ class DatabaseSeeder extends Seeder
             'code' => '23456',
         ]);
 
-        Empleado::factory()->create([
-            'name' => 'Empleado 1',
-            'dni' => '12341234',
-            'sucursal_id' => 1,
-            'password' => Hash::make('12341234'),
-            'remember_token' => Str::random(10),
-        ]);
-        Empleado::factory()->create([
-            'name' => 'Empleado 2',
-            'dni' => '23452345',
-            'sucursal_id' => 2,
-            'password' => Hash::make('23452345'),
-            'remember_token' => Str::random(10),
-        ]);
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@gmail.com',
-            'password' => bcrypt('12341234'),
-        ]);
-        User::factory()->create([
-            'name' => 'Test User 2',
-            'email' => 'test2@gmail.com',
-            'password' => bcrypt('12341234'),
-        ]);
-        User::factory()->create([
-            'name' => 'Test User 3',
-            'email' => 'test3@gmail.com',
-            'password' => bcrypt('12341234'),
-        ]);
-        User::factory()->create([
-            'name' => 'Test User 4',
-            'email' => 'test4@gmail.com',
-            'password' => bcrypt('12341234'),
+        $this->call([
+            AdminSeeder::class,
+            EmpleadoSeeder::class,
+            UserSeeder::class,
+            TruequeErrorSeeder::class,
         ]);
 
         // Producto 1
