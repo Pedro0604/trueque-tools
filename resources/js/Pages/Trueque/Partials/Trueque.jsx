@@ -150,7 +150,7 @@ export default function Trueque({
                             Agregar venta
                         </PrimaryButton>
                     }
-                    {trueque.venta_id &&
+                    {trueque.venta_id && trueque.can.viewVenta &&
                         <PrimaryButton
                             className="w-full justify-center"
                             isLink
