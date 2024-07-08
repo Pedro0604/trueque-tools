@@ -45,7 +45,6 @@ class DatabaseSeeder extends Seeder
         Product::factory()->create([
             'name' => 'Producto promocionado',
             'category' => 1,
-            'description' => fake()->sentence(),
             'promoted_at' => fake()->dateTimeBetween('-1 weeks'),
             'user_id' => 1,
             'sucursal_id' => 1,
@@ -55,7 +54,6 @@ class DatabaseSeeder extends Seeder
         Product::factory()->create([
             'name' => 'Producto con trueque pendiente',
             'category' => 1,
-            'description' => fake()->sentence(),
             'promoted_at' => null,
             'user_id' => 1,
             'sucursal_id' => 1,
@@ -65,7 +63,6 @@ class DatabaseSeeder extends Seeder
         Product::factory()->create([
             'name' => 'Producto de prueba',
             'category' => 1,
-            'description' => fake()->sentence(),
             'promoted_at' => null,
             'user_id' => 3,
             'sucursal_id' => 1,
@@ -89,9 +86,8 @@ class DatabaseSeeder extends Seeder
 
         // Producto 4
         Product::factory()->create([
-            'name' => 'Producto sin nada MercadoPago',
+            'name' => 'Producto a promocionar con MercadoPago',
             'category' => 2,
-            'description' => fake()->sentence(),
             'promoted_at' => null,
             'user_id' => 1,
             'sucursal_id' => 1,
@@ -99,9 +95,8 @@ class DatabaseSeeder extends Seeder
 
         // Producto 5
         Product::factory()->create([
-            'name' => 'Producto a modificar y después eliminar',
+            'name' => 'Producto a modificar y eliminar',
             'category' => 2,
-            'description' => fake()->sentence(),
             'promoted_at' => null,
             'user_id' => 1,
             'sucursal_id' => 1,
@@ -144,9 +139,8 @@ class DatabaseSeeder extends Seeder
 
         // Producto 6
         Product::factory()->create([
-            'name' => 'Producto sin nada tarjeta',
+            'name' => 'Producto a promocionar con tarjeta',
             'category' => 2,
-            'description' => fake()->sentence(),
             'promoted_at' => null,
             'user_id' => 1,
             'sucursal_id' => 1,
@@ -156,7 +150,6 @@ class DatabaseSeeder extends Seeder
         Product::factory()->create([
             'name' => 'Producto sin nada',
             'category' => 2,
-            'description' => fake()->sentence(),
             'promoted_at' => null,
             'user_id' => 2,
             'sucursal_id' => 1,
@@ -168,7 +161,6 @@ class DatabaseSeeder extends Seeder
         Product::factory()->create([
             'name' => 'Producto a agregar venta',
             'category' => 1,
-            'description' => fake()->sentence(),
             'promoted_at' => null,
             'user_id' => 1,
             'sucursal_id' => 1,
@@ -178,7 +170,6 @@ class DatabaseSeeder extends Seeder
         Product::factory()->create([
             'name' => 'Producto de prueba 2',
             'category' => 1,
-            'description' => fake()->sentence(),
             'promoted_at' => null,
             'user_id' => 3,
             'sucursal_id' => 1,
@@ -192,11 +183,45 @@ class DatabaseSeeder extends Seeder
             'state' => 'accepted',
         ]);
 
-        // Trueque 1 (Solicitud 1)
+        // Trueque 2 (Solicitud 2)
         Trueque::factory()->create([
             'ended_at' => now()->subDays(14),
             'is_failed' => false,
             'solicitud_id' => 2,
+            'code' => fake()->unique()->text(10),
+        ]);
+
+        // Producto 10
+        Product::factory()->create([
+            'name' => 'Producto a agregar venta 2',
+            'category' => 1,
+            'promoted_at' => null,
+            'user_id' => 1,
+            'sucursal_id' => 2,
+        ]);
+
+        // Producto 11
+        Product::factory()->create([
+            'name' => 'Producto de prueba 3',
+            'category' => 1,
+            'promoted_at' => null,
+            'user_id' => 3,
+            'sucursal_id' => 2,
+        ]);
+
+        // Solicitud 3 (Producto 10 y 11)
+        Solicitud::factory()->create([
+            'published_product_id' => 10,
+            'offered_product_id' => 11,
+            'meeting_date_time' => now()->subDays(14),
+            'state' => 'accepted',
+        ]);
+
+        // Trueque 3 (Solicitud 3)
+        Trueque::factory()->create([
+            'ended_at' => now()->subDays(14),
+            'is_failed' => false,
+            'solicitud_id' => 3,
             'code' => fake()->unique()->text(10),
         ]);
 
@@ -223,15 +248,15 @@ class DatabaseSeeder extends Seeder
             $solicitudes->push($solicitud);
         }
 
+        $trueques_previos = Trueque::count();
+
         // Paso 3: Crear un trueque para cada solicitud
         $solicitudes->each(function ($solicitud) {
-            if ($solicitud->id != 1 && $solicitud->id != 2) {
-                Trueque::factory()->create([
-                    'solicitud_id' => $solicitud->id,
-                    'ended_at' => $solicitud->meeting_date_time,
-                    'is_failed' => false,
-                ]);
-            }
+            Trueque::factory()->create([
+                'solicitud_id' => $solicitud->id,
+                'ended_at' => $solicitud->meeting_date_time,
+                'is_failed' => false,
+            ]);
         });
 
         $productosFerreteria = [
@@ -251,8 +276,8 @@ class DatabaseSeeder extends Seeder
         ];
 
         // Crear una Venta para cada Trueque
-        Trueque::all()->each(function ($trueque) use ($productosFerreteria) {
-            if ($trueque->id != 1 && $trueque->id != 2) {
+        Trueque::all()->each(function ($trueque) use ($productosFerreteria, $trueques_previos) {
+            if ($trueque->id > $trueques_previos) {
                 $venta = new Venta();
                 $venta->total = 0; // Inicializar el total en 0
                 $venta->created_at = (new Carbon($trueque->ended_at))->addDays(rand(0, 5));
